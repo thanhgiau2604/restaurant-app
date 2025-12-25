@@ -6,33 +6,34 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { toast } from "sonner"
 
 const menuCategories = [
   {
     id: "appetizers",
-    name: "Appetizers",
+    name: "Khai vị",
     dishes: [
       {
-        name: "Spring Rolls",
-        description: "Crispy vegetable rolls with sweet chili sauce",
+        name: "Chả giò",
+        description: "Cuốn rau củ chiên giòn ăn kèm sốt ớt ngọt",
         price: "$8.99",
         image: "/crispy-spring-rolls-with-vegetables.jpg",
       },
       {
-        name: "Bruschetta",
-        description: "Toasted bread with tomatoes and basil",
+        name: "Bánh mì nướng cà chua",
+        description: "Bánh mì nướng phủ cà chua và húng quế",
         price: "$9.99",
         image: "/tomato-basil-bruschetta.png",
       },
       {
-        name: "Calamari",
-        description: "Lightly fried with marinara sauce",
+        name: "Mực chiên",
+        description: "Chiên giòn nhẹ, ăn kèm sốt marinara",
         price: "$12.99",
         image: "/fried-calamari-rings.jpg",
       },
       {
-        name: "Wings Platter",
-        description: "Buffalo, BBQ, or honey garlic",
+        name: "Đĩa cánh gà",
+        description: "Vị Buffalo, BBQ hoặc tỏi mật ong",
         price: "$11.99",
         image: "/buffalo-chicken-wings-platter.jpg",
       },
@@ -40,29 +41,29 @@ const menuCategories = [
   },
   {
     id: "mains",
-    name: "Main Dishes",
+    name: "Món chính",
     dishes: [
       {
-        name: "Grilled Salmon",
-        description: "With roasted vegetables and lemon butter",
+        name: "Cá hồi nướng",
+        description: "Ăn kèm rau củ nướng và bơ chanh",
         price: "$24.99",
         image: "/grilled-salmon-with-vegetables.jpg",
       },
       {
-        name: "Beef Burger",
-        description: "Angus beef with cheese and special sauce",
+        name: "Burger bò",
+        description: "Bò Angus với phô mai và sốt đặc biệt",
         price: "$16.99",
         image: "/gourmet-beef-burger-with-cheese.jpg",
       },
       {
-        name: "Pasta Carbonara",
-        description: "Creamy sauce with bacon and parmesan",
+        name: "Mì Ý Carbonara",
+        description: "Sốt kem béo với thịt xông khói và phô mai parmesan",
         price: "$18.99",
         image: "/creamy-pasta-carbonara.png",
       },
       {
-        name: "Chicken Teriyaki",
-        description: "Grilled chicken with teriyaki glaze",
+        name: "Gà Teriyaki",
+        description: "Gà nướng phủ sốt teriyaki",
         price: "$19.99",
         image: "/chicken-teriyaki-with-rice.jpg",
       },
@@ -70,29 +71,29 @@ const menuCategories = [
   },
   {
     id: "beverages",
-    name: "Beverages",
+    name: "Thức uống",
     dishes: [
       {
-        name: "Fresh Lemonade",
-        description: "House-made with mint",
+        name: "Nước chanh tươi",
+        description: "Pha chế tại quán với lá bạc hà",
         price: "$4.99",
         image: "/fresh-mint-lemonade.png",
       },
       {
-        name: "Craft Beer",
-        description: "Selection of local brews",
+        name: "Bia thủ công",
+        description: "Tuyển chọn các loại bia địa phương",
         price: "$6.99",
         image: "/craft-beer-glass.jpg",
       },
       {
-        name: "House Wine",
-        description: "Red or white",
+        name: "Rượu vang nhà",
+        description: "Vang đỏ hoặc vang trắng",
         price: "$8.99",
         image: "/wine-glass-red-and-white.jpg",
       },
       {
-        name: "Specialty Cocktails",
-        description: "Ask your server",
+        name: "Cocktail đặc biệt",
+        description: "Vui lòng hỏi nhân viên phục vụ",
         price: "$12.99",
         image: "/colorful-cocktail-drinks.jpg",
       },
@@ -100,35 +101,36 @@ const menuCategories = [
   },
   {
     id: "desserts",
-    name: "Desserts",
+    name: "Tráng miệng",
     dishes: [
       {
-        name: "Chocolate Lava Cake",
-        description: "Warm cake with vanilla ice cream",
+        name: "Bánh chocolate tan chảy",
+        description: "Bánh nóng ăn kèm kem vani",
         price: "$8.99",
         image: "/chocolate-lava-cake.png",
       },
       {
         name: "Tiramisu",
-        description: "Classic Italian dessert",
+        description: "Món tráng miệng Ý cổ điển",
         price: "$9.99",
         image: "/tiramisu-italian-dessert.jpg",
       },
       {
-        name: "Cheesecake",
-        description: "New York style with berry compote",
+        name: "Bánh phô mai",
+        description: "Phong cách New York với sốt berry",
         price: "$8.99",
         image: "/cheesecake-with-berries.png",
       },
       {
-        name: "Ice Cream Trio",
-        description: "Three scoops of your choice",
+        name: "Bộ ba kem",
+        description: "Ba viên kem tùy chọn",
         price: "$6.99",
         image: "/three-scoops-ice-cream.jpg",
       },
     ],
   },
-]
+];
+
 
 export default function RestaurantPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -166,11 +168,11 @@ export default function RestaurantPage() {
         <nav className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="bg-gradient-to-r from-accent to-secondary p-2 rounded-lg">
+              <div className="bg-linear-to-r from-accent to-secondary p-2 rounded-lg">
                 <UtensilsCrossed className="h-6 w-6 text-white" />
               </div>
               <span
-                className={`text-2xl font-bold bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent ${!scrolled ? "drop-shadow-lg" : ""}`}
+                className={`text-2xl font-bold bg-linear-to-r from-accent to-secondary bg-clip-text text-transparent ${!scrolled ? "drop-shadow-lg" : ""}`}
               >
                 Flavor House
               </span>
@@ -182,31 +184,31 @@ export default function RestaurantPage() {
                 onClick={() => scrollToSection("home")}
                 className={`${scrolled ? "text-foreground" : "text-white"} hover:text-accent transition-colors font-medium drop-shadow-md`}
               >
-                Home
+                Trang chủ
               </button>
               <button
                 onClick={() => scrollToSection("about")}
                 className={`${scrolled ? "text-foreground" : "text-white"} hover:text-accent transition-colors font-medium drop-shadow-md`}
               >
-                About Us
+                Giới thiệu
               </button>
               <button
                 onClick={() => scrollToSection("dishes")}
                 className={`${scrolled ? "text-foreground" : "text-white"} hover:text-accent transition-colors font-medium drop-shadow-md`}
               >
-                Dishes
+                Thực đơn
               </button>
               <button
                 onClick={() => scrollToSection("reservations")}
                 className={`${scrolled ? "text-foreground" : "text-white"} hover:text-accent transition-colors font-medium drop-shadow-md`}
               >
-                Reservations
+                Đặt bàn
               </button>
               <button
                 onClick={() => scrollToSection("location")}
                 className={`${scrolled ? "text-foreground" : "text-white"} hover:text-accent transition-colors font-medium drop-shadow-md`}
               >
-                Location
+                Vị trí
               </button>
             </div>
 
@@ -228,31 +230,31 @@ export default function RestaurantPage() {
                   onClick={() => scrollToSection("home")}
                   className="text-left py-2 text-foreground hover:text-accent transition-colors font-medium"
                 >
-                  Home
+                  Trang chủ
                 </button>
                 <button
                   onClick={() => scrollToSection("about")}
                   className="text-left py-2 text-foreground hover:text-accent transition-colors font-medium"
                 >
-                  About Us
+                  Giới thiệu
                 </button>
                 <button
                   onClick={() => scrollToSection("dishes")}
                   className="text-left py-2 text-foreground hover:text-accent transition-colors font-medium"
                 >
-                  Dishes
+                  Món ăn
                 </button>
                 <button
                   onClick={() => scrollToSection("reservations")}
                   className="text-left py-2 text-foreground hover:text-accent transition-colors font-medium"
                 >
-                  Reservations
+                  Đặt bàn
                 </button>
                 <button
                   onClick={() => scrollToSection("location")}
                   className="text-left py-2 text-foreground hover:text-accent transition-colors font-medium"
                 >
-                  Location
+                  Vị trí
                 </button>
               </div>
             </div>
@@ -262,7 +264,7 @@ export default function RestaurantPage() {
 
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-hero-accent)] via-[var(--color-hero-primary)] to-[var(--color-hero-secondary)] animate-gradient-xy opacity-90" />
+        <div className="absolute inset-0 bg-linear-to-br from-(--color-hero-accent) via-(--color-hero-primary) to-(--color-hero-secondary) animate-gradient-xy opacity-90" />
         <div className="absolute inset-0 bg-[url('/restaurant-interior-dining.jpg')] bg-cover bg-center opacity-40" />
 
         {/* Floating Food Images */}
@@ -297,17 +299,17 @@ export default function RestaurantPage() {
           className={`relative z-10 container mx-auto px-4 text-center transition-all duration-1000 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 text-balance drop-shadow-2xl">
-            Experience Culinary Excellence
+            Trải nghiệm đỉnh cao ẩm thực
           </h1>
           <p className="text-xl md:text-2xl text-white mb-8 max-w-2xl mx-auto text-pretty drop-shadow-lg">
-            Fresh ingredients, bold flavors, and unforgettable moments at Flavor House
+            Nguyên liệu tươi ngon, hương vị đậm đà và những khoảnh khắc khó quên tại nhà hàng Mộc Sơn
           </p>
           <Button
             size="lg"
             onClick={() => scrollToSection("reservations")}
-            className="bg-gradient-to-r from-orange-500 to-purple-600 text-white hover:opacity-90 font-semibold px-8 py-6 text-lg rounded-full shadow-2xl hover:scale-105 transition-transform"
+            className="bg-linear-to-r from-orange-500 to-purple-600 text-white hover:opacity-90 font-semibold px-8 py-6 text-lg rounded-full shadow-2xl hover:scale-105 transition-transform"
           >
-            Reserve Your Table
+            Đặt Bàn Ngay
           </Button>
         </div>
       </section>
@@ -318,41 +320,37 @@ export default function RestaurantPage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="animate-in fade-in slide-in-from-left duration-700">
               <div className="rounded-2xl overflow-hidden shadow-2xl">
-                <img src="/chef-cooking-kitchen.jpg" alt="Chef cooking" className="w-full h-[400px] object-cover" />
+                <img src="/chef-cooking-kitchen.jpg" alt="Chef cooking" className="w-full h-100 object-cover" />
               </div>
             </div>
             <div className="animate-in fade-in slide-in-from-right duration-700">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-                Our Story
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                Giới Thiệu Quán
               </h2>
               <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
-                Founded in 2020, Flavor House has become a beloved destination for food enthusiasts seeking exceptional
-                dining experiences. Our passionate chefs combine traditional techniques with innovative flavors to
-                create dishes that delight every palate.
+                Được thành lập vào năm 2025, Flavor House đã trở thành điểm đến được yêu thích của những tín đồ ẩm thực đang tìm kiếm trải nghiệm ăn uống đặc biệt. Đội ngũ đầu bếp đầy đam mê của chúng tôi kết hợp các kỹ thuật truyền thống với hương vị sáng tạo để tạo nên những món ăn làm hài lòng mọi khẩu vị.
               </p>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                We source the finest local ingredients and craft each dish with care, ensuring every meal is a memorable
-                celebration of taste and quality. From intimate dinners to group celebrations, we're here to make your
-                dining experience extraordinary.
+                Chúng tôi lựa chọn những nguyên liệu địa phương tươi ngon nhất và chế biến từng món ăn một cách tỉ mỉ, để mỗi bữa ăn đều là một trải nghiệm đáng nhớ, tôn vinh hương vị và chất lượng. Từ những bữa tối ấm cúng đến các buổi tụ họp đông người, chúng tôi luôn sẵn sàng mang đến cho bạn một trải nghiệm ẩm thực thật sự khác biệt.
               </p>
               <div className="flex gap-8">
                 <div className="text-center">
-                  <div className="text-4xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  <div className="text-4xl font-bold bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
                     500+
                   </div>
-                  <div className="text-sm text-muted-foreground">Happy Customers</div>
+                  <div className="text-sm text-muted-foreground">Khách hàng hài lòng</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  <div className="text-4xl font-bold bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
                     50+
                   </div>
-                  <div className="text-sm text-muted-foreground">Signature Dishes</div>
+                  <div className="text-sm text-muted-foreground">Món ăn đặc trưng</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  <div className="text-4xl font-bold bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
                     4.9
                   </div>
-                  <div className="text-sm text-muted-foreground">Average Rating</div>
+                  <div className="text-sm text-muted-foreground">Đánh giá trung bình</div>
                 </div>
               </div>
             </div>
@@ -361,14 +359,14 @@ export default function RestaurantPage() {
       </section>
 
       {/* Dishes Section */}
-      <section id="dishes" className="py-20 bg-gradient-to-br from-orange-50 via-purple-50 to-rose-50">
+      <section id="dishes" className="py-20 bg-linear-to-br from-orange-50 via-purple-50 to-rose-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-              Our Menu
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+              Thực đơn
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Explore our carefully curated selection of delicious dishes
+              Khám phá tuyển chọn các món ăn hấp dẫn được chúng tôi chọn lọc kỹ lưỡng
             </p>
           </div>
 
@@ -381,7 +379,7 @@ export default function RestaurantPage() {
                 variant={activeCategory === category.id ? "default" : "outline"}
                 className={`rounded-full px-6 transition-all duration-300 ${
                   activeCategory === category.id
-                    ? "bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-lg scale-105"
+                    ? "bg-linear-to-r from-orange-500 to-purple-600 text-white shadow-lg scale-105"
                     : "hover:scale-105 hover:border-orange-400"
                 }`}
               >
@@ -391,7 +389,7 @@ export default function RestaurantPage() {
           </div>
 
           {/* Dishes Grid with smooth transition */}
-          <div className="relative min-h-[600px]">
+          <div className="relative min-h-150">
             {menuCategories.map((category) => (
               <div
                 key={category.id}
@@ -413,7 +411,7 @@ export default function RestaurantPage() {
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       />
                       <div className="absolute top-2 right-2 bg-white px-3 py-1 rounded-full shadow-lg">
-                        <span className="text-lg font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                        <span className="text-lg font-bold bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
                           {dish.price}
                         </span>
                       </div>
@@ -434,11 +432,11 @@ export default function RestaurantPage() {
       <section id="reservations" className="py-20 bg-background">
         <div className="container mx-auto px-4 max-w-2xl">
           <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-              Make a Reservation
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+              Đặt Bàn
             </h2>
             <p className="text-lg text-muted-foreground">
-              Book your table and get ready for an amazing culinary experience
+             Đặt bàn ngay và sẵn sàng cho một trải nghiệm ẩm thực tuyệt vời
             </p>
           </div>
 
@@ -448,43 +446,43 @@ export default function RestaurantPage() {
                 className="space-y-6"
                 onSubmit={(e) => {
                   e.preventDefault()
-                  alert("Reservation submitted! We will contact you soon.")
+                  toast.success("Đặt bàn thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất")
                 }}
               >
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label htmlFor="name">Tên của bạn</Label>
                   <Input id="name" placeholder="John Doe" required className="h-12" />
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="guests">Number of Guests</Label>
+                    <Label htmlFor="guests">Số lượng khách</Label>
                     <Input id="guests" type="number" min="1" max="20" placeholder="2" required className="h-12" />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
+                    <Label htmlFor="phone">Số điện thoại</Label>
                     <Input id="phone" type="tel" placeholder="+1 (555) 123-4567" required className="h-12" />
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="date">Date</Label>
+                    <Label htmlFor="date">Ngày</Label>
                     <Input id="date" type="date" required className="h-12" />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="time">Time</Label>
+                    <Label htmlFor="time">Giờ</Label>
                     <Input id="time" type="time" required className="h-12" />
                   </div>
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full h-12 bg-gradient-to-r from-orange-500 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity"
+                  className="w-full h-12 bg-linear-to-r from-orange-500 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity"
                 >
-                  Confirm Reservation
+                  Xác nhận Đặt bàn
                 </Button>
               </form>
             </CardContent>
@@ -493,13 +491,13 @@ export default function RestaurantPage() {
       </section>
 
       {/* Location Section */}
-      <section id="location" className="py-20 bg-gradient-to-br from-orange-50 via-purple-50 to-rose-50">
+      <section id="location" className="py-20 bg-linear-to-br from-orange-50 via-purple-50 to-rose-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-              Visit Us
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+              Vị trí quán
             </h2>
-            <p className="text-lg text-muted-foreground">Come experience the flavors at our location</p>
+            <p className="text-lg text-muted-foreground">Hãy đến và trải nghiệm hương vị tại địa điểm của chúng tôi</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -521,11 +519,11 @@ export default function RestaurantPage() {
             <Card className="shadow-xl animate-in fade-in slide-in-from-right duration-700">
               <CardContent className="p-8 space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="bg-gradient-to-r from-orange-500 to-amber-500 p-3 rounded-lg">
+                  <div className="bg-linear-to-r from-orange-500 to-amber-500 p-3 rounded-lg">
                     <MapPin className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">Address</h3>
+                    <h3 className="font-semibold text-lg mb-1">Địa chỉ</h3>
                     <p className="text-muted-foreground leading-relaxed">
                       123 Culinary Street
                       <br />
@@ -535,28 +533,28 @@ export default function RestaurantPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-gradient-to-r from-orange-500 to-amber-500 p-3 rounded-lg">
+                  <div className="bg-linear-to-r from-orange-500 to-amber-500 p-3 rounded-lg">
                     <Phone className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">Phone</h3>
-                    <p className="text-muted-foreground">(555) 123-4567</p>
+                    <h3 className="font-semibold text-lg mb-1">Số điện thoại</h3>
+                    <p className="text-muted-foreground">+84 384 273 44</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-gradient-to-r from-orange-500 to-amber-500 p-3 rounded-lg">
+                  <div className="bg-linear-to-r from-orange-500 to-amber-500 p-3 rounded-lg">
                     <Clock className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">Opening Hours</h3>
-                    <div className="space-y-2 text-muted-foreground">
-                      <div className="flex justify-between">
-                        <span>Monday - Friday</span>
+                    <h3 className="font-semibold text-lg mb-1">Giờ hoạt động</h3>
+                    <div className="text-muted-foreground">
+                      <div className="flex justify-between gap-2">
+                        <span>Thứ 2 - Thứ 6</span>
                         <span className="font-medium">11:00 AM - 10:00 PM</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span>Saturday - Sunday</span>
+                      <div className="flex justify-between gap-2">
+                        <span>Thứ 7 - Chủ nhật</span>
                         <span className="font-medium">10:00 AM - 11:00 PM</span>
                       </div>
                     </div>
@@ -569,7 +567,7 @@ export default function RestaurantPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-orange-900/90 via-rose-900/90 to-purple-950/90 text-white py-12">
+      <footer className="bg-linear-to-br from-orange-900/90 via-rose-900/90 to-purple-950/90 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
@@ -580,7 +578,7 @@ export default function RestaurantPage() {
                 <span className="text-2xl font-bold">Flavor House</span>
               </div>
               <p className="text-white/90 leading-relaxed">
-                Bringing you the finest culinary experiences with passion and dedication since 2020.
+                Mang đến cho bạn những trải nghiệm ẩm thực tinh tế nhất với niềm đam mê và sự tận tâm kể từ năm 2025.
               </p>
             </div>
 
@@ -591,31 +589,31 @@ export default function RestaurantPage() {
                   onClick={() => scrollToSection("home")}
                   className="block text-white/90 hover:text-white transition-colors"
                 >
-                  Home
+                  Trang chủ
                 </button>
                 <button
                   onClick={() => scrollToSection("about")}
                   className="block text-white/90 hover:text-white transition-colors"
                 >
-                  About Us
+                  Giới thiệu
                 </button>
                 <button
                   onClick={() => scrollToSection("dishes")}
                   className="block text-white/90 hover:text-white transition-colors"
                 >
-                  Dishes
+                  Thực đơn
                 </button>
                 <button
                   onClick={() => scrollToSection("reservations")}
                   className="block text-white/90 hover:text-white transition-colors"
                 >
-                  Reservations
+                  Đặt bàn
                 </button>
               </div>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
+              <h3 className="text-lg font-semibold mb-4">Theo dõi chúng tôi</h3>
               <div className="flex gap-4">
                 <a
                   href="#"

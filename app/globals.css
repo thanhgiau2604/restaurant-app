@@ -156,3 +156,8 @@
 .animate-gradient-xy {
   animation: gradient-xy 15s ease infinite;
 }
+
+
+* {
+    line-height: 1.5;
+}
