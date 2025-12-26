@@ -23,6 +23,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Plus, Pencil, Trash2, ImageIcon, Upload, X, Search } from "lucide-react"
 import { type Dish } from "@/lib/storage"
+import { uploadImage } from "@/lib/cloudinary"
 import { useRestaurantStore } from "@/stores/restaurant-store"
 import Image from "next/image"
 import { toast } from "sonner"
@@ -39,6 +40,7 @@ export function DishManagement() {
   const [searchQuery, setSearchQuery] = useState("")
 
   const [imagePreview, setImagePreview] = useState<string>("")
+  const [isUploading, setIsUploading] = useState(false)
 
   const [formData, setFormData] = useState({
     name: "",
@@ -55,7 +57,7 @@ export function DishManagement() {
     return searchQuery === "" || dish.name.toLowerCase().includes(searchQuery.toLowerCase())
   })
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       // Check file size (max 5MB)
@@ -74,13 +76,19 @@ export function DishManagement() {
         return
       }
 
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        const base64String = reader.result as string
-        setImagePreview(base64String)
-        setFormData({ ...formData, image: base64String })
+      setIsUploading(true)
+      try {
+        const imageUrl = await uploadImage(file)
+        setImagePreview(imageUrl)
+        setFormData({ ...formData, image: imageUrl })
+        toast.success("Image uploaded")
+      } catch (error) {
+        toast.error("Image upload failed", {
+          description: "Please try again.",
+        })
+      } finally {
+        setIsUploading(false)
       }
-      reader.readAsDataURL(file)
     }
   }
 
@@ -225,15 +233,22 @@ export function DishManagement() {
                         id="image-upload"
                         accept="image/*"
                         onChange={handleImageChange}
+                        disabled={isUploading}
                         className="hidden"
                       />
-                      <label htmlFor="image-upload" className="cursor-pointer">
+                      <label htmlFor="image-upload" className={isUploading ? "cursor-not-allowed" : "cursor-pointer"}>
                         <div className="flex flex-col items-center gap-2">
-                          <div className="bg-muted p-3 rounded-full">
-                            <Upload className="h-6 w-6 text-muted-foreground" />
-                          </div>
+                          {isUploading ? (
+                            <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary/30 border-t-primary" />
+                          ) : (
+                            <div className="bg-muted p-3 rounded-full">
+                              <Upload className="h-6 w-6 text-muted-foreground" />
+                            </div>
+                          )}
                           <div>
-                            <p className="text-sm font-medium">Click to upload image</p>
+                            <p className="text-sm font-medium">
+                              {isUploading ? "Uploading image..." : "Click to upload image"}
+                            </p>
                             <p className="text-xs text-muted-foreground mt-1">PNG, JPG up to 5MB</p>
                           </div>
                         </div>
@@ -243,7 +258,11 @@ export function DishManagement() {
                 </div>
 
                 <div className="flex gap-2 pt-4">
-                  <Button type="submit" className="flex-1 bg-linear-to-r from-primary to-secondary text-white">
+                  <Button
+                    type="submit"
+                    className="flex-1 bg-linear-to-r from-primary to-secondary text-white"
+                    disabled={isUploading}
+                  >
                     {editingDish ? "Update" : "Add"} Dish
                   </Button>
                   <Button type="button" variant="outline" onClick={resetForm}>
