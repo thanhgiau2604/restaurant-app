@@ -2,14 +2,14 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { UtensilsCrossed, Lock, User } from "lucide-react"
-import { signInWithEmailAndPassword } from "firebase/auth"
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"
 import { FirebaseError } from "firebase/app"
 import { firebaseAuth } from "@/lib/firebase"
 import { toast } from "sonner"
@@ -18,7 +18,35 @@ export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [isCheckingSession, setIsCheckingSession] = useState(true)
   const router = useRouter()
+
+  const useDebouncedValue = <T,>(value: T, delay = 300) => {
+    const [debouncedValue, setDebouncedValue] = useState(value)
+
+    useEffect(() => {
+      const timer = setTimeout(() => setDebouncedValue(value), delay)
+      return () => clearTimeout(timer)
+    }, [value, delay])
+
+    return debouncedValue
+  }
+
+  const debouncedEmail = useDebouncedValue(email, 300)
+  const debouncedPassword = useDebouncedValue(password, 300)
+  const isDebouncing = email !== debouncedEmail || password !== debouncedPassword
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
+      if (user) {
+        router.replace("/admin")
+      } else {
+        setIsCheckingSession(false)
+      }
+    })
+
+    return () => unsubscribe()
+  }, [router])
 
   const getAuthErrorMessage = (error: unknown) => {
     if (error instanceof FirebaseError) {
@@ -44,7 +72,7 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      await signInWithEmailAndPassword(firebaseAuth, email, password)
+      await signInWithEmailAndPassword(firebaseAuth, debouncedEmail, debouncedPassword)
       toast.success("Login successful", {
         description: "Welcome back, admin!",
       })
@@ -56,6 +84,14 @@ export default function LoginPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (isCheckingSession) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-primary/20 via-accent/20 to-secondary/20 p-4">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary/30 border-t-primary" />
+      </div>
+    )
   }
 
   return (
@@ -111,7 +147,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               className="w-full bg-linear-to-r from-primary to-secondary hover:opacity-90 text-white font-semibold"
-              disabled={isLoading}
+              disabled={isLoading || isDebouncing}
             >
               {isLoading ? "Signing in..." : "Sign In"}
             </Button>

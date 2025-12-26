@@ -33,7 +33,9 @@ export function AdminAuthGuard({ children }: AdminAuthGuardProps) {
   if (isChecking) {
     return (
       <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-8 text-muted-foreground">Checking session...</div>
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary/30 border-t-primary" />
+        </div>
       </div>
     )
   }
