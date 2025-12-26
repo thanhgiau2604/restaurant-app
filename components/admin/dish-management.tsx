@@ -22,12 +22,17 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Plus, Pencil, Trash2, ImageIcon, Upload, X, Search } from "lucide-react"
-import { dishStorage, type Dish } from "@/lib/storage"
+import { type Dish } from "@/lib/storage"
+import { useRestaurantStore } from "@/stores/restaurant-store"
 import Image from "next/image"
 import { toast } from "sonner"
 
 export function DishManagement() {
-  const [dishes, setDishes] = useState<Dish[]>([])
+  const dishes = useRestaurantStore((state) => state.dishes)
+  const loadDishes = useRestaurantStore((state) => state.loadDishes)
+  const addDish = useRestaurantStore((state) => state.addDish)
+  const updateDish = useRestaurantStore((state) => state.updateDish)
+  const deleteDish = useRestaurantStore((state) => state.deleteDish)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingDish, setEditingDish] = useState<Dish | null>(null)
 
@@ -43,8 +48,8 @@ export function DishManagement() {
   })
 
   useEffect(() => {
-    setDishes(dishStorage.getAll())
-  }, [])
+    loadDishes()
+  }, [loadDishes])
 
   const filteredDishes = dishes.filter((dish) => {
     return searchQuery === "" || dish.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -88,7 +93,7 @@ export function DishManagement() {
     e.preventDefault()
 
     if (editingDish) {
-      dishStorage.update(editingDish.id, {
+      updateDish(editingDish.id, {
         name: formData.name,
         price: Number.parseFloat(formData.price),
         category: formData.category,
@@ -96,7 +101,7 @@ export function DishManagement() {
       })
       toast.success('Dish updated successfully')
     } else {
-      dishStorage.add({
+      addDish({
         name: formData.name,
         price: Number.parseFloat(formData.price),
         category: formData.category,
@@ -104,8 +109,6 @@ export function DishManagement() {
       })
       toast.success('Dish added successfully')
     }
-
-    setDishes(dishStorage.getAll())
     resetForm()
   }
 
@@ -122,8 +125,7 @@ export function DishManagement() {
   }
 
   const handleDelete = (id: string) => {
-    dishStorage.delete(id)
-    setDishes(dishStorage.getAll())
+    deleteDish(id)
     toast.success('Dish deleted successfully')
   }
 

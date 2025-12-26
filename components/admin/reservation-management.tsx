@@ -23,7 +23,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Pencil, Trash2, Calendar, Users, Phone, Search, Filter } from "lucide-react"
-import { reservationStorage, type Reservation } from "@/lib/storage"
+import { type Reservation } from "@/lib/storage"
+import { useRestaurantStore } from "@/stores/restaurant-store"
 import { toast } from "sonner"
 
 const statusColors = {
@@ -41,7 +42,10 @@ const statusLabels = {
 }
 
 export function ReservationManagement() {
-  const [reservations, setReservations] = useState<Reservation[]>([])
+  const reservations = useRestaurantStore((state) => state.reservations)
+  const loadReservations = useRestaurantStore((state) => state.loadReservations)
+  const updateReservation = useRestaurantStore((state) => state.updateReservation)
+  const deleteReservation = useRestaurantStore((state) => state.deleteReservation)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingReservation, setEditingReservation] = useState<Reservation | null>(null)
 
@@ -55,8 +59,8 @@ export function ReservationManagement() {
   })
 
   useEffect(() => {
-    setReservations(reservationStorage.getAll())
-  }, [])
+    loadReservations()
+  }, [loadReservations])
 
   const filteredReservations = reservations.filter((reservation) => {
     // Search by name or phone
@@ -93,19 +97,17 @@ export function ReservationManagement() {
     e.preventDefault()
 
     if (editingReservation) {
-      reservationStorage.update(editingReservation.id, {
+      updateReservation(editingReservation.id, {
         status: formData.status as Reservation["status"],
         tableNumber: formData.tableNumber || undefined,
       })
-      setReservations(reservationStorage.getAll())
       toast.success('Reservation updated successfully')
       resetForm()
     }
   }
 
   const handleDelete = (id: string) => {
-    reservationStorage.delete(id)
-    setReservations(reservationStorage.getAll())
+    deleteReservation(id)
     toast.success('Reservation deleted successfully')
   }
 
