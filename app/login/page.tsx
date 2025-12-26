@@ -14,6 +14,8 @@ import { FirebaseError } from "firebase/app"
 import { firebaseAuth } from "@/lib/firebase"
 import { toast } from "sonner"
 
+const SESSION_STARTED_AT_KEY = "admin-session-started-at"
+
 export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -73,6 +75,7 @@ export default function LoginPage() {
 
     try {
       await signInWithEmailAndPassword(firebaseAuth, debouncedEmail, debouncedPassword)
+      localStorage.setItem(SESSION_STARTED_AT_KEY, String(Date.now()))
       toast.success("Login successful", {
         description: "Welcome back, admin!",
       })

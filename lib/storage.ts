@@ -1,5 +1,3 @@
-// In-memory seed data for demo purposes.
-
 export interface Dish {
   id: string
   name: string
