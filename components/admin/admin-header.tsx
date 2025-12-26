@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import { UtensilsCrossed, LogOut, LayoutDashboard, CalendarDays } from "lucide-react"
-import { logout } from "@/lib/admin-auth"
+import { signOut } from "firebase/auth"
+import { firebaseAuth } from "@/lib/firebase"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
@@ -16,11 +17,17 @@ export function AdminHeader({ activePage = "dashboard" }: AdminHeaderProps) {
   const router = useRouter()
 
   const handleLogout = async () => {
-    await logout()
-    toast.success('Logged out',{
-      description: "You have been successfully logged out.",
-    })
-    router.push("/login")
+    try {
+      await signOut(firebaseAuth)
+      toast.success("Logged out", {
+        description: "You have been successfully logged out.",
+      })
+      router.push("/login")
+    } catch (error) {
+      toast.error("Logout failed", {
+        description: "Please try again.",
+      })
+    }
   }
 
   return (

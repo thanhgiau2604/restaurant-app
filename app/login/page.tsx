@@ -9,33 +9,50 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { UtensilsCrossed, Lock, User } from "lucide-react"
-import { login } from "@/lib/admin-auth"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import { FirebaseError } from "firebase/app"
+import { firebaseAuth } from "@/lib/firebase"
 import { toast } from "sonner"
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+
+  const getAuthErrorMessage = (error: unknown) => {
+    if (error instanceof FirebaseError) {
+      switch (error.code) {
+        case "auth/invalid-email":
+          return "Please enter a valid email address."
+        case "auth/user-not-found":
+        case "auth/wrong-password":
+        case "auth/invalid-credential":
+          return "Incorrect email or password."
+        case "auth/too-many-requests":
+          return "Too many attempts. Please try again shortly."
+        default:
+          return "Unable to sign in. Please try again."
+      }
+    }
+
+    return "Unable to sign in. Please try again."
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
     try {
-      const result = await login(username, password)
-      if (result.success) {
-        toast.success('Login successful', {
-          description: "Welcome back, admin!",
-        })
-        router.push("/admin")
-      } else {
-        toast.error('Login failed',{
-          description: result.error || "Invalid credentials",
-        })
-      }
+      await signInWithEmailAndPassword(firebaseAuth, email, password)
+      toast.success("Login successful", {
+        description: "Welcome back, admin!",
+      })
+      router.push("/admin")
     } catch (error) {
-      toast.error('An error occurred. Please try again')
+      toast.error("Login failed", {
+        description: getAuthErrorMessage(error),
+      })
     } finally {
       setIsLoading(false)
     }
@@ -58,17 +75,17 @@ export default function LoginPage() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username" className="text-sm font-medium">
-                Username
+              <Label htmlFor="email" className="text-sm font-medium">
+                Email
               </Label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  id="username"
-                  type="text"
-                  placeholder="Enter username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  id="email"
+                  type="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="pl-10"
                   required
                 />

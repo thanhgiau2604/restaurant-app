@@ -4,6 +4,8 @@ import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Toaster } from "@/components/ui/sonner"
+import FirebaseAnalytics from '@/components/firebase-analytics'
+
 
 const _googleSans = Inter({ subsets: ["vietnamese"] })
 
@@ -39,6 +41,7 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body className={`antialiased ${_googleSans.className}`}>
+        <FirebaseAnalytics />
         {children}
         <Analytics />
         <Toaster richColors />
