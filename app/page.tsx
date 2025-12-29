@@ -1,5 +1,6 @@
 "use client"
 
+import type React from "react"
 import { useState, useEffect } from "react"
 import { Menu, X, UtensilsCrossed, Phone, MapPin, Facebook, Instagram, Twitter, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -7,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
+import { useRestaurantStore } from "@/stores/restaurant-store"
 
 const menuCategories = [
   {
@@ -137,6 +139,16 @@ export default function RestaurantPage() {
   const [activeCategory, setActiveCategory] = useState("appetizers")
   const [scrolled, setScrolled] = useState(false)
   const [heroVisible, setHeroVisible] = useState(false)
+  const addReservation = useRestaurantStore((state) => state.addReservation)
+  const [isSubmittingReservation, setIsSubmittingReservation] = useState(false)
+  const [reservationForm, setReservationForm] = useState({
+    name: "",
+    guests: "",
+    phone: "",
+    date: "",
+    time: "",
+  })
+  const [reservationErrors, setReservationErrors] = useState<Record<string, string>>({})
 
   useEffect(() => {
     const handleScroll = () => {
@@ -156,6 +168,94 @@ export default function RestaurantPage() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
       setMobileMenuOpen(false)
+    }
+  }
+
+  const validateReservation = (data: typeof reservationForm) => {
+    const errors: Record<string, string> = {}
+    const name = data.name.trim()
+    if (!name) {
+      errors.name = "Vui lòng nhập tên của bạn."
+    } else if (name.length < 2) {
+      errors.name = "Tên cần có ít nhất 2 ký tự."
+    }
+
+    const guests = Number.parseInt(data.guests, 10)
+    if (!data.guests) {
+      errors.guests = "Vui lòng nhập số lượng khách."
+    } else if (Number.isNaN(guests) || guests < 1 || guests > 20) {
+      errors.guests = "Số lượng khách phải từ 1 đến 20."
+    }
+
+    const phone = data.phone.trim()
+    const phoneDigits = phone.replace(/\D/g, "")
+    if (!phone) {
+      errors.phone = "Vui lòng nhập số điện thoại."
+    } else if (phoneDigits.length < 8 || phoneDigits.length > 15) {
+      errors.phone = "Số điện thoại không hợp lệ."
+    }
+
+    if (!data.date) {
+      errors.date = "Vui lòng chọn ngày."
+    } else {
+      const selectedDate = new Date(`${data.date}T00:00:00`)
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+      if (Number.isNaN(selectedDate.getTime())) {
+        errors.date = "Ngày không hợp lệ."
+      } else if (selectedDate < today) {
+        errors.date = "Ngày không được trong quá khứ."
+      }
+    }
+
+    if (!data.time) {
+      errors.time = "Vui lòng chọn giờ."
+    } else if (data.date) {
+      const selectedDateTime = new Date(`${data.date}T${data.time}`)
+      if (!Number.isNaN(selectedDateTime.getTime())) {
+        const now = new Date()
+        if (selectedDateTime < now) {
+          errors.time = "Giờ phải lớn hơn thời điểm hiện tại."
+        }
+      }
+    }
+
+    return errors
+  }
+
+  const handleReservationChange = (field: keyof typeof reservationForm, value: string) => {
+    setReservationForm((prev) => ({ ...prev, [field]: value }))
+    if (reservationErrors[field]) {
+      setReservationErrors((prev) => ({ ...prev, [field]: "" }))
+    }
+  }
+
+  const handleReservationSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const errors = validateReservation(reservationForm)
+    if (Object.keys(errors).length > 0) {
+      setReservationErrors(errors)
+      toast.error("Vui lòng kiểm tra lại thông tin đặt bàn.")
+      return
+    }
+
+    setIsSubmittingReservation(true)
+    try {
+      await addReservation({
+        name: reservationForm.name.trim(),
+        phone: reservationForm.phone.trim(),
+        guests: Number.parseInt(reservationForm.guests, 10),
+        date: reservationForm.date,
+        time: reservationForm.time,
+        status: "processing",
+      })
+      setReservationForm({ name: "", guests: "", phone: "", date: "", time: "" })
+      setReservationErrors({})
+      toast.success("Đặt bàn thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.")
+    } catch (error) {
+      toast.error("Không thể đặt bàn. Vui lòng thử lại.")
+    } finally {
+      setIsSubmittingReservation(false)
     }
   }
 
@@ -444,45 +544,87 @@ export default function RestaurantPage() {
             <CardContent className="p-8">
               <form
                 className="space-y-6"
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  toast.success("Đặt bàn thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất")
-                }}
+                onSubmit={handleReservationSubmit}
               >
                 <div className="space-y-2">
                   <Label htmlFor="name">Tên của bạn</Label>
-                  <Input id="name" placeholder="John Doe" required className="h-12" />
+                  <Input
+                    id="name"
+                    placeholder="John Doe"
+                    value={reservationForm.name}
+                    onChange={(e) => handleReservationChange("name", e.target.value)}
+                    className="h-12"
+                    aria-invalid={Boolean(reservationErrors.name)}
+                  />
+                  {reservationErrors.name && <p className="text-sm text-red-500">{reservationErrors.name}</p>}
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="guests">Số lượng khách</Label>
-                    <Input id="guests" type="number" min="1" max="20" placeholder="2" required className="h-12" />
+                    <Input
+                      id="guests"
+                      type="number"
+                      min="1"
+                      max="20"
+                      placeholder="2"
+                      value={reservationForm.guests}
+                      onChange={(e) => handleReservationChange("guests", e.target.value)}
+                      className="h-12"
+                      aria-invalid={Boolean(reservationErrors.guests)}
+                    />
+                    {reservationErrors.guests && <p className="text-sm text-red-500">{reservationErrors.guests}</p>}
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="phone">Số điện thoại</Label>
-                    <Input id="phone" type="tel" placeholder="+1 (555) 123-4567" required className="h-12" />
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="+1 (555) 123-4567"
+                      value={reservationForm.phone}
+                      onChange={(e) => handleReservationChange("phone", e.target.value)}
+                      className="h-12"
+                      aria-invalid={Boolean(reservationErrors.phone)}
+                    />
+                    {reservationErrors.phone && <p className="text-sm text-red-500">{reservationErrors.phone}</p>}
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="date">Ngày</Label>
-                    <Input id="date" type="date" required className="h-12" />
+                    <Input
+                      id="date"
+                      type="date"
+                      value={reservationForm.date}
+                      onChange={(e) => handleReservationChange("date", e.target.value)}
+                      className="h-12"
+                      aria-invalid={Boolean(reservationErrors.date)}
+                    />
+                    {reservationErrors.date && <p className="text-sm text-red-500">{reservationErrors.date}</p>}
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="time">Giờ</Label>
-                    <Input id="time" type="time" required className="h-12" />
+                    <Input
+                      id="time"
+                      type="time"
+                      value={reservationForm.time}
+                      onChange={(e) => handleReservationChange("time", e.target.value)}
+                      className="h-12"
+                      aria-invalid={Boolean(reservationErrors.time)}
+                    />
+                    {reservationErrors.time && <p className="text-sm text-red-500">{reservationErrors.time}</p>}
                   </div>
                 </div>
 
                 <Button
                   type="submit"
+                  disabled={isSubmittingReservation}
                   className="w-full h-12 bg-linear-to-r from-orange-500 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity"
                 >
-                  Xác nhận Đặt bàn
+                  {isSubmittingReservation ? "Đang gửi..." : "Xác nhận Đặt bàn"}
                 </Button>
               </form>
             </CardContent>

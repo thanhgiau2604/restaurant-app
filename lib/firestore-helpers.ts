@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   deleteDoc,
+  deleteField,
   doc,
   getDocs,
   orderBy,
@@ -74,7 +75,21 @@ export async function createReservation(reservation: Omit<Reservation, "id">): P
 
 export async function updateReservationById(id: string, updates: Partial<Omit<Reservation, "id">>) {
   const docRef = doc(firestoreDb, "reservations", id)
-  await updateDoc(docRef, updates)
+  const sanitizedUpdates: Record<string, unknown> = {}
+  for (const [key, value] of Object.entries(updates)) {
+    if (key === "tableNumber") {
+      if (value === undefined || value === "") {
+        sanitizedUpdates.tableNumber = deleteField()
+      } else {
+        sanitizedUpdates.tableNumber = value
+      }
+      continue
+    }
+    if (value !== undefined) {
+      sanitizedUpdates[key] = value
+    }
+  }
+  await updateDoc(docRef, sanitizedUpdates)
 }
 
 export async function deleteReservationById(id: string) {

@@ -53,6 +53,7 @@ export function ReservationManagement() {
   const [isSaving, setIsSaving] = useState(false)
 
   const [searchQuery, setSearchQuery] = useState("")
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("")
   const [filterDate, setFilterDate] = useState("")
   const [filterStatus, setFilterStatus] = useState<string>("all")
 
@@ -66,6 +67,13 @@ export function ReservationManagement() {
   }, [])
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery)
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [searchQuery])
+
+  useEffect(() => {
     if (reservationsError) {
       toast.error("Reservations error", {
         description: reservationsError,
@@ -76,9 +84,9 @@ export function ReservationManagement() {
   const filteredReservations = reservations.filter((reservation) => {
     // Search by name or phone
     const matchesSearch =
-      searchQuery === "" ||
-      reservation.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      reservation.phone.includes(searchQuery)
+      debouncedSearchQuery === "" ||
+      reservation.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+      reservation.phone.includes(debouncedSearchQuery)
 
     // Filter by date
     const matchesDate = filterDate === "" || reservation.date === filterDate
@@ -106,6 +114,10 @@ export function ReservationManagement() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!formData.status) {
+      toast.error("Please select a status before saving.")
+      return
+    }
     setIsSaving(true)
 
     try {
