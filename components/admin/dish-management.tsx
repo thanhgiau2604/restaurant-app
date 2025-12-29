@@ -22,7 +22,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Plus, Pencil, Trash2, ImageIcon, Upload, X, Search } from "lucide-react"
-import { type Dish } from "@/lib/storage"
+import { type Dish } from "@/lib/types"
 import { uploadImage } from "@/lib/cloudinary"
 import { useRestaurantStore } from "@/stores/restaurant-store"
 import Image from "next/image"
@@ -30,6 +30,8 @@ import { toast } from "sonner"
 
 export function DishManagement() {
   const dishes = useRestaurantStore((state) => state.dishes)
+  const isLoadingDishes = useRestaurantStore((state) => state.isLoadingDishes)
+  const dishesError = useRestaurantStore((state) => state.dishesError)
   const loadDishes = useRestaurantStore((state) => state.loadDishes)
   const addDish = useRestaurantStore((state) => state.addDish)
   const updateDish = useRestaurantStore((state) => state.updateDish)
@@ -41,6 +43,7 @@ export function DishManagement() {
 
   const [imagePreview, setImagePreview] = useState<string>("")
   const [isUploading, setIsUploading] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
 
   const [formData, setFormData] = useState({
     name: "",
@@ -51,7 +54,15 @@ export function DishManagement() {
 
   useEffect(() => {
     loadDishes()
-  }, [loadDishes])
+  }, [])
+
+  useEffect(() => {
+    if (dishesError) {
+      toast.error("Dishes error", {
+        description: dishesError,
+      })
+    }
+  }, [dishesError])
 
   const filteredDishes = dishes.filter((dish) => {
     return searchQuery === "" || dish.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -97,27 +108,36 @@ export function DishManagement() {
     setFormData({ ...formData, image: "" })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsSaving(true)
 
-    if (editingDish) {
-      updateDish(editingDish.id, {
-        name: formData.name,
-        price: Number.parseFloat(formData.price),
-        category: formData.category,
-        image: formData.image,
+    try {
+      if (editingDish) {
+        await updateDish(editingDish.id, {
+          name: formData.name,
+          price: Number.parseFloat(formData.price),
+          category: formData.category,
+          image: formData.image,
+        })
+        toast.success("Dish updated successfully")
+      } else {
+        await addDish({
+          name: formData.name,
+          price: Number.parseFloat(formData.price),
+          category: formData.category,
+          image: formData.image,
+        })
+        toast.success("Dish added successfully")
+      }
+      resetForm()
+    } catch (error) {
+      toast.error("Unable to save dish", {
+        description: "Please try again.",
       })
-      toast.success('Dish updated successfully')
-    } else {
-      addDish({
-        name: formData.name,
-        price: Number.parseFloat(formData.price),
-        category: formData.category,
-        image: formData.image,
-      })
-      toast.success('Dish added successfully')
+    } finally {
+      setIsSaving(false)
     }
-    resetForm()
   }
 
   const handleEdit = (dish: Dish) => {
@@ -132,9 +152,15 @@ export function DishManagement() {
     setIsDialogOpen(true)
   }
 
-  const handleDelete = (id: string) => {
-    deleteDish(id)
-    toast.success('Dish deleted successfully')
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteDish(id)
+      toast.success("Dish deleted successfully")
+    } catch (error) {
+      toast.error("Unable to delete dish", {
+        description: "Please try again.",
+      })
+    }
   }
 
   const resetForm = () => {
@@ -261,9 +287,9 @@ export function DishManagement() {
                   <Button
                     type="submit"
                     className="flex-1 bg-linear-to-r from-primary to-secondary text-white"
-                    disabled={isUploading}
+                    disabled={isUploading || isSaving}
                   >
-                    {editingDish ? "Update" : "Add"} Dish
+                    {isSaving ? "Saving..." : `${editingDish ? "Update" : "Add"} Dish`}
                   </Button>
                   <Button type="button" variant="outline" onClick={resetForm}>
                     Cancel
@@ -299,9 +325,11 @@ export function DishManagement() {
               {filteredDishes.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
-                    {searchQuery
-                      ? "No dishes match your search."
-                      : "No dishes found. Add your first dish to get started."}
+                    {isLoadingDishes
+                      ? "Loading dishes..."
+                      : searchQuery
+                        ? "No dishes match your search."
+                        : "No dishes found. Add your first dish to get started."}
                   </TableCell>
                 </TableRow>
               ) : (

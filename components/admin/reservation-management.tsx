@@ -23,7 +23,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Pencil, Trash2, Calendar, Users, Phone, Search, Filter } from "lucide-react"
-import { type Reservation } from "@/lib/storage"
+import { type Reservation } from "@/lib/types"
 import { useRestaurantStore } from "@/stores/restaurant-store"
 import { toast } from "sonner"
 
@@ -43,11 +43,14 @@ const statusLabels = {
 
 export function ReservationManagement() {
   const reservations = useRestaurantStore((state) => state.reservations)
+  const isLoadingReservations = useRestaurantStore((state) => state.isLoadingReservations)
+  const reservationsError = useRestaurantStore((state) => state.reservationsError)
   const loadReservations = useRestaurantStore((state) => state.loadReservations)
   const updateReservation = useRestaurantStore((state) => state.updateReservation)
   const deleteReservation = useRestaurantStore((state) => state.deleteReservation)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingReservation, setEditingReservation] = useState<Reservation | null>(null)
+  const [isSaving, setIsSaving] = useState(false)
 
   const [searchQuery, setSearchQuery] = useState("")
   const [filterDate, setFilterDate] = useState("")
@@ -60,7 +63,15 @@ export function ReservationManagement() {
 
   useEffect(() => {
     loadReservations()
-  }, [loadReservations])
+  }, [])
+
+  useEffect(() => {
+    if (reservationsError) {
+      toast.error("Reservations error", {
+        description: reservationsError,
+      })
+    }
+  }, [reservationsError])
 
   const filteredReservations = reservations.filter((reservation) => {
     // Search by name or phone
@@ -93,22 +104,37 @@ export function ReservationManagement() {
     setIsDialogOpen(true)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsSaving(true)
 
-    if (editingReservation) {
-      updateReservation(editingReservation.id, {
-        status: formData.status as Reservation["status"],
-        tableNumber: formData.tableNumber || undefined,
+    try {
+      if (editingReservation) {
+        await updateReservation(editingReservation.id, {
+          status: formData.status as Reservation["status"],
+          tableNumber: formData.tableNumber || undefined,
+        })
+        toast.success("Reservation updated successfully")
+        resetForm()
+      }
+    } catch (error) {
+      toast.error("Unable to update reservation", {
+        description: "Please try again.",
       })
-      toast.success('Reservation updated successfully')
-      resetForm()
+    } finally {
+      setIsSaving(false)
     }
   }
 
-  const handleDelete = (id: string) => {
-    deleteReservation(id)
-    toast.success('Reservation deleted successfully')
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteReservation(id)
+      toast.success("Reservation deleted successfully")
+    } catch (error) {
+      toast.error("Unable to delete reservation", {
+        description: "Please try again.",
+      })
+    }
   }
 
   const resetForm = () => {
@@ -180,9 +206,11 @@ export function ReservationManagement() {
               {filteredReservations.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
-                    {searchQuery || filterDate || filterStatus !== "all"
-                      ? "No reservations match your search criteria."
-                      : "No reservations found."}
+                    {isLoadingReservations
+                      ? "Loading reservations..."
+                      : searchQuery || filterDate || filterStatus !== "all"
+                        ? "No reservations match your search criteria."
+                        : "No reservations found."}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -281,8 +309,9 @@ export function ReservationManagement() {
                                 <Button
                                   type="submit"
                                   className="flex-1 bg-linear-to-r from-primary to-secondary text-white"
+                                  disabled={isSaving}
                                 >
-                                  Update Reservation
+                                  {isSaving ? "Saving..." : "Update Reservation"}
                                 </Button>
                                 <Button type="button" variant="outline" onClick={resetForm}>
                                   Cancel
