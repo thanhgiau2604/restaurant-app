@@ -170,11 +170,11 @@ export default function RestaurantPage() {
         <nav className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="bg-linear-to-r from-accent to-secondary p-2 rounded-lg">
+              <div className="bg-rose-800 p-2 rounded-lg">
                 <UtensilsCrossed className="h-6 w-6 text-white" />
               </div>
               <span
-                className={`text-2xl font-bold bg-linear-to-r from-accent to-secondary bg-clip-text text-transparent ${!scrolled ? "drop-shadow-lg text-white" : ""}`}
+                className={`text-2xl font-bold text-rose-800 bg-clip-text  ${!scrolled ? "drop-shadow-lg text-white" : ""}`}
               >
                 Flavor House
               </span>
@@ -184,31 +184,31 @@ export default function RestaurantPage() {
             <div className="hidden md:flex items-center gap-8">
               <button
                 onClick={() => scrollToSection("home")}
-                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-hero-accent transition-colors drop-shadow-md font-bold`}
+                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-rose-700 transition-colors drop-shadow-md font-bold`}
               >
                 Trang chủ
               </button>
               <button
                 onClick={() => scrollToSection("about")}
-                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-hero-accent transition-colors  drop-shadow-md font-bold`}
+                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-rose-700 transition-colors  drop-shadow-md font-bold`}
               >
                 Giới thiệu
               </button>
               <button
                 onClick={() => scrollToSection("dishes")}
-                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-hero-accent transition-colors drop-shadow-md font-bold`}
+                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-rose-700 transition-colors drop-shadow-md font-bold`}
               >
                 Thực đơn
               </button>
               <button
                 onClick={() => scrollToSection("reservations")}
-                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-hero-accent transition-colors font-bold drop-shadow-md`}
+                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-rose-700 transition-colors font-bold drop-shadow-md`}
               >
                 Đặt bàn
               </button>
               <button
                 onClick={() => scrollToSection("location")}
-                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-hero-accent transition-colors font-bold drop-shadow-md`}
+                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-rose-700 transition-colors font-bold drop-shadow-md`}
               >
                 Vị trí
               </button>
@@ -308,8 +308,9 @@ export default function RestaurantPage() {
           </p>
           <Button
             size="lg"
+            variant="custom"
             onClick={() => scrollToSection("reservations")}
-            className="bg-linear-to-r from-orange-500 to-purple-600 text-white hover:opacity-90 font-semibold px-8 py-6 text-lg rounded-full shadow-2xl hover:scale-105 transition-transform"
+            className="bg-linear-to-r from-[#fa6689] to-rose-800 text-white font-semibold px-10 py-8 text-2xl rounded-full shadow-2xl hover:scale-105 transition-transform"
           >
             Đặt Bàn Ngay
           </Button>
@@ -317,7 +318,7 @@ export default function RestaurantPage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-background">
+      <section id="about" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="animate-in fade-in slide-in-from-left duration-700">
@@ -326,7 +327,7 @@ export default function RestaurantPage() {
               </div>
             </div>
             <div className="animate-in fade-in slide-in-from-right duration-700">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-rose-700">
                 Giới Thiệu Quán
               </h2>
               <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
@@ -337,19 +338,19 @@ export default function RestaurantPage() {
               </p>
               <div className="flex gap-8">
                 <div className="text-center">
-                  <div className="text-4xl font-bold bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  <div className="text-4xl font-bold bg-linear-to-r from-orange-500 via-rose-700 to-purple-500 bg-clip-text text-transparent">
                     500+
                   </div>
                   <div className="text-sm text-muted-foreground">Khách hàng hài lòng</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  <div className="text-4xl font-bold bg-linear-to-r from-orange-500 via-rose-700 to-purple-500 bg-clip-text text-transparent">
                     50+
                   </div>
                   <div className="text-sm text-muted-foreground">Món ăn đặc trưng</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  <div className="text-4xl font-bold bg-linear-to-r ffrom-orange-500 via-rose-700 to-purple-500 bg-clip-text text-transparent">
                     4.9
                   </div>
                   <div className="text-sm text-muted-foreground">Đánh giá trung bình</div>
@@ -361,10 +362,10 @@ export default function RestaurantPage() {
       </section>
 
       {/* Dishes Section */}
-      <section id="dishes" className="py-20 bg-linear-to-br from-orange-50 via-purple-50 to-rose-50">
+      <section id="dishes" className="py-20 bg-linear-to-br from-orange-50 to-purple-100 via-rose-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-rose-700">
               Thực đơn
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -383,13 +384,14 @@ export default function RestaurantPage() {
                 ))
               : categories.map((category) => (
                   <Button
+
                     key={category.id}
                     onClick={() => setActiveCategory(category.id)}
-                    variant={activeCategory === category.id ? "default" : "outline"}
+                    variant={activeCategory === category.id ? "custom" : "outline"}
                     className={`rounded-full px-6 transition-all duration-300 ${
                       activeCategory === category.id
-                        ? "bg-linear-to-r from-orange-500 to-purple-600 text-white shadow-lg scale-105"
-                        : "hover:scale-105 hover:border-orange-400"
+                        ? "bg-linear-to-br bg-rose-700/50 from-rose-700/40 to-rose-800/80 text-white shadow-lg scale-105"
+                        : "hover:scale-105 hover:border-rose-400"
                     }`}
                   >
                     {category.name}
@@ -447,10 +449,10 @@ export default function RestaurantPage() {
       </section>
 
       {/* Reservations Section */}
-      <section id="reservations" className="py-20 bg-background">
+      <section id="reservations" className="py-20 bg-white">
         <div className="container mx-auto px-4 max-w-2xl">
           <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-rose-700">
               Đặt Bàn
             </h2>
             <p className="text-lg text-muted-foreground">
@@ -539,8 +541,9 @@ export default function RestaurantPage() {
 
                 <Button
                   type="submit"
+                  variant="default"
                   disabled={isSubmittingReservation}
-                  className="w-full h-12 bg-linear-to-r from-orange-500 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity"
+                  className="w-full h-12 bg-rose-800/80 text-white font-semibold hover:opacity-90 transition-opacity hover:text-white hover:bg-rose-800/80"
                 >
                   {isSubmittingReservation ? "Đang gửi..." : "Xác nhận Đặt bàn"}
                 </Button>
@@ -551,10 +554,10 @@ export default function RestaurantPage() {
       </section>
 
       {/* Location Section */}
-      <section id="location" className="py-20 bg-linear-to-br from-orange-50 via-purple-50 to-rose-50">
+      <section id="location" className="py-20 bg-linear-to-br from-orange-50 to-purple-100 via-rose-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-rose-700">
               Vị trí quán
             </h2>
             <p className="text-lg text-muted-foreground">Hãy đến và trải nghiệm hương vị tại địa điểm của chúng tôi</p>
@@ -579,11 +582,13 @@ export default function RestaurantPage() {
             <Card className="shadow-xl animate-in fade-in slide-in-from-right duration-700">
               <CardContent className="p-8 space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="bg-linear-to-r from-orange-500 to-amber-500 p-3 rounded-lg">
+                  <div className="bg-linear-to-br from-rose-600 to-orange-800 p-3 rounded-lg shadow-lg">
                     <MapPin className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">Địa chỉ</h3>
+                    <h3 className="font-semibold text-lg mb-1 text-rose-700">
+                      Địa chỉ
+                    </h3>
                     <p className="text-muted-foreground leading-relaxed">
                       123 Culinary Street
                       <br />
@@ -593,21 +598,25 @@ export default function RestaurantPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-linear-to-r from-orange-500 to-amber-500 p-3 rounded-lg">
+                  <div className="bg-linear-to-br from-rose-600 to-orange-800 p-3 rounded-lg shadow-lg">
                     <Phone className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">Số điện thoại</h3>
+                    <h3 className="font-semibold text-lg mb-1 text-rose-700">
+                      Số điện thoại
+                    </h3>
                     <p className="text-muted-foreground">+84 384 273 44</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-linear-to-r from-orange-500 to-amber-500 p-3 rounded-lg">
+                  <div className="bg-linear-to-br from-rose-600 to-orange-800 p-3 rounded-lg shadow-lg">
                     <Clock className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">Giờ hoạt động</h3>
+                    <h3 className="font-semibold text-lg mb-1 text-rose-700">
+                      Giờ hoạt động
+                    </h3>
                     <div className="text-muted-foreground">
                       <div className="flex justify-between gap-2">
                         <span>Thứ 2 - Thứ 6</span>
@@ -627,7 +636,7 @@ export default function RestaurantPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-linear-to-br from-orange-900/90 via-rose-900/90 to-purple-950/90 text-white py-12">
+      <footer className="bg-linear-to-br from-orange-900/90 via-rose-900/80 to-purple-900/80 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
