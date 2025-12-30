@@ -3,6 +3,9 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
+import { Controller, useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -33,6 +36,10 @@ export function DishManagement() {
   const isLoadingDishes = useRestaurantStore((state) => state.isLoadingDishes)
   const dishesError = useRestaurantStore((state) => state.dishesError)
   const loadDishes = useRestaurantStore((state) => state.loadDishes)
+  const categories = useRestaurantStore((state) => state.categories)
+  const isLoadingCategories = useRestaurantStore((state) => state.isLoadingCategories)
+  const categoriesError = useRestaurantStore((state) => state.categoriesError)
+  const loadCategories = useRestaurantStore((state) => state.loadCategories)
   const addDish = useRestaurantStore((state) => state.addDish)
   const updateDish = useRestaurantStore((state) => state.updateDish)
   const deleteDish = useRestaurantStore((state) => state.deleteDish)
@@ -43,17 +50,55 @@ export function DishManagement() {
 
   const [imagePreview, setImagePreview] = useState<string>("")
   const [isUploading, setIsUploading] = useState(false)
-  const [isSaving, setIsSaving] = useState(false)
 
-  const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    category: "",
-    image: "",
+  const formatVnd = (value: string) => {
+    const digits = value.replace(/\D/g, "")
+    if (!digits) {
+      return ""
+    }
+    return new Intl.NumberFormat("vi-VN").format(Number(digits))
+  }
+
+  const parsePrice = (value: string) => {
+    const digits = value.replace(/\D/g, "")
+    if (!digits) {
+      return Number.NaN
+    }
+    return Number.parseInt(digits, 10)
+  }
+
+  const formSchema = z.object({
+    name: z.string().min(1, "Dish name is required."),
+    price: z
+      .string()
+      .min(1, "Price is required.")
+      .refine((value) => !Number.isNaN(parsePrice(value)), "Please enter a valid price."),
+    category: z.string().min(1, "Category is required."),
+    image: z.string().optional().or(z.literal("")),
+  })
+
+  type FormValues = z.infer<typeof formSchema>
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    reset,
+    formState: { errors, isSubmitting, isDirty },
+  } = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      price: "",
+      category: "",
+      image: "",
+    },
   })
 
   useEffect(() => {
     loadDishes()
+    loadCategories()
   }, [])
 
   useEffect(() => {
@@ -64,9 +109,21 @@ export function DishManagement() {
     }
   }, [dishesError])
 
+  useEffect(() => {
+    if (categoriesError) {
+      toast.error("Categories error", {
+        description: categoriesError,
+      })
+    }
+  }, [categoriesError])
+
   const filteredDishes = dishes.filter((dish) => {
     return searchQuery === "" || dish.name.toLowerCase().includes(searchQuery.toLowerCase())
   })
+
+  const categoryNameById = (categoryId: string) => {
+    return categories.find((category) => category.id === categoryId)?.name ?? "Unknown"
+  }
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -91,7 +148,7 @@ export function DishManagement() {
       try {
         const imageUrl = await uploadImage(file)
         setImagePreview(imageUrl)
-        setFormData({ ...formData, image: imageUrl })
+        setValue("image", imageUrl, { shouldValidate: true, shouldDirty: true })
         toast.success("Image uploaded")
       } catch (error) {
         toast.error("Image upload failed", {
@@ -105,28 +162,26 @@ export function DishManagement() {
 
   const handleClearImage = () => {
     setImagePreview("")
-    setFormData({ ...formData, image: "" })
+    setValue("image", "", { shouldValidate: true, shouldDirty: true })
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSaving(true)
-
+  const onSubmit = async (values: FormValues) => {
+    const parsedPrice = parsePrice(values.price)
     try {
       if (editingDish) {
         await updateDish(editingDish.id, {
-          name: formData.name,
-          price: Number.parseFloat(formData.price),
-          category: formData.category,
-          image: formData.image,
+          name: values.name,
+          price: parsedPrice,
+          category: values.category,
+          image: values.image || "",
         })
         toast.success("Dish updated successfully")
       } else {
         await addDish({
-          name: formData.name,
-          price: Number.parseFloat(formData.price),
-          category: formData.category,
-          image: formData.image,
+          name: values.name,
+          price: parsedPrice,
+          category: values.category,
+          image: values.image || "",
         })
         toast.success("Dish added successfully")
       }
@@ -135,16 +190,14 @@ export function DishManagement() {
       toast.error("Unable to save dish", {
         description: "Please try again.",
       })
-    } finally {
-      setIsSaving(false)
     }
   }
 
   const handleEdit = (dish: Dish) => {
     setEditingDish(dish)
-    setFormData({
+    reset({
       name: dish.name,
-      price: dish.price.toString(),
+      price: formatVnd(dish.price.toString()),
       category: dish.category,
       image: dish.image,
     })
@@ -164,7 +217,7 @@ export function DishManagement() {
   }
 
   const resetForm = () => {
-    setFormData({ name: "", price: "", category: "", image: "" })
+    reset({ name: "", price: "", category: "", image: "" })
     setEditingDish(null)
     setImagePreview("")
     setIsDialogOpen(false)
@@ -192,46 +245,67 @@ export function DishManagement() {
               <DialogHeader>
                 <DialogTitle>{editingDish ? "Edit Dish" : "Add New Dish"}</DialogTitle>
               </DialogHeader>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Dish Name</Label>
                   <Input
                     id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    {...register("name")}
                     placeholder="e.g., Grilled Salmon"
                     required
                   />
+                  {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="price">Price</Label>
-                  <Input
-                    id="price"
-                    type="number"
-                    step="0.01"
-                    value={formData.price}
-                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                    placeholder="0.00"
-                    required
+                  <Label htmlFor="price">Price (VND)</Label>
+                  <Controller
+                    control={control}
+                    name="price"
+                    render={({ field }) => (
+                      <Input
+                        id="price"
+                        type="text"
+                        inputMode="numeric"
+                        value={field.value}
+                        onChange={(e) => field.onChange(formatVnd(e.target.value))}
+                        placeholder="0"
+                        required
+                      />
+                    )}
                   />
+                  {errors.price && <p className="text-sm text-red-500">{errors.price.message}</p>}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
-                  <Select
-                    value={formData.category}
-                    onValueChange={(value) => setFormData({ ...formData, category: value })}
-                    required
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Appetizers">Appetizers</SelectItem>
-                      <SelectItem value="Main Course">Main Course</SelectItem>
-                      <SelectItem value="Desserts">Desserts</SelectItem>
-                      <SelectItem value="Beverages">Beverages</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Controller
+                    control={control}
+                    name="category"
+                    render={({ field }) => (
+                      <Select value={field.value} onValueChange={field.onChange} required>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {isLoadingCategories ? (
+                            <SelectItem value="loading" disabled>
+                              Loading categories...
+                            </SelectItem>
+                          ) : categories.length === 0 ? (
+                            <SelectItem value="empty" disabled>
+                              No categories available
+                            </SelectItem>
+                          ) : (
+                            categories.map((category) => (
+                              <SelectItem key={category.id} value={category.id}>
+                                {category.name}
+                              </SelectItem>
+                            ))
+                          )}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                  {errors.category && <p className="text-sm text-red-500">{errors.category.message}</p>}
                 </div>
 
                 <div className="space-y-2">
@@ -287,9 +361,9 @@ export function DishManagement() {
                   <Button
                     type="submit"
                     className="flex-1 bg-linear-to-r from-primary to-secondary text-white"
-                    disabled={isUploading || isSaving}
+                    disabled={isUploading || isSubmitting || !isDirty}
                   >
-                    {isSaving ? "Saving..." : `${editingDish ? "Update" : "Add"} Dish`}
+                    {isSubmitting ? "Saving..." : `${editingDish ? "Update" : "Add"} Dish`}
                   </Button>
                   <Button type="button" variant="outline" onClick={resetForm}>
                     Cancel
@@ -347,8 +421,8 @@ export function DishManagement() {
                       </div>
                     </TableCell>
                     <TableCell className="font-medium">{dish.name}</TableCell>
-                    <TableCell>{dish.category}</TableCell>
-                    <TableCell>${dish.price.toFixed(2)}</TableCell>
+                    <TableCell>{categoryNameById(dish.category)}</TableCell>
+                    <TableCell>{formatVnd(dish.price.toString())}đ</TableCell>
                     <TableCell className="text-right">
                       <div className="flex gap-2 justify-end">
                         <Button variant="outline" size="sm" onClick={() => handleEdit(dish)} className="gap-1">

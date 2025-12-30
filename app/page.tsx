@@ -10,136 +10,19 @@ import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
 import { useRestaurantStore } from "@/stores/restaurant-store"
 
-const menuCategories = [
-  {
-    id: "appetizers",
-    name: "Khai vị",
-    dishes: [
-      {
-        name: "Chả giò",
-        description: "Cuốn rau củ chiên giòn ăn kèm sốt ớt ngọt",
-        price: "$8.99",
-        image: "/crispy-spring-rolls-with-vegetables.jpg",
-      },
-      {
-        name: "Bánh mì nướng cà chua",
-        description: "Bánh mì nướng phủ cà chua và húng quế",
-        price: "$9.99",
-        image: "/tomato-basil-bruschetta.png",
-      },
-      {
-        name: "Mực chiên",
-        description: "Chiên giòn nhẹ, ăn kèm sốt marinara",
-        price: "$12.99",
-        image: "/fried-calamari-rings.jpg",
-      },
-      {
-        name: "Đĩa cánh gà",
-        description: "Vị Buffalo, BBQ hoặc tỏi mật ong",
-        price: "$11.99",
-        image: "/buffalo-chicken-wings-platter.jpg",
-      },
-    ],
-  },
-  {
-    id: "mains",
-    name: "Món chính",
-    dishes: [
-      {
-        name: "Cá hồi nướng",
-        description: "Ăn kèm rau củ nướng và bơ chanh",
-        price: "$24.99",
-        image: "/grilled-salmon-with-vegetables.jpg",
-      },
-      {
-        name: "Burger bò",
-        description: "Bò Angus với phô mai và sốt đặc biệt",
-        price: "$16.99",
-        image: "/gourmet-beef-burger-with-cheese.jpg",
-      },
-      {
-        name: "Mì Ý Carbonara",
-        description: "Sốt kem béo với thịt xông khói và phô mai parmesan",
-        price: "$18.99",
-        image: "/creamy-pasta-carbonara.png",
-      },
-      {
-        name: "Gà Teriyaki",
-        description: "Gà nướng phủ sốt teriyaki",
-        price: "$19.99",
-        image: "/chicken-teriyaki-with-rice.jpg",
-      },
-    ],
-  },
-  {
-    id: "beverages",
-    name: "Thức uống",
-    dishes: [
-      {
-        name: "Nước chanh tươi",
-        description: "Pha chế tại quán với lá bạc hà",
-        price: "$4.99",
-        image: "/fresh-mint-lemonade.png",
-      },
-      {
-        name: "Bia thủ công",
-        description: "Tuyển chọn các loại bia địa phương",
-        price: "$6.99",
-        image: "/craft-beer-glass.jpg",
-      },
-      {
-        name: "Rượu vang nhà",
-        description: "Vang đỏ hoặc vang trắng",
-        price: "$8.99",
-        image: "/wine-glass-red-and-white.jpg",
-      },
-      {
-        name: "Cocktail đặc biệt",
-        description: "Vui lòng hỏi nhân viên phục vụ",
-        price: "$12.99",
-        image: "/colorful-cocktail-drinks.jpg",
-      },
-    ],
-  },
-  {
-    id: "desserts",
-    name: "Tráng miệng",
-    dishes: [
-      {
-        name: "Bánh chocolate tan chảy",
-        description: "Bánh nóng ăn kèm kem vani",
-        price: "$8.99",
-        image: "/chocolate-lava-cake.png",
-      },
-      {
-        name: "Tiramisu",
-        description: "Món tráng miệng Ý cổ điển",
-        price: "$9.99",
-        image: "/tiramisu-italian-dessert.jpg",
-      },
-      {
-        name: "Bánh phô mai",
-        description: "Phong cách New York với sốt berry",
-        price: "$8.99",
-        image: "/cheesecake-with-berries.png",
-      },
-      {
-        name: "Bộ ba kem",
-        description: "Ba viên kem tùy chọn",
-        price: "$6.99",
-        image: "/three-scoops-ice-cream.jpg",
-      },
-    ],
-  },
-];
-
 
 export default function RestaurantPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeCategory, setActiveCategory] = useState("appetizers")
+  const [activeCategory, setActiveCategory] = useState("")
   const [scrolled, setScrolled] = useState(false)
   const [heroVisible, setHeroVisible] = useState(false)
   const addReservation = useRestaurantStore((state) => state.addReservation)
+  const dishes = useRestaurantStore((state) => state.dishes)
+  const categories = useRestaurantStore((state) => state.categories)
+  const loadDishes = useRestaurantStore((state) => state.loadDishes)
+  const loadCategories = useRestaurantStore((state) => state.loadCategories)
+  const isLoadingDishes = useRestaurantStore((state) => state.isLoadingDishes)
+  const isLoadingCategories = useRestaurantStore((state) => state.isLoadingCategories)
   const [isSubmittingReservation, setIsSubmittingReservation] = useState(false)
   const [reservationForm, setReservationForm] = useState({
     name: "",
@@ -162,6 +45,17 @@ export default function RestaurantPage() {
     const timer = setTimeout(() => setHeroVisible(true), 100)
     return () => clearTimeout(timer)
   }, [])
+
+  useEffect(() => {
+    loadDishes()
+    loadCategories()
+  }, [])
+
+  useEffect(() => {
+    if (!activeCategory && categories.length > 0) {
+      setActiveCategory(categories[0].id)
+    }
+  }, [activeCategory, categories])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -230,6 +124,14 @@ export default function RestaurantPage() {
     }
   }
 
+  const formatVnd = (value: number) => {
+    return new Intl.NumberFormat("vi-VN").format(value)
+  }
+
+  const filteredDishes = activeCategory
+    ? dishes.filter((dish) => dish.category === activeCategory)
+    : dishes
+
   const handleReservationSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const errors = validateReservation(reservationForm)
@@ -272,7 +174,7 @@ export default function RestaurantPage() {
                 <UtensilsCrossed className="h-6 w-6 text-white" />
               </div>
               <span
-                className={`text-2xl font-bold bg-linear-to-r from-accent to-secondary bg-clip-text text-transparent ${!scrolled ? "drop-shadow-lg" : ""}`}
+                className={`text-2xl font-bold bg-linear-to-r from-accent to-secondary bg-clip-text text-transparent ${!scrolled ? "drop-shadow-lg text-white" : ""}`}
               >
                 Flavor House
               </span>
@@ -282,31 +184,31 @@ export default function RestaurantPage() {
             <div className="hidden md:flex items-center gap-8">
               <button
                 onClick={() => scrollToSection("home")}
-                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-accent transition-colors font-medium drop-shadow-md`}
+                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-hero-accent transition-colors drop-shadow-md font-bold`}
               >
                 Trang chủ
               </button>
               <button
                 onClick={() => scrollToSection("about")}
-                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-accent transition-colors font-medium drop-shadow-md`}
+                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-hero-accent transition-colors  drop-shadow-md font-bold`}
               >
                 Giới thiệu
               </button>
               <button
                 onClick={() => scrollToSection("dishes")}
-                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-accent transition-colors font-medium drop-shadow-md`}
+                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-hero-accent transition-colors drop-shadow-md font-bold`}
               >
                 Thực đơn
               </button>
               <button
                 onClick={() => scrollToSection("reservations")}
-                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-accent transition-colors font-medium drop-shadow-md`}
+                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-hero-accent transition-colors font-bold drop-shadow-md`}
               >
                 Đặt bàn
               </button>
               <button
                 onClick={() => scrollToSection("location")}
-                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-accent transition-colors font-medium drop-shadow-md`}
+                className={`${scrolled ? "text-foreground" : "text-white"} hover:text-hero-accent transition-colors font-bold drop-shadow-md`}
               >
                 Vị trí
               </button>
@@ -472,36 +374,52 @@ export default function RestaurantPage() {
 
           {/* Category Tabs */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {menuCategories.map((category) => (
-              <Button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                variant={activeCategory === category.id ? "default" : "outline"}
-                className={`rounded-full px-6 transition-all duration-300 ${
-                  activeCategory === category.id
-                    ? "bg-linear-to-r from-orange-500 to-purple-600 text-white shadow-lg scale-105"
-                    : "hover:scale-105 hover:border-orange-400"
-                }`}
-              >
-                {category.name}
-              </Button>
-            ))}
+            {isLoadingCategories
+              ? Array.from({ length: 4 }).map((_, index) => (
+                  <div
+                    key={`category-skeleton-${index}`}
+                    className="h-10 w-28 rounded-full bg-white/70 animate-pulse shadow-sm"
+                  />
+                ))
+              : categories.map((category) => (
+                  <Button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.id)}
+                    variant={activeCategory === category.id ? "default" : "outline"}
+                    className={`rounded-full px-6 transition-all duration-300 ${
+                      activeCategory === category.id
+                        ? "bg-linear-to-r from-orange-500 to-purple-600 text-white shadow-lg scale-105"
+                        : "hover:scale-105 hover:border-orange-400"
+                    }`}
+                  >
+                    {category.name}
+                  </Button>
+                ))}
           </div>
 
           {/* Dishes Grid with smooth transition */}
-          <div className="relative min-h-150">
-            {menuCategories.map((category) => (
-              <div
-                key={category.id}
-                className={`grid sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-500 ${
-                  activeCategory === category.id
-                    ? "opacity-100 relative"
-                    : "opacity-0 absolute inset-0 pointer-events-none"
-                }`}
-              >
-                {category.dishes.map((dish, index) => (
+          <div className="relative min-h-100">
+            {isLoadingDishes || isLoadingCategories ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <Card key={`dish-skeleton-${index}`} className="border-2 border-transparent">
+                    <div className="h-48 bg-white/70 animate-pulse" />
+                    <CardContent className="p-5 space-y-3">
+                      <div className="h-5 w-2/3 bg-muted/70 animate-pulse rounded" />
+                      <div className="h-4 w-full bg-muted/50 animate-pulse rounded" />
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : categories.length === 0 ? (
+              <div className="text-center text-muted-foreground py-12">Chưa có danh mục nào.</div>
+            ) : filteredDishes.length === 0 ? (
+              <div className="text-center text-muted-foreground py-12">Chưa có món ăn trong danh mục này.</div>
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-500">
+                {filteredDishes.map((dish) => (
                   <Card
-                    key={index}
+                    key={dish.id}
                     className="hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-orange-400 overflow-hidden group"
                   >
                     <div className="relative h-48 overflow-hidden">
@@ -512,18 +430,18 @@ export default function RestaurantPage() {
                       />
                       <div className="absolute top-2 right-2 bg-white px-3 py-1 rounded-full shadow-lg">
                         <span className="text-lg font-bold bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-                          {dish.price}
+                          {formatVnd(dish.price)} VND
                         </span>
                       </div>
                     </div>
                     <CardContent className="p-5">
                       <h3 className="text-xl font-bold mb-2">{dish.name}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{dish.description}</p>
+                      <p className="text-muted-foreground leading-relaxed">Món ăn đặc trưng của nhà hàng.</p>
                     </CardContent>
                   </Card>
                 ))}
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>

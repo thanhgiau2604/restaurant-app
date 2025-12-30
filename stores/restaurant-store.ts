@@ -1,12 +1,13 @@
 "use client"
 
 import { create } from "zustand"
-import { type Dish, type Reservation } from "@/lib/types"
+import { type Category, type Dish, type Reservation } from "@/lib/types"
 import {
   createDish,
   createReservation,
   deleteDishById,
   deleteReservationById,
+  fetchCategories,
   fetchDishes,
   fetchReservations,
   updateDishById,
@@ -15,12 +16,16 @@ import {
 
 type RestaurantState = {
   dishes: Dish[]
+  categories: Category[]
   reservations: Reservation[]
   isLoadingDishes: boolean
+  isLoadingCategories: boolean
   isLoadingReservations: boolean
   dishesError: string | null
+  categoriesError: string | null
   reservationsError: string | null
   loadDishes: () => Promise<void>
+  loadCategories: () => Promise<void>
   loadReservations: () => Promise<void>
   addDish: (dish: Omit<Dish, "id">) => Promise<void>
   updateDish: (id: string, dish: Partial<Dish>) => Promise<void>
@@ -32,10 +37,13 @@ type RestaurantState = {
 
 export const useRestaurantStore = create<RestaurantState>((set) => ({
   dishes: [],
+  categories: [],
   reservations: [],
   isLoadingDishes: false,
+  isLoadingCategories: false,
   isLoadingReservations: false,
   dishesError: null,
+  categoriesError: null,
   reservationsError: null,
   loadDishes: async () => {
     set({ isLoadingDishes: true, dishesError: null })
@@ -46,6 +54,17 @@ export const useRestaurantStore = create<RestaurantState>((set) => ({
       set({ dishesError: "Unable to load dishes." })
     } finally {
       set({ isLoadingDishes: false })
+    }
+  },
+  loadCategories: async () => {
+    set({ isLoadingCategories: true, categoriesError: null })
+    try {
+      const categories = await fetchCategories()
+      set({ categories })
+    } catch (error) {
+      set({ categoriesError: "Unable to load categories." })
+    } finally {
+      set({ isLoadingCategories: false })
     }
   },
   loadReservations: async () => {

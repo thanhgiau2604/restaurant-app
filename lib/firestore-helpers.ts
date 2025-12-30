@@ -4,6 +4,7 @@ import {
   deleteDoc,
   deleteField,
   doc,
+  documentId,
   getDocs,
   orderBy,
   query,
@@ -11,10 +12,11 @@ import {
   updateDoc,
 } from "firebase/firestore"
 import { firestoreDb } from "@/lib/firebase"
-import { type Dish, type Reservation } from "@/lib/types"
+import { type Category, type Dish, type Reservation } from "@/lib/types"
 
 const dishesCollection = collection(firestoreDb, "dishes")
 const reservationsCollection = collection(firestoreDb, "reservations")
+const categoriesCollection = collection(firestoreDb, "categories")
 
 export async function fetchDishes(): Promise<Dish[]> {
   const snapshot = await getDocs(query(dishesCollection, orderBy("name", "asc")))
@@ -46,6 +48,17 @@ export async function updateDishById(id: string, updates: Partial<Omit<Dish, "id
 export async function deleteDishById(id: string) {
   const docRef = doc(firestoreDb, "dishes", id)
   await deleteDoc(docRef)
+}
+
+export async function fetchCategories(): Promise<Category[]> {
+  const snapshot = await getDocs(query(categoriesCollection, orderBy(documentId(), "asc")))
+  return snapshot.docs.map((docSnapshot) => {
+    const data = docSnapshot.data() as Omit<Category, "id">
+    return {
+      id: docSnapshot.id,
+      name: data.name ?? "",
+    }
+  })
 }
 
 export async function fetchReservations(): Promise<Reservation[]> {

@@ -6,6 +6,11 @@ export interface Dish {
   image: string
 }
 
+export interface Category {
+  id: string
+  name: string
+}
+
 export interface Reservation {
   id: string
   name: string
