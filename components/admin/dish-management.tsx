@@ -236,7 +236,7 @@ export function DishManagement() {
             }}
           >
             <DialogTrigger asChild>
-              <Button className="bg-linear-to-r from-primary to-secondary text-white gap-2">
+              <Button className="bg-linear-to-r from-primary to-secondary text-white gap-2 hover:opacity-90">
                 <Plus className="h-4 w-4" />
                 Add Dish
               </Button>
@@ -288,7 +288,7 @@ export function DishManagement() {
                         <SelectContent>
                           {isLoadingCategories ? (
                             <SelectItem value="loading" disabled>
-                              Loading categories...
+                              Loading...
                             </SelectItem>
                           ) : categories.length === 0 ? (
                             <SelectItem value="empty" disabled>
@@ -360,7 +360,7 @@ export function DishManagement() {
                 <div className="flex gap-2 pt-4">
                   <Button
                     type="submit"
-                    className="flex-1 bg-linear-to-r from-primary to-secondary text-white"
+                    className="flex-1 bg-linear-to-r from-primary to-secondary text-white hover:opacity-90"
                     disabled={isUploading || isSubmitting || !isDirty}
                   >
                     {isSubmitting ? "Saving..." : `${editingDish ? "Update" : "Add"} Dish`}
