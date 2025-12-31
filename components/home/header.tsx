@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { Menu, X } from "lucide-react"
-import AppLogo from "@/components/common/logo"
+import { Menu, X } from 'lucide-react'
+import AppLogo from '@/components/common/logo'
 
 type HeaderProps = {
   scrolled: boolean
@@ -18,82 +18,82 @@ export default function HomeHeader({
 }: HeaderProps) {
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-sm shadow-lg" : "bg-transparent"}`}
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/95 shadow-lg backdrop-blur-sm' : 'bg-transparent'}`}
     >
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <AppLogo width={150} height="auto" type={scrolled ? "primary" : "secondary"} />
+            <AppLogo width={150} height="auto" type={scrolled ? 'primary' : 'secondary'} />
           </div>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden items-center gap-8 md:flex">
             <button
-              onClick={() => onNavigate("home")}
-              className={`${scrolled ? "text-foreground" : "text-white"} hover:text-rose-700 transition-colors drop-shadow-md font-bold`}
+              onClick={() => onNavigate('home')}
+              className={`${scrolled ? 'text-foreground' : 'text-white'} font-bold drop-shadow-md transition-colors hover:text-rose-700`}
             >
               Trang chủ
             </button>
             <button
-              onClick={() => onNavigate("about")}
-              className={`${scrolled ? "text-foreground" : "text-white"} hover:text-rose-700 transition-colors  drop-shadow-md font-bold`}
+              onClick={() => onNavigate('about')}
+              className={`${scrolled ? 'text-foreground' : 'text-white'} font-bold drop-shadow-md transition-colors hover:text-rose-700`}
             >
               Giới thiệu
             </button>
             <button
-              onClick={() => onNavigate("dishes")}
-              className={`${scrolled ? "text-foreground" : "text-white"} hover:text-rose-700 transition-colors drop-shadow-md font-bold`}
+              onClick={() => onNavigate('menu')}
+              className={`${scrolled ? 'text-foreground' : 'text-white'} font-bold drop-shadow-md transition-colors hover:text-rose-700`}
             >
               Thực đơn
             </button>
             <button
-              onClick={() => onNavigate("reservations")}
-              className={`${scrolled ? "text-foreground" : "text-white"} hover:text-rose-700 transition-colors font-bold drop-shadow-md`}
+              onClick={() => onNavigate('reservations')}
+              className={`${scrolled ? 'text-foreground' : 'text-white'} font-bold drop-shadow-md transition-colors hover:text-rose-700`}
             >
               Đặt bàn
             </button>
             <button
-              onClick={() => onNavigate("location")}
-              className={`${scrolled ? "text-foreground" : "text-white"} hover:text-rose-700 transition-colors font-bold drop-shadow-md`}
+              onClick={() => onNavigate('location')}
+              className={`${scrolled ? 'text-foreground' : 'text-white'} font-bold drop-shadow-md transition-colors hover:text-rose-700`}
             >
               Vị trí
             </button>
           </div>
 
-          <button className="md:hidden p-2" onClick={onToggleMobileMenu} aria-label="Toggle menu">
+          <button className="p-2 md:hidden" onClick={onToggleMobileMenu} aria-label="Toggle menu">
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-background/98 backdrop-blur-lg shadow-xl border-t border-border animate-in slide-in-from-top-5">
-            <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
+          <div className="bg-background/98 border-border animate-in slide-in-from-top-5 absolute top-full right-0 left-0 border-t shadow-xl backdrop-blur-lg md:hidden">
+            <div className="container mx-auto flex flex-col gap-4 px-4 py-6">
               <button
-                onClick={() => onNavigate("home")}
-                className="text-left py-2 text-foreground hover:text-accent transition-colors font-medium"
+                onClick={() => onNavigate('home')}
+                className="text-foreground hover:text-accent py-2 text-left font-medium transition-colors"
               >
                 Trang chủ
               </button>
               <button
-                onClick={() => onNavigate("about")}
-                className="text-left py-2 text-foreground hover:text-accent transition-colors font-medium"
+                onClick={() => onNavigate('about')}
+                className="text-foreground hover:text-accent py-2 text-left font-medium transition-colors"
               >
                 Giới thiệu
               </button>
               <button
-                onClick={() => onNavigate("dishes")}
-                className="text-left py-2 text-foreground hover:text-accent transition-colors font-medium"
+                onClick={() => onNavigate('menu')}
+                className="text-foreground hover:text-accent py-2 text-left font-medium transition-colors"
               >
                 Món ăn
               </button>
               <button
-                onClick={() => onNavigate("reservations")}
-                className="text-left py-2 text-foreground hover:text-accent transition-colors font-medium"
+                onClick={() => onNavigate('reservations')}
+                className="text-foreground hover:text-accent py-2 text-left font-medium transition-colors"
               >
                 Đặt bàn
               </button>
               <button
-                onClick={() => onNavigate("location")}
-                className="text-left py-2 text-foreground hover:text-accent transition-colors font-medium"
+                onClick={() => onNavigate('location')}
+                className="text-foreground hover:text-accent py-2 text-left font-medium transition-colors"
               >
                 Vị trí
               </button>

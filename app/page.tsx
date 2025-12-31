@@ -1,24 +1,23 @@
-"use client"
+'use client'
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import { toast } from "sonner"
-import { useRestaurantStore } from "@/stores/restaurant-store"
-import HomeHeader from "@/components/home/header"
-import HeroSection from "@/components/home/hero-section"
-import AboutSection from "@/components/home/about-section"
-import DishesSection from "@/components/home/dishes-section"
+import type React from 'react'
+import { useState, useEffect } from 'react'
+import { toast } from 'sonner'
+import { useRestaurantStore } from '@/stores/restaurant-store'
+import HomeHeader from '@/components/home/header'
+import HeroSection from '@/components/home/hero-section'
+import AboutSection from '@/components/home/about-section'
+import MenuSection from '@/components/home/menu-section'
 import ReservationsSection, {
   type ReservationErrors,
   type ReservationFormState,
-} from "@/components/home/reservations-section"
-import LocationSection from "@/components/home/location-section"
-import FooterSection from "@/components/home/footer-section"
-
+} from '@/components/home/reservations-section'
+import LocationSection from '@/components/home/location-section'
+import FooterSection from '@/components/home/footer-section'
 
 export default function RestaurantPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeCategory, setActiveCategory] = useState("")
+  const [activeCategory, setActiveCategory] = useState('')
   const [scrolled, setScrolled] = useState(false)
   const [heroVisible, setHeroVisible] = useState(false)
   const addReservation = useRestaurantStore((state) => state.addReservation)
@@ -30,11 +29,11 @@ export default function RestaurantPage() {
   const isLoadingCategories = useRestaurantStore((state) => state.isLoadingCategories)
   const [isSubmittingReservation, setIsSubmittingReservation] = useState(false)
   const [reservationForm, setReservationForm] = useState<ReservationFormState>({
-    name: "",
-    guests: "",
-    phone: "",
-    date: "",
-    time: "",
+    name: '',
+    guests: '',
+    phone: '',
+    date: '',
+    time: '',
   })
   const [reservationErrors, setReservationErrors] = useState<ReservationErrors>({})
 
@@ -42,8 +41,9 @@ export default function RestaurantPage() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
     }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function RestaurantPage() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      element.scrollIntoView({ behavior: 'smooth' })
       setMobileMenuOpen(false)
     }
   }
@@ -74,47 +74,47 @@ export default function RestaurantPage() {
     const errors: Record<string, string> = {}
     const name = data.name.trim()
     if (!name) {
-      errors.name = "Vui lòng nhập tên của bạn."
+      errors.name = 'Vui lòng nhập tên của bạn.'
     } else if (name.length < 2) {
-      errors.name = "Tên cần có ít nhất 2 ký tự."
+      errors.name = 'Tên cần có ít nhất 2 ký tự.'
     }
 
     const guests = Number.parseInt(data.guests, 10)
     if (!data.guests) {
-      errors.guests = "Vui lòng nhập số lượng khách."
+      errors.guests = 'Vui lòng nhập số lượng khách.'
     } else if (Number.isNaN(guests) || guests < 1 || guests > 20) {
-      errors.guests = "Số lượng khách phải từ 1 đến 20."
+      errors.guests = 'Số lượng khách phải từ 1 đến 20.'
     }
 
     const phone = data.phone.trim()
-    const phoneDigits = phone.replace(/\D/g, "")
+    const phoneDigits = phone.replace(/\D/g, '')
     if (!phone) {
-      errors.phone = "Vui lòng nhập số điện thoại."
+      errors.phone = 'Vui lòng nhập số điện thoại.'
     } else if (phoneDigits.length < 8 || phoneDigits.length > 15) {
-      errors.phone = "Số điện thoại không hợp lệ."
+      errors.phone = 'Số điện thoại không hợp lệ.'
     }
 
     if (!data.date) {
-      errors.date = "Vui lòng chọn ngày."
+      errors.date = 'Vui lòng chọn ngày.'
     } else {
       const selectedDate = new Date(`${data.date}T00:00:00`)
       const today = new Date()
       today.setHours(0, 0, 0, 0)
       if (Number.isNaN(selectedDate.getTime())) {
-        errors.date = "Ngày không hợp lệ."
+        errors.date = 'Ngày không hợp lệ.'
       } else if (selectedDate < today) {
-        errors.date = "Ngày không được trong quá khứ."
+        errors.date = 'Ngày không được trong quá khứ.'
       }
     }
 
     if (!data.time) {
-      errors.time = "Vui lòng chọn giờ."
+      errors.time = 'Vui lòng chọn giờ.'
     } else if (data.date) {
       const selectedDateTime = new Date(`${data.date}T${data.time}`)
       if (!Number.isNaN(selectedDateTime.getTime())) {
         const now = new Date()
         if (selectedDateTime < now) {
-          errors.time = "Giờ phải lớn hơn thời điểm hiện tại."
+          errors.time = 'Giờ phải lớn hơn thời điểm hiện tại.'
         }
       }
     }
@@ -125,12 +125,12 @@ export default function RestaurantPage() {
   const handleReservationChange = (field: keyof typeof reservationForm, value: string) => {
     setReservationForm((prev) => ({ ...prev, [field]: value }))
     if (reservationErrors[field]) {
-      setReservationErrors((prev) => ({ ...prev, [field]: "" }))
+      setReservationErrors((prev) => ({ ...prev, [field]: '' }))
     }
   }
 
   const formatVnd = (value: number) => {
-    return new Intl.NumberFormat("vi-VN").format(value)
+    return new Intl.NumberFormat('vi-VN').format(value)
   }
 
   const filteredDishes = activeCategory
@@ -142,7 +142,7 @@ export default function RestaurantPage() {
     const errors = validateReservation(reservationForm)
     if (Object.keys(errors).length > 0) {
       setReservationErrors(errors)
-      toast.error("Vui lòng kiểm tra lại thông tin đặt bàn.")
+      toast.error('Vui lòng kiểm tra lại thông tin đặt bàn.')
       return
     }
 
@@ -154,13 +154,13 @@ export default function RestaurantPage() {
         guests: Number.parseInt(reservationForm.guests, 10),
         date: reservationForm.date,
         time: reservationForm.time,
-        status: "processing",
+        status: 'processing',
       })
-      setReservationForm({ name: "", guests: "", phone: "", date: "", time: "" })
+      setReservationForm({ name: '', guests: '', phone: '', date: '', time: '' })
       setReservationErrors({})
-      toast.success("Đặt bàn thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.")
+      toast.success('Đặt bàn thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.')
     } catch (error) {
-      toast.error("Không thể đặt bàn. Vui lòng thử lại.")
+      toast.error('Không thể đặt bàn. Vui lòng thử lại.')
     } finally {
       setIsSubmittingReservation(false)
     }
@@ -175,11 +175,11 @@ export default function RestaurantPage() {
         onNavigate={scrollToSection}
       />
 
-      <HeroSection heroVisible={heroVisible} onCtaClick={() => scrollToSection("reservations")} />
+      <HeroSection heroVisible={heroVisible} onCtaClick={() => scrollToSection('reservations')} />
 
       <AboutSection />
 
-      <DishesSection
+      <MenuSection
         categories={categories}
         dishes={filteredDishes}
         activeCategory={activeCategory}

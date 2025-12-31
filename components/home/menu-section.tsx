@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import type { Category, Dish } from '@/lib/types'
 
-type DishesSectionProps = {
+type Props = {
   categories: Category[]
   dishes: Dish[]
   activeCategory: string
@@ -14,7 +14,7 @@ type DishesSectionProps = {
   formatVnd: (value: number) => string
 }
 
-export default function DishesSection({
+export default function MenuSection({
   categories,
   dishes,
   activeCategory,
@@ -22,12 +22,9 @@ export default function DishesSection({
   isLoadingCategories,
   onCategoryChange,
   formatVnd,
-}: DishesSectionProps) {
+}: Props) {
   return (
-    <section
-      id="dishes"
-      className="bg-linear-to-br from-orange-50 via-rose-100 to-purple-100 py-20"
-    >
+    <section id="menu" className="bg-linear-to-br from-orange-50 via-rose-100 to-purple-100 py-20">
       <div className="container mx-auto px-4">
         <div className="animate-in fade-in slide-in-from-bottom mb-12 text-center duration-700">
           <h2 className="mb-4 text-4xl font-bold text-rose-700 md:text-5xl">Thực đơn</h2>
