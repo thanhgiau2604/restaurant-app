@@ -1,24 +1,24 @@
-"use client"
+'use client'
 
-import type React from "react"
+import type React from 'react'
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { UtensilsCrossed, Lock, User } from "lucide-react"
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"
-import { FirebaseError } from "firebase/app"
-import { firebaseAuth } from "@/lib/firebase"
-import { toast } from "sonner"
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { UtensilsCrossed, Lock, User } from 'lucide-react'
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { FirebaseError } from 'firebase/app'
+import { firebaseAuth } from '@/lib/firebase'
+import { toast } from 'sonner'
 
-const SESSION_STARTED_AT_KEY = "admin-session-started-at"
+const SESSION_STARTED_AT_KEY = 'admin-session-started-at'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isCheckingSession, setIsCheckingSession] = useState(true)
   const router = useRouter()
@@ -41,7 +41,7 @@ export default function LoginPage() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
       if (user) {
-        router.replace("/admin")
+        router.replace('/admin')
       } else {
         setIsCheckingSession(false)
       }
@@ -53,20 +53,20 @@ export default function LoginPage() {
   const getAuthErrorMessage = (error: unknown) => {
     if (error instanceof FirebaseError) {
       switch (error.code) {
-        case "auth/invalid-email":
-          return "Please enter a valid email address."
-        case "auth/user-not-found":
-        case "auth/wrong-password":
-        case "auth/invalid-credential":
-          return "Incorrect email or password."
-        case "auth/too-many-requests":
-          return "Too many attempts. Please try again shortly."
+        case 'auth/invalid-email':
+          return 'Vui lòng nhập địa chỉ email hợp lệ.'
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+        case 'auth/invalid-credential':
+          return 'Email hoặc mật khẩu không đúng.'
+        case 'auth/too-many-requests':
+          return 'Đã thử quá nhiều lần. Vui lòng thử lại sau ít phút.'
         default:
-          return "Unable to sign in. Please try again."
+          return 'Không thể đăng nhập. Vui lòng thử lại.'
       }
     }
 
-    return "Unable to sign in. Please try again."
+    return 'Không thể đăng nhập. Vui lòng thử lại.'
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -76,12 +76,10 @@ export default function LoginPage() {
     try {
       await signInWithEmailAndPassword(firebaseAuth, debouncedEmail, debouncedPassword)
       localStorage.setItem(SESSION_STARTED_AT_KEY, String(Date.now()))
-      toast.success("Login successful", {
-        description: "Welcome back, admin!",
-      })
-      router.push("/admin")
+      toast.success('Đăng nhập thành công')
+      router.push('/admin')
     } catch (error) {
-      toast.error("Login failed", {
+      toast.error('Lỗi đăng nhập', {
         description: getAuthErrorMessage(error),
       })
     } finally {
@@ -91,25 +89,27 @@ export default function LoginPage() {
 
   if (isCheckingSession) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-primary/20 via-accent/20 to-secondary/20 p-4">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary/30 border-t-primary" />
+      <div className="from-primary/20 via-accent/20 to-secondary/20 flex min-h-screen items-center justify-center bg-linear-to-br p-4">
+        <div className="border-primary/30 border-t-primary h-10 w-10 animate-spin rounded-full border-4" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-primary/20 via-accent/20 to-secondary/20 p-4">
-      <div className="absolute inset-0 bg-linear-to-br from-primary via-accent to-secondary opacity-10 animate-gradient-xy" />
+    <div className="from-primary/20 via-accent/20 to-secondary/20 flex min-h-screen items-center justify-center bg-linear-to-br p-4">
+      <div className="from-primary via-accent to-secondary animate-gradient-xy absolute inset-0 bg-linear-to-br opacity-10" />
 
-      <Card className="w-full max-w-md relative z-10 shadow-2xl">
+      <Card className="relative z-10 w-full max-w-md shadow-2xl">
         <CardHeader className="space-y-4 text-center">
-          <div className="mx-auto bg-linear-to-r from-primary to-secondary p-4 rounded-2xl w-fit">
+          <div className="from-primary to-secondary mx-auto w-fit rounded-2xl bg-linear-to-r p-4">
             <UtensilsCrossed className="h-12 w-12 text-white" />
           </div>
-          <CardTitle className="text-3xl font-bold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Admin Login
+          <CardTitle className="from-primary to-secondary bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent">
+            ĐĂNG NHẬP
           </CardTitle>
-          <CardDescription className="text-base">Sign in to access the restaurant management dashboard</CardDescription>
+          <CardDescription className="text-base">
+            Đăng nhập để quản lý nhà hàng của bạn
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -118,7 +118,7 @@ export default function LoginPage() {
                 Email
               </Label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <User className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                 <Input
                   id="email"
                   type="email"
@@ -132,10 +132,10 @@ export default function LoginPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="password" className="text-sm font-medium">
-                Password
+                Mật khẩu
               </Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Lock className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                 <Input
                   id="password"
                   type="password"
@@ -149,10 +149,10 @@ export default function LoginPage() {
             </div>
             <Button
               type="submit"
-              className="w-full bg-linear-to-r from-primary to-secondary hover:opacity-90 text-white font-semibold"
+              className="from-primary to-secondary w-full bg-linear-to-r font-semibold text-white hover:opacity-90"
               disabled={isLoading || isDebouncing}
             >
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? 'Loading...' : 'Đăng nhập'}
             </Button>
           </form>
         </CardContent>
