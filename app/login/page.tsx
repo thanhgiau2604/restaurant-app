@@ -97,14 +97,12 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-orange-50 via-rose-100 to-purple-100 p-4">
-      <Card className="relative z-10 w-full max-w-md shadow-2xl">
+      <Card className="relative z-10 w-full max-w-md border-none bg-white/50 shadow-2xl">
         <CardHeader className="space-y-4 text-center">
-          <div className="mx-auto w-fit rounded-2xl bg-linear-to-br from-rose-600 to-orange-800 p-4">
+          <div className="secondary-gradient mx-auto w-fit rounded-2xl p-4">
             <Lock className="h-6 w-6 text-white" />
           </div>
-          <CardTitle className="bg-linear-to-br from-rose-600 to-orange-800 bg-clip-text text-3xl font-bold text-transparent">
-            ĐĂNG NHẬP
-          </CardTitle>
+          <CardTitle className="text-primary text-3xl font-bold">ĐĂNG NHẬP</CardTitle>
           <CardDescription className="text-base">
             Đăng nhập để quản lý nhà hàng của bạn
           </CardDescription>
@@ -147,7 +145,7 @@ export default function LoginPage() {
             </div>
             <Button
               type="submit"
-              className="w-full bg-linear-to-br from-rose-700 to-orange-700 font-semibold text-white hover:opacity-90"
+              className="secondary-gradient w-full font-semibold text-white hover:opacity-90"
               disabled={isLoading || isDebouncing}
             >
               {isLoading ? 'Loading...' : 'Đăng nhập'}

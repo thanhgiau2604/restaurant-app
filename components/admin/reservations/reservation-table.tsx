@@ -156,7 +156,7 @@ export default function ReservationTable({
                       </DialogTrigger>
                       <DialogContent className="max-w-md">
                         <DialogHeader>
-                          <DialogTitle>Cập nhật đặt bàn</DialogTitle>
+                          <DialogTitle>Cập nhật bàn</DialogTitle>
                         </DialogHeader>
                         <form onSubmit={onSubmit} className="space-y-4">
                           <div className="bg-muted/50 space-y-3 rounded-lg p-4">
@@ -219,7 +219,7 @@ export default function ReservationTable({
                               variant="outline"
                               onClick={() => onDialogOpenChange(false)}
                             >
-                              Hủy
+                              Đóng
                             </Button>
                           </div>
                         </form>

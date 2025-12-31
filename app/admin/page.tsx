@@ -18,7 +18,7 @@ export default function AdminPage() {
 
           <div className="grid max-w-4xl gap-6 md:grid-cols-2">
             <Link href="/admin/menu">
-              <Card className="hover:border-primary/50 group cursor-pointer transition-all hover:shadow-lg">
+              <Card className="group cursor-pointer border-none bg-white/50 transition-all hover:shadow-lg">
                 <CardHeader>
                   <div className="mb-2 flex items-center gap-3">
                     <div className="secondary-gradient rounded-lg p-3 transition-transform group-hover:scale-110">
@@ -37,7 +37,7 @@ export default function AdminPage() {
             </Link>
 
             <Link href="/admin/reservations">
-              <Card className="hover:border-primary/50 group cursor-pointer transition-all hover:shadow-lg">
+              <Card className="group cursor-pointer border-none bg-white/50 transition-all hover:shadow-lg">
                 <CardHeader>
                   <div className="mb-2 flex items-center gap-3">
                     <div className="secondary-gradient rounded-lg p-3 transition-transform group-hover:scale-110">

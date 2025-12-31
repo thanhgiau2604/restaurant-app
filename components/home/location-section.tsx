@@ -64,11 +64,7 @@ export default function LocationSection() {
                   <h3 className="mb-1 text-lg font-semibold text-rose-700">Giờ hoạt động</h3>
                   <div className="text-muted-foreground">
                     <div className="flex justify-between gap-2">
-                      <span>Thứ 2 - Thứ 6</span>
-                      <span className="font-medium">{BASIC_INFO.business_hours.weekdays}</span>
-                    </div>
-                    <div className="flex justify-between gap-2">
-                      <span>Thứ 7 - Chủ nhật</span>
+                      <span>Thứ 2 - Chủ nhật:</span>
                       <span className="font-medium">{BASIC_INFO.business_hours.weekdays}</span>
                     </div>
                   </div>
