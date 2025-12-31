@@ -11,7 +11,7 @@
   --card-foreground: oklch(0.15 0.02 258.34);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0.02 258.34);
-  --primary: oklch(0.58 0.2 35);
+  --primary: oklch(0.6 0.23 18);
   --primary-foreground: oklch(0.99 0.01 85.87);
   --secondary: oklch(0.48 0.18 320);
   --secondary-foreground: oklch(0.99 0.01 85.87);
@@ -170,4 +170,12 @@ button {
 #dishes,
 #location {
   scroll-margin-top: 75px;
+}
+
+.common-gradient {
+  @apply bg-linear-to-r from-rose-800 to-orange-700 text-white;
+}
+
+.secondary-gradient {
+  @apply from-primary to-secondary/80 bg-linear-to-r text-white;
 }

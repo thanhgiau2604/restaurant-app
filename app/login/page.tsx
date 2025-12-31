@@ -96,15 +96,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="from-primary/20 via-accent/20 to-secondary/20 flex min-h-screen items-center justify-center bg-linear-to-br p-4">
-      <div className="from-primary via-accent to-secondary animate-gradient-xy absolute inset-0 bg-linear-to-br opacity-10" />
-
+    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-orange-50 via-rose-100 to-purple-100 p-4">
       <Card className="relative z-10 w-full max-w-md shadow-2xl">
         <CardHeader className="space-y-4 text-center">
-          <div className="from-primary to-secondary mx-auto w-fit rounded-2xl bg-linear-to-r p-4">
-            <UtensilsCrossed className="h-12 w-12 text-white" />
+          <div className="mx-auto w-fit rounded-2xl bg-linear-to-br from-rose-600 to-orange-800 p-4">
+            <Lock className="h-6 w-6 text-white" />
           </div>
-          <CardTitle className="from-primary to-secondary bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent">
+          <CardTitle className="bg-linear-to-br from-rose-600 to-orange-800 bg-clip-text text-3xl font-bold text-transparent">
             ĐĂNG NHẬP
           </CardTitle>
           <CardDescription className="text-base">
@@ -149,7 +147,7 @@ export default function LoginPage() {
             </div>
             <Button
               type="submit"
-              className="from-primary to-secondary w-full bg-linear-to-r font-semibold text-white hover:opacity-90"
+              className="w-full bg-linear-to-br from-rose-700 to-orange-700 font-semibold text-white hover:opacity-90"
               disabled={isLoading || isDebouncing}
             >
               {isLoading ? 'Loading...' : 'Đăng nhập'}

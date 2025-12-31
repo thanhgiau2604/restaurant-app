@@ -1,35 +1,68 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
-import { Toaster } from "@/components/ui/sonner"
+import type React from 'react'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
+import './globals.css'
+import { Toaster } from '@/components/ui/sonner'
 import FirebaseAnalytics from '@/components/firebase-analytics'
 
+const SITE_NAME = 'Nhà hàng Mộc Sơn'
+const SITE_URL = 'https://nhahangmocson.com'
+const OG_IMAGE = `${SITE_URL}/main-logo.png`
+const TW_IMAGE = OG_IMAGE
 
-const _googleSans = Inter({ subsets: ["vietnamese"] })
+const _googleSans = Inter({ subsets: ['vietnamese'] })
 
 export const metadata: Metadata = {
-  title: "Flavor House - Exceptional Dining Experience",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} | Hầm rượu & Ẩm thực cho tiệc tùng và giao lưu`,
+    template: `%s | ${SITE_NAME}`,
+  },
   description:
-    "Experience culinary excellence at Flavor House. Fresh ingredients, bold flavors, and unforgettable moments. Reserve your table today!",
-  generator: "v0.app",
-  icons: {
-    icon: [
+    'Nhà hàng Mộc Sơn mang đến không gian hầm rượu ấm cúng, món ăn hấp dẫn và thức uống tuyển chọn. Điểm hẹn lý tưởng cho giao lưu, tiệc tùng và những buổi gặp gỡ đáng nhớ.',
+  keywords: [
+    'Nhà hàng',
+    'Nhà hàng Mộc Sơn',
+    'hầm rượu',
+    'bia',
+    'ẩm thực',
+    'tiệc tùng',
+    'giao lưu',
+    'nhà hàng',
+  ],
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: 'vi_VN',
+    title: `${SITE_NAME} | Không gian hầm rượu cho giao lưu & tiệc tùng`,
+    description:
+      'Trải nghiệm ẩm thực và thức uống trong không gian hầm rượu ấm cúng. Phù hợp cho tiệc tùng, gặp gỡ và những khoảnh khắc đáng nhớ tại Nhà hàng Mộc Sơn.',
+    images: [
       {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} - Hầm rượu & Ẩm thực`,
       },
     ],
-    apple: "/apple-icon.png",
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} | Hầm rượu & Ẩm thực`,
+    description:
+      'Không gian hầm rượu ấm cúng với món ăn và thức uống tuyển chọn – lý tưởng cho giao lưu và tiệc tùng.',
+    images: [TW_IMAGE],
+  },
+
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
 }
 
