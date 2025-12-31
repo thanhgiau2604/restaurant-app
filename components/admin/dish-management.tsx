@@ -1,16 +1,22 @@
-"use client"
+'use client'
 
-import type React from "react"
+import type React from 'react'
 
-import { useState, useEffect } from "react"
-import { Controller, useForm } from "react-hook-form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { useState, useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,15 +27,28 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Plus, Pencil, Trash2, ImageIcon, Upload, X, Search } from "lucide-react"
-import { type Dish } from "@/lib/types"
-import { uploadImage } from "@/lib/cloudinary"
-import { useRestaurantStore } from "@/stores/restaurant-store"
-import Image from "next/image"
-import { toast } from "sonner"
+} from '@/components/ui/alert-dialog'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import { Plus, Pencil, Trash2, ImageIcon, Upload, X, Search } from 'lucide-react'
+import { type Dish } from '@/lib/types'
+import { uploadImage } from '@/lib/cloudinary'
+import { useRestaurantStore } from '@/stores/restaurant-store'
+import Image from 'next/image'
+import { toast } from 'sonner'
 
 export function DishManagement() {
   const dishes = useRestaurantStore((state) => state.dishes)
@@ -46,21 +65,21 @@ export function DishManagement() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingDish, setEditingDish] = useState<Dish | null>(null)
 
-  const [searchQuery, setSearchQuery] = useState("")
+  const [searchQuery, setSearchQuery] = useState('')
 
-  const [imagePreview, setImagePreview] = useState<string>("")
+  const [imagePreview, setImagePreview] = useState<string>('')
   const [isUploading, setIsUploading] = useState(false)
 
   const formatVnd = (value: string) => {
-    const digits = value.replace(/\D/g, "")
+    const digits = value.replace(/\D/g, '')
     if (!digits) {
-      return ""
+      return ''
     }
-    return new Intl.NumberFormat("vi-VN").format(Number(digits))
+    return new Intl.NumberFormat('vi-VN').format(Number(digits))
   }
 
   const parsePrice = (value: string) => {
-    const digits = value.replace(/\D/g, "")
+    const digits = value.replace(/\D/g, '')
     if (!digits) {
       return Number.NaN
     }
@@ -68,13 +87,13 @@ export function DishManagement() {
   }
 
   const formSchema = z.object({
-    name: z.string().min(1, "Dish name is required."),
+    name: z.string().min(1, 'Vui lòng nhập tên món.'),
     price: z
       .string()
-      .min(1, "Price is required.")
-      .refine((value) => !Number.isNaN(parsePrice(value)), "Please enter a valid price."),
-    category: z.string().min(1, "Category is required."),
-    image: z.string().optional().or(z.literal("")),
+      .min(1, 'Vui lòng nhập giá.')
+      .refine((value) => !Number.isNaN(parsePrice(value)), 'Giá không hợp lệ.'),
+    category: z.string().min(1, 'Vui lòng chọn danh mục.'),
+    image: z.string().optional().or(z.literal('')),
   })
 
   type FormValues = z.infer<typeof formSchema>
@@ -89,10 +108,10 @@ export function DishManagement() {
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      price: "",
-      category: "",
-      image: "",
+      name: '',
+      price: '',
+      category: '',
+      image: '',
     },
   })
 
@@ -103,7 +122,7 @@ export function DishManagement() {
 
   useEffect(() => {
     if (dishesError) {
-      toast.error("Dishes error", {
+      toast.error('Lỗi món ăn', {
         description: dishesError,
       })
     }
@@ -111,18 +130,18 @@ export function DishManagement() {
 
   useEffect(() => {
     if (categoriesError) {
-      toast.error("Categories error", {
+      toast.error('Lỗi danh mục', {
         description: categoriesError,
       })
     }
   }, [categoriesError])
 
   const filteredDishes = dishes.filter((dish) => {
-    return searchQuery === "" || dish.name.toLowerCase().includes(searchQuery.toLowerCase())
+    return searchQuery === '' || dish.name.toLowerCase().includes(searchQuery.toLowerCase())
   })
 
   const categoryNameById = (categoryId: string) => {
-    return categories.find((category) => category.id === categoryId)?.name ?? "Unknown"
+    return categories.find((category) => category.id === categoryId)?.name ?? 'Không rõ'
   }
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,16 +149,16 @@ export function DishManagement() {
     if (file) {
       // Check file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
-        toast.error('File too large',{
-          description: "Please select an image smaller than 5MB",
+        toast.error('Ảnh quá lớn', {
+          description: 'Vui lòng chọn ảnh nhỏ hơn 5MB',
         })
         return
       }
 
       // Check file type
-      if (!file.type.startsWith("image/")) {
-        toast.error('Invalid file type',{
-          description: "Please select an image file",
+      if (!file.type.startsWith('image/')) {
+        toast.error('Định dạng ảnh không hợp lệ', {
+          description: 'Vui lòng chọn tệp hình ảnh',
         })
         return
       }
@@ -148,11 +167,11 @@ export function DishManagement() {
       try {
         const imageUrl = await uploadImage(file)
         setImagePreview(imageUrl)
-        setValue("image", imageUrl, { shouldValidate: true, shouldDirty: true })
-        toast.success("Image uploaded")
+        setValue('image', imageUrl, { shouldValidate: true, shouldDirty: true })
+        toast.success('Tải ảnh thành công')
       } catch (error) {
-        toast.error("Image upload failed", {
-          description: "Please try again.",
+        toast.error('Tải ảnh thất bại', {
+          description: 'Vui lòng thử lại.',
         })
       } finally {
         setIsUploading(false)
@@ -161,8 +180,8 @@ export function DishManagement() {
   }
 
   const handleClearImage = () => {
-    setImagePreview("")
-    setValue("image", "", { shouldValidate: true, shouldDirty: true })
+    setImagePreview('')
+    setValue('image', '', { shouldValidate: true, shouldDirty: true })
   }
 
   const onSubmit = async (values: FormValues) => {
@@ -173,22 +192,22 @@ export function DishManagement() {
           name: values.name,
           price: parsedPrice,
           category: values.category,
-          image: values.image || "",
+          image: values.image || '',
         })
-        toast.success("Dish updated successfully")
+        toast.success('Cập nhật món ăn thành công')
       } else {
         await addDish({
           name: values.name,
           price: parsedPrice,
           category: values.category,
-          image: values.image || "",
+          image: values.image || '',
         })
-        toast.success("Dish added successfully")
+        toast.success('Thêm món ăn thành công')
       }
       resetForm()
     } catch (error) {
-      toast.error("Unable to save dish", {
-        description: "Please try again.",
+      toast.error('Không thể lưu món ăn', {
+        description: 'Vui lòng thử lại.',
       })
     }
   }
@@ -208,18 +227,18 @@ export function DishManagement() {
   const handleDelete = async (id: string) => {
     try {
       await deleteDish(id)
-      toast.success("Dish deleted successfully")
+      toast.success('Xóa món ăn thành công')
     } catch (error) {
-      toast.error("Unable to delete dish", {
-        description: "Please try again.",
+      toast.error('Không thể xóa món ăn', {
+        description: 'Vui lòng thử lại.',
       })
     }
   }
 
   const resetForm = () => {
-    reset({ name: "", price: "", category: "", image: "" })
+    reset({ name: '', price: '', category: '', image: '' })
     setEditingDish(null)
-    setImagePreview("")
+    setImagePreview('')
     setIsDialogOpen(false)
   }
 
@@ -227,7 +246,7 @@ export function DishManagement() {
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-2xl font-bold">Menu Management</CardTitle>
+          <CardTitle className="text-2xl font-bold">Quản lý thực đơn</CardTitle>
           <Dialog
             open={isDialogOpen}
             onOpenChange={(open) => {
@@ -236,28 +255,23 @@ export function DishManagement() {
             }}
           >
             <DialogTrigger asChild>
-              <Button className="bg-linear-to-r from-primary to-secondary text-white gap-2 hover:opacity-90">
+              <Button className="from-primary to-secondary gap-2 bg-linear-to-r text-white hover:opacity-90">
                 <Plus className="h-4 w-4" />
-                Add Dish
+                Thêm món
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-h-[90vh] max-w-md overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>{editingDish ? "Edit Dish" : "Add New Dish"}</DialogTitle>
+                <DialogTitle>{editingDish ? 'Chỉnh sửa món' : 'Thêm món mới'}</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Dish Name</Label>
-                  <Input
-                    id="name"
-                    {...register("name")}
-                    placeholder="e.g., Grilled Salmon"
-                    required
-                  />
+                  <Label htmlFor="name">Tên món</Label>
+                  <Input id="name" {...register('name')} placeholder="vd: Cá hồi nướng" required />
                   {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="price">Price (VND)</Label>
+                  <Label htmlFor="price">Giá (VND)</Label>
                   <Controller
                     control={control}
                     name="price"
@@ -276,23 +290,23 @@ export function DishManagement() {
                   {errors.price && <p className="text-sm text-red-500">{errors.price.message}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="category">Category</Label>
+                  <Label htmlFor="category">Danh mục</Label>
                   <Controller
                     control={control}
                     name="category"
                     render={({ field }) => (
                       <Select value={field.value} onValueChange={field.onChange} required>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select category" />
+                          <SelectValue placeholder="Chọn danh mục" />
                         </SelectTrigger>
                         <SelectContent>
                           {isLoadingCategories ? (
                             <SelectItem value="loading" disabled>
-                              Loading...
+                              Đang tải...
                             </SelectItem>
                           ) : categories.length === 0 ? (
                             <SelectItem value="empty" disabled>
-                              No categories available
+                              Chưa có danh mục
                             </SelectItem>
                           ) : (
                             categories.map((category) => (
@@ -305,15 +319,22 @@ export function DishManagement() {
                       </Select>
                     )}
                   />
-                  {errors.category && <p className="text-sm text-red-500">{errors.category.message}</p>}
+                  {errors.category && (
+                    <p className="text-sm text-red-500">{errors.category.message}</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Dish Image</Label>
+                  <Label>Hình ảnh món</Label>
                   {imagePreview ? (
                     <div className="relative">
-                      <div className="relative w-full h-48 rounded-lg overflow-hidden bg-muted">
-                        <Image src={imagePreview || "/placeholder.svg"} alt="Preview" fill className="object-cover" />
+                      <div className="bg-muted relative h-48 w-full overflow-hidden rounded-lg">
+                        <Image
+                          src={imagePreview || '/placeholder.svg'}
+                          alt="Xem trước"
+                          fill
+                          className="object-cover"
+                        />
                       </div>
                       <Button
                         type="button"
@@ -323,11 +344,11 @@ export function DishManagement() {
                         onClick={handleClearImage}
                       >
                         <X className="h-3 w-3" />
-                        Remove
+                        Xóa ảnh
                       </Button>
                     </div>
                   ) : (
-                    <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center hover:border-primary/50 transition-colors">
+                    <div className="border-muted-foreground/25 hover:border-primary/50 rounded-lg border-2 border-dashed p-8 text-center transition-colors">
                       <input
                         type="file"
                         id="image-upload"
@@ -336,20 +357,25 @@ export function DishManagement() {
                         disabled={isUploading}
                         className="hidden"
                       />
-                      <label htmlFor="image-upload" className={isUploading ? "cursor-not-allowed" : "cursor-pointer"}>
+                      <label
+                        htmlFor="image-upload"
+                        className={isUploading ? 'cursor-not-allowed' : 'cursor-pointer'}
+                      >
                         <div className="flex flex-col items-center gap-2">
                           {isUploading ? (
-                            <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary/30 border-t-primary" />
+                            <div className="border-primary/30 border-t-primary h-10 w-10 animate-spin rounded-full border-4" />
                           ) : (
-                            <div className="bg-muted p-3 rounded-full">
-                              <Upload className="h-6 w-6 text-muted-foreground" />
+                            <div className="bg-muted rounded-full p-3">
+                              <Upload className="text-muted-foreground h-6 w-6" />
                             </div>
                           )}
                           <div>
                             <p className="text-sm font-medium">
-                              {isUploading ? "Uploading image..." : "Click to upload image"}
+                              {isUploading ? 'Đang tải ảnh...' : 'Bấm để tải ảnh'}
                             </p>
-                            <p className="text-xs text-muted-foreground mt-1">PNG, JPG up to 5MB</p>
+                            <p className="text-muted-foreground mt-1 text-xs">
+                              PNG, JPG tối đa 5MB
+                            </p>
                           </div>
                         </div>
                       </label>
@@ -360,13 +386,13 @@ export function DishManagement() {
                 <div className="flex gap-2 pt-4">
                   <Button
                     type="submit"
-                    className="flex-1 bg-linear-to-r from-primary to-secondary text-white hover:opacity-90"
+                    className="from-primary to-secondary flex-1 bg-linear-to-r text-white hover:opacity-90"
                     disabled={isUploading || isSubmitting || !isDirty}
                   >
-                    {isSubmitting ? "Saving..." : `${editingDish ? "Update" : "Add"} Dish`}
+                    {isSubmitting ? 'Đang lưu...' : `${editingDish ? 'Cập nhật' : 'Thêm'} món`}
                   </Button>
                   <Button type="button" variant="outline" onClick={resetForm}>
-                    Cancel
+                    Hủy
                   </Button>
                 </div>
               </form>
@@ -374,9 +400,9 @@ export function DishManagement() {
           </Dialog>
         </div>
         <div className="relative mt-4">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
-            placeholder="Search dishes by name..."
+            placeholder="Tìm món theo tên..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
@@ -388,34 +414,39 @@ export function DishManagement() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Image</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead>Hình ảnh</TableHead>
+                <TableHead>Tên</TableHead>
+                <TableHead>Danh mục</TableHead>
+                <TableHead>Giá</TableHead>
+                <TableHead className="text-right">Thao tác</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredDishes.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                  <TableCell colSpan={5} className="text-muted-foreground py-8 text-center">
                     {isLoadingDishes
-                      ? "Loading dishes..."
+                      ? 'Đang tải món ăn...'
                       : searchQuery
-                        ? "No dishes match your search."
-                        : "No dishes found. Add your first dish to get started."}
+                        ? 'Không có món nào phù hợp.'
+                        : 'Chưa có món ăn. Hãy thêm món đầu tiên.'}
                   </TableCell>
                 </TableRow>
               ) : (
                 filteredDishes.map((dish) => (
                   <TableRow key={dish.id}>
                     <TableCell>
-                      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-muted">
+                      <div className="bg-muted relative h-16 w-16 overflow-hidden rounded-lg">
                         {dish.image ? (
-                          <Image src={dish.image || "/placeholder.svg"} alt={dish.name} fill className="object-cover" />
+                          <Image
+                            src={dish.image || '/placeholder.svg'}
+                            alt={dish.name}
+                            fill
+                            className="object-cover"
+                          />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <ImageIcon className="h-6 w-6 text-muted-foreground" />
+                          <div className="flex h-full w-full items-center justify-center">
+                            <ImageIcon className="text-muted-foreground h-6 w-6" />
                           </div>
                         )}
                       </div>
@@ -424,33 +455,38 @@ export function DishManagement() {
                     <TableCell>{categoryNameById(dish.category)}</TableCell>
                     <TableCell>{formatVnd(dish.price.toString())}đ</TableCell>
                     <TableCell className="text-right">
-                      <div className="flex gap-2 justify-end">
-                        <Button variant="outline" size="sm" onClick={() => handleEdit(dish)} className="gap-1">
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleEdit(dish)}
+                          className="gap-1"
+                        >
                           <Pencil className="h-3 w-3" />
-                          Edit
+                          Sửa
                         </Button>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
                             <Button variant="destructive" size="sm" className="gap-1">
                               <Trash2 className="h-3 w-3" />
-                              Delete
+                              Xóa
                             </Button>
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                              <AlertDialogTitle>Bạn chắc chắn chứ?</AlertDialogTitle>
                               <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete the dish "{dish.name}" from
-                                your menu.
+                                Thao tác này không thể hoàn tác. Món "{dish.name}" sẽ bị xóa khỏi
+                                thực đơn.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogCancel>Hủy</AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={() => handleDelete(dish.id)}
                                 className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                               >
-                                Delete
+                                Xóa
                               </AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>

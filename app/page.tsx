@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
 import { useRestaurantStore } from "@/stores/restaurant-store"
+import Image from "next/image"
+import AppLogo from "@/components/common/logo"
 
 
 export default function RestaurantPage() {
@@ -170,14 +172,7 @@ export default function RestaurantPage() {
         <nav className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="bg-rose-800 p-2 rounded-lg">
-                <UtensilsCrossed className="h-6 w-6 text-white" />
-              </div>
-              <span
-                className={`text-2xl font-bold text-rose-800 bg-clip-text  ${!scrolled ? "drop-shadow-lg text-white" : ""}`}
-              >
-                Flavor House
-              </span>
+              <AppLogo width={150} height="auto" type={scrolled ? "primary" : "secondary"} />
             </div>
 
             {/* Desktop Menu */}
@@ -641,10 +636,7 @@ export default function RestaurantPage() {
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="bg-white/20 p-2 rounded-lg">
-                  <UtensilsCrossed className="h-6 w-6 text-white" />
-                </div>
-                <span className="text-2xl font-bold">Flavor House</span>
+                <AppLogo type="secondary" width={150} height="auto"/>
               </div>
               <p className="text-white/90 leading-relaxed">
                 Mang đến cho bạn những trải nghiệm ẩm thực tinh tế nhất với niềm đam mê và sự tận tâm kể từ năm 2025.

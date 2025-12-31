@@ -13,10 +13,9 @@ export default function AdminPage() {
         <AdminHeader />
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
-              Restaurant Dashboard
+            <h2 className="text-3xl font-bold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+              Dashboard
             </h2>
-            <p className="text-muted-foreground">Select a management section to get started</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl">
@@ -24,17 +23,17 @@ export default function AdminPage() {
               <Card className="cursor-pointer transition-all hover:shadow-lg hover:border-primary/50 group">
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-gradient-to-r from-primary to-secondary p-3 rounded-lg group-hover:scale-110 transition-transform">
+                    <div className="bg-linear-to-r from-primary to-secondary p-3 rounded-lg group-hover:scale-110 transition-transform">
                       <UtensilsCrossed className="h-6 w-6 text-white" />
                     </div>
-                    <CardTitle className="text-2xl">Menu Management</CardTitle>
+                    <CardTitle className="text-2xl">Quản lý thực đơn</CardTitle>
                   </div>
                   <CardDescription>
-                    Add, edit, and delete menu items. Manage dish details, pricing, and categories.
+                    Thêm, chỉnh sửa và xóa món ăn. Quản lý thông tin món, giá và danh mục.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground">Click to manage your restaurant menu</p>
+                  <p className="text-sm text-muted-foreground">Bấm để quản lý thực đơn</p>
                 </CardContent>
               </Card>
             </Link>
@@ -43,17 +42,17 @@ export default function AdminPage() {
               <Card className="cursor-pointer transition-all hover:shadow-lg hover:border-primary/50 group">
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-gradient-to-r from-primary to-secondary p-3 rounded-lg group-hover:scale-110 transition-transform">
+                    <div className="bg-linear-to-r from-primary to-secondary p-3 rounded-lg group-hover:scale-110 transition-transform">
                       <Calendar className="h-6 w-6 text-white" />
                     </div>
-                    <CardTitle className="text-2xl">Reservations</CardTitle>
+                    <CardTitle className="text-2xl">Đặt bàn</CardTitle>
                   </div>
                   <CardDescription>
-                    View and manage customer reservations. Update status and assign table numbers.
+                    Xem và quản lý đặt bàn của khách. Cập nhật trạng thái và gán số bàn.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground">Click to manage reservations</p>
+                  <p className="text-sm text-muted-foreground">Bấm để quản lý đặt bàn</p>
                 </CardContent>
               </Card>
             </Link>

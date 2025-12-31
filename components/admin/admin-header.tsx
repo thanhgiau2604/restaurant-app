@@ -19,13 +19,13 @@ export function AdminHeader({ activePage = "dashboard" }: AdminHeaderProps) {
   const handleLogout = async () => {
     try {
       await signOut(firebaseAuth)
-      toast.success("Logged out", {
-        description: "You have been successfully logged out.",
+      toast.success("Đã đăng xuất", {
+        description: "Bạn đã đăng xuất thành công.",
       })
       router.push("/login")
     } catch (error) {
-      toast.error("Logout failed", {
-        description: "Please try again.",
+      toast.error("Đăng xuất thất bại", {
+        description: "Vui lòng thử lại.",
       })
     }
   }
@@ -40,9 +40,9 @@ export function AdminHeader({ activePage = "dashboard" }: AdminHeaderProps) {
             </div>
             <div>
               <h1 className="text-xl font-bold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Flavor House Admin
+                Quản trị Flavor House
               </h1>
-              <p className="text-xs text-muted-foreground">Restaurant Management</p>
+              <p className="text-xs text-muted-foreground">Quản lý nhà hàng</p>
             </div>
           </Link>
 
@@ -57,7 +57,7 @@ export function AdminHeader({ activePage = "dashboard" }: AdminHeaderProps) {
                 )}
               >
                 <LayoutDashboard className="h-4 w-4" />
-                Dashboard
+                Tổng quan
               </Button>
             </Link>
             <Link href="/admin/menu">
@@ -70,7 +70,7 @@ export function AdminHeader({ activePage = "dashboard" }: AdminHeaderProps) {
                 )}
               >
                 <UtensilsCrossed className="h-4 w-4" />
-                Menu
+                Thực đơn
               </Button>
             </Link>
             <Link href="/admin/reservations">
@@ -83,7 +83,7 @@ export function AdminHeader({ activePage = "dashboard" }: AdminHeaderProps) {
                 )}
               >
                 <CalendarDays className="h-4 w-4" />
-                Reservations
+                Đặt bàn
               </Button>
             </Link>
           </nav>
@@ -94,7 +94,7 @@ export function AdminHeader({ activePage = "dashboard" }: AdminHeaderProps) {
           className="gap-2 hover:bg-destructive hover:text-destructive-foreground bg-transparent"
         >
           <LogOut className="h-4 w-4" />
-          Logout
+          Đăng xuất
         </Button>
       </div>
     </header>
