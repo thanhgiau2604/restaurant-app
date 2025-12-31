@@ -47,7 +47,7 @@ export default function HeroSection({ heroVisible, onCtaClick }: HeroSectionProp
         className={`relative z-10 container mx-auto px-4 text-center transition-all duration-1000 ${heroVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
       >
         <h1 className="mb-6 text-5xl font-bold text-balance text-white drop-shadow-2xl md:text-7xl">
-          Nhà hàng hầm rượu Mộc Sơn
+          Nhà Hàng Ẩm Thực Mộc Sơn
         </h1>
         <p className="mx-auto mb-8 max-w-2xl text-xl text-pretty text-white drop-shadow-lg md:text-2xl">
           Món ăn hấp dẫn và thức uống chọn lọc dành cho những buổi tiệc trọn vẹn trong không gian
