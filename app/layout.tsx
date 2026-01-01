@@ -8,7 +8,7 @@ import FirebaseAnalytics from '@/components/firebase-analytics'
 
 const SITE_NAME = 'Nhà hàng Mộc Sơn'
 const SITE_URL = 'https://nhahangmocson.com'
-const OG_IMAGE = `${SITE_URL}/main-logo.png`
+const OG_IMAGE = `${SITE_URL}/main-img.jpg`
 const TW_IMAGE = OG_IMAGE
 
 const _googleSans = Inter({ subsets: ['vietnamese'] })
@@ -72,11 +72,11 @@ function RestaurantJsonLd() {
     '@type': 'Restaurant',
     name: SITE_NAME,
     url: SITE_URL,
-    image: [OG_IMAGE],
+    logo: `${SITE_URL}/main-logo.png`,
     description:
       'Không gian hầm rượu ấm cúng với món ăn hấp dẫn và thức uống tuyển chọn – phù hợp cho giao lưu và tiệc tùng.',
-    servesCuisine: ['Ẩm thực', 'Rượu', 'Món Việt'], // TODO: sửa theo thực tế
-    telephone: '0848662244', // TODO
+    servesCuisine: ['Ẩm thực', 'Rượu', 'Món Việt'],
+    telephone: '+84848662244',
     email: 'contact@nhahangmocson.com',
     address: {
       '@type': 'PostalAddress',
@@ -86,27 +86,35 @@ function RestaurantJsonLd() {
       postalCode: '752426',
       addressCountry: 'VN',
     },
-    // Nếu có tọa độ, Google rất thích
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      email: 'contact@nhahangmocson.com',
+      telephone: '+84848662244',
+      areaServed: 'VN',
+    },
     geo: {
       '@type': 'GeoCoordinates',
       latitude: 10.6958397,
       longitude: 106.6093528,
     },
-    openingHours: ['Mo-Su 09:30-23:00'],
-    sameAs: [
-      // TODO: thêm link social nếu có
-      // "https://www.facebook.com/...",
-      // "https://www.instagram.com/...",
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        opens: '09:30',
+        closes: '23:00',
+      },
     ],
-    // Có thể khai báo nhận đặt bàn / menu
+    // TODO: thêm link social nếu có
+    // sameAs: ['https://www.facebook.com/...', 'https://www.instagram.com/...'],
     acceptsReservations: true,
-    menu: `${SITE_URL}/#menu`, // TODO nếu có trang menu
+    menu: `${SITE_URL}/#menu`,
   }
 
   return (
     <script
       type="application/ld+json"
-      // Next.js yêu cầu stringify
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
     />
   )

@@ -1,5 +1,7 @@
 'use client'
 
+import AboutImg from '@/assets/view-01.jpg'
+
 export default function AboutSection() {
   return (
     <section id="about" className="bg-white py-20">
@@ -7,11 +9,7 @@ export default function AboutSection() {
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div className="animate-in fade-in slide-in-from-left duration-700">
             <div className="overflow-hidden rounded-2xl shadow-2xl">
-              <img
-                src="/chef-cooking-kitchen.jpg"
-                alt="Chef cooking"
-                className="h-100 w-full object-cover"
-              />
+              <img src={AboutImg.src} alt="Chef cooking" className="h-100 w-full object-cover" />
             </div>
           </div>
           <div className="animate-in fade-in slide-in-from-right duration-700">
