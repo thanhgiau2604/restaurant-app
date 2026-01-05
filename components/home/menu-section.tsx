@@ -27,7 +27,7 @@ export default function MenuSection({
     <section id="menu" className="bg-linear-to-br from-orange-50 via-rose-100 to-purple-100 py-20">
       <div className="container mx-auto px-4">
         <div className="animate-in fade-in slide-in-from-bottom mb-12 text-center duration-700">
-          <h2 className="mb-4 text-4xl font-bold text-rose-700 md:text-5xl">Thực đơn</h2>
+          <h2 className="mb-4 text-4xl font-bold text-rose-700 md:text-5xl">Thực Đơn</h2>
           <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
             Khám phá tuyển chọn các món ăn hấp dẫn được chúng tôi chọn lọc kỹ lưỡng
           </p>

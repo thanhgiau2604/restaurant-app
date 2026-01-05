@@ -41,7 +41,7 @@ export default function ReservationsSection({
           </p>
         </div>
 
-        <Card className="animate-in fade-in slide-in-from-bottom border-2 shadow-2xl delay-200 duration-700">
+        <Card className="animate-in fade-in slide-in-from-bottom border-none shadow-2xl shadow-rose-100 delay-200 duration-700">
           <CardContent className="p-8">
             <form className="space-y-6" onSubmit={onSubmit}>
               <div className="space-y-2">

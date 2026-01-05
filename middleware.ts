@@ -13,7 +13,6 @@ const unauthorizedResponse = () =>
   })
 
 export function middleware(request: NextRequest) {
-  console.log({ user: BASIC_AUTH_USER, pass: BASIC_AUTH_PASSWORD })
   if (!BASIC_AUTH_USER || !BASIC_AUTH_PASSWORD) {
     return NextResponse.next()
   }

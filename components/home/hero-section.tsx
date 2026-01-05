@@ -7,6 +7,41 @@ import Dish02 from '@/assets/dish-02.jpg'
 import Dish03 from '@/assets/dish-03.jpg'
 import Dish04 from '@/assets/dish-04.jpg'
 
+const heroDishImages = [
+  {
+    src: Dish01.src,
+    positionClass: 'top-[15%] left-[10%]',
+    sizeClass: 'h-32 w-32 md:h-48 md:w-48',
+    visibleOpacityClass: 'opacity-80',
+    hiddenTranslateClass: '-translate-y-20',
+    animationDelay: '0.2s',
+  },
+  {
+    src: Dish02.src,
+    positionClass: 'top-[60%] left-[5%]',
+    sizeClass: 'h-24 w-24 md:h-36 md:w-36',
+    visibleOpacityClass: 'opacity-70',
+    hiddenTranslateClass: 'translate-y-20',
+    animationDelay: '0.4s',
+  },
+  {
+    src: Dish03.src,
+    positionClass: 'top-[20%] right-[8%]',
+    sizeClass: 'h-28 w-28 md:h-40 md:w-40',
+    visibleOpacityClass: 'opacity-75',
+    hiddenTranslateClass: '-translate-y-20',
+    animationDelay: '0.3s',
+  },
+  {
+    src: Dish04.src,
+    positionClass: 'right-[12%] bottom-[20%]',
+    sizeClass: 'h-24 w-24 md:h-36 md:w-36',
+    visibleOpacityClass: 'opacity-80',
+    hiddenTranslateClass: 'translate-y-20',
+    animationDelay: '0.5s',
+  },
+]
+
 type HeroSectionProps = {
   heroVisible: boolean
   onCtaClick: () => void
@@ -25,36 +60,21 @@ export default function HeroSection({ heroVisible, onCtaClick }: HeroSectionProp
       />
 
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <img
-          src={Dish01.src}
-          alt="Food"
-          className={`absolute top-[15%] left-[10%] h-32 w-32 rounded-full object-cover shadow-2xl transition-all duration-1000 md:h-48 md:w-48 ${heroVisible ? 'translate-y-0 opacity-80' : '-translate-y-20 opacity-0'}`}
-          style={{ animationDelay: '0.2s' }}
-        />
-        <img
-          src={Dish02.src}
-          alt="Food"
-          className={`absolute top-[60%] left-[5%] h-24 w-24 rounded-full object-cover shadow-2xl transition-all duration-1000 md:h-36 md:w-36 ${heroVisible ? 'translate-y-0 opacity-70' : 'translate-y-20 opacity-0'}`}
-          style={{ animationDelay: '0.4s' }}
-        />
-        <img
-          src={Dish03.src}
-          alt="Food"
-          className={`absolute top-[20%] right-[8%] h-28 w-28 rounded-full object-cover shadow-2xl transition-all duration-1000 md:h-40 md:w-40 ${heroVisible ? 'translate-y-0 opacity-75' : '-translate-y-20 opacity-0'}`}
-          style={{ animationDelay: '0.3s' }}
-        />
-        <img
-          src={Dish04.src}
-          alt="Food"
-          className={`absolute right-[12%] bottom-[20%] h-24 w-24 rounded-full object-cover shadow-2xl transition-all duration-1000 md:h-36 md:w-36 ${heroVisible ? 'translate-y-0 opacity-80' : 'translate-y-20 opacity-0'}`}
-          style={{ animationDelay: '0.5s' }}
-        />
+        {heroDishImages.map((dish) => (
+          <img
+            key={`${dish.src}-${dish.animationDelay}`}
+            src={dish.src}
+            alt="Food"
+            className={`absolute ${dish.positionClass} ${dish.sizeClass} rounded-full object-cover shadow-2xl transition-all duration-1000 ${heroVisible ? `translate-y-0 ${dish.visibleOpacityClass}` : `${dish.hiddenTranslateClass} opacity-0`}`}
+            style={{ animationDelay: dish.animationDelay }}
+          />
+        ))}
       </div>
 
       <div
         className={`relative z-10 container mx-auto px-4 text-center transition-all duration-1000 ${heroVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
       >
-        <h1 className="mb-6 text-5xl font-bold text-balance text-white drop-shadow-2xl md:text-7xl">
+        <h1 className="mb-6 bg-linear-to-r from-rose-100 via-rose-300 to-rose-100 bg-clip-text text-5xl font-bold text-balance text-transparent drop-shadow-2xl md:text-7xl">
           Nhà Hàng Ẩm Thực Mộc Sơn
         </h1>
         <p className="mx-auto mb-8 max-w-2xl text-xl text-pretty text-white drop-shadow-lg md:text-2xl">
