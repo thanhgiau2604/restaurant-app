@@ -74,7 +74,7 @@ export default function HeroSection({ heroVisible, onCtaClick }: HeroSectionProp
       <div
         className={`relative z-10 container mx-auto px-4 text-center transition-all duration-1000 ${heroVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
       >
-        <h1 className="mb-6 bg-linear-to-r from-rose-100 via-rose-300 to-rose-100 bg-clip-text text-5xl font-bold text-balance text-transparent drop-shadow-2xl md:text-7xl">
+        <h1 className="mb-6 bg-clip-text text-5xl font-bold text-balance text-white drop-shadow-2xl text-shadow-[2px_5px_0px_rgba(199,0,54,0.6)] md:text-7xl">
           Nhà Hàng Ẩm Thực Mộc Sơn
         </h1>
         <p className="mx-auto mb-8 max-w-2xl text-xl text-pretty text-white drop-shadow-lg md:text-2xl">

@@ -2,6 +2,7 @@
 
 import type React from 'react'
 import { useState, useEffect } from 'react'
+import { ArrowUp } from 'lucide-react'
 import { toast } from 'sonner'
 import { useRestaurantStore } from '@/stores/restaurant-store'
 import HomeHeader from '@/components/home/header'
@@ -19,6 +20,7 @@ export default function RestaurantPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState('')
   const [scrolled, setScrolled] = useState(false)
+  const [showScrollTop, setShowScrollTop] = useState(false)
   const [heroVisible, setHeroVisible] = useState(false)
   const addReservation = useRestaurantStore((state) => state.addReservation)
   const dishes = useRestaurantStore((state) => state.dishes)
@@ -39,7 +41,9 @@ export default function RestaurantPage() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      const scrollY = window.scrollY
+      setScrolled(scrollY > 50)
+      setShowScrollTop(scrollY > 300)
     }
     handleScroll()
     window.addEventListener('scroll', handleScroll)
@@ -68,6 +72,10 @@ export default function RestaurantPage() {
       element.scrollIntoView({ behavior: 'smooth' })
       setMobileMenuOpen(false)
     }
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const validateReservation = (data: typeof reservationForm) => {
@@ -200,6 +208,15 @@ export default function RestaurantPage() {
       <LocationSection />
 
       <FooterSection onNavigate={scrollToSection} />
+
+      <button
+        type="button"
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+        className={`fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-rose-200/90 text-rose-900 shadow-lg transition-all duration-300 hover:scale-105 hover:bg-rose-100 ${showScrollTop ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'}`}
+      >
+        <ArrowUp className="h-5 w-5" />
+      </button>
     </div>
   )
 }
