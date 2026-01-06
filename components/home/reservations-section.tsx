@@ -48,7 +48,7 @@ export default function ReservationsSection({
                 <Label htmlFor="name">Tên của bạn</Label>
                 <Input
                   id="name"
-                  placeholder="John Doe"
+                  placeholder="Nhập tên của bạn"
                   value={form.name}
                   onChange={(e) => onChange('name', e.target.value)}
                   className="h-12"
@@ -65,7 +65,7 @@ export default function ReservationsSection({
                     type="number"
                     min="1"
                     max="20"
-                    placeholder="2"
+                    placeholder="Nhập số lượng khách"
                     value={form.guests}
                     onChange={(e) => onChange('guests', e.target.value)}
                     className="h-12"
@@ -100,6 +100,7 @@ export default function ReservationsSection({
                     onChange={(e) => onChange('date', e.target.value)}
                     className="h-12"
                     aria-invalid={Boolean(errors.date)}
+                    placeholder="Chọn ngày dùng bữa"
                   />
                   {errors.date && <p className="text-sm text-red-500">{errors.date}</p>}
                 </div>

@@ -26,6 +26,17 @@ export default function HomeHeader({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Image src={Logo.src} width={80} height={80} alt="logo" />
+            <p
+              className={cn(
+                'font-extrabold max-md:hidden',
+                scrolled
+                  ? 'text-secondary'
+                  : 'text-hero-accent text-shadow-[2px_0px_0px_rgba(73,35,20)]'
+              )}
+            >
+              NHÀ HÀNG <br /> <span className="mr-1" />
+              MỘC SƠN
+            </p>
           </div>
 
           <div className="hidden items-center gap-8 md:flex">
@@ -77,7 +88,11 @@ export default function HomeHeader({
           </div>
 
           <button className="p-2 md:hidden" onClick={onToggleMobileMenu} aria-label="Toggle menu">
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileMenuOpen ? (
+              <X className={`h-6 w-6 ${scrolled ? 'text-primary' : 'text-white'}`} />
+            ) : (
+              <Menu className={`h-6 w-6 ${scrolled ? 'text-primary' : 'text-white'}`} />
+            )}
           </button>
         </div>
 
@@ -86,31 +101,31 @@ export default function HomeHeader({
             <div className="container mx-auto flex flex-col gap-4 px-4 py-6">
               <button
                 onClick={() => onNavigate('home')}
-                className="text-foreground hover:text-accent py-2 text-left font-medium transition-colors"
+                className="text-primary py-2 text-left font-medium transition-colors"
               >
                 Trang chủ
               </button>
               <button
                 onClick={() => onNavigate('about')}
-                className="text-foreground hover:text-accent py-2 text-left font-medium transition-colors"
+                className="text-primary py-2 text-left font-medium transition-colors"
               >
                 Giới thiệu
               </button>
               <button
                 onClick={() => onNavigate('menu')}
-                className="text-foreground hover:text-accent py-2 text-left font-medium transition-colors"
+                className="text-primary py-2 text-left font-medium transition-colors"
               >
                 Món ăn
               </button>
               <button
                 onClick={() => onNavigate('reservations')}
-                className="text-foreground hover:text-accent py-2 text-left font-medium transition-colors"
+                className="text-primary py-2 text-left font-medium transition-colors"
               >
                 Đặt bàn
               </button>
               <button
                 onClick={() => onNavigate('location')}
-                className="text-foreground hover:text-accent py-2 text-left font-medium transition-colors"
+                className="text-primary py-2 text-left font-medium transition-colors"
               >
                 Vị trí
               </button>

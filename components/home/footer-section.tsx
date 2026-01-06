@@ -1,7 +1,8 @@
 'use client'
 
+import Logo from '@/assets/logo.png'
+import Image from 'next/image'
 import { Facebook, Instagram, Twitter } from 'lucide-react'
-import AppLogo from '@/components/common/logo'
 
 type FooterSectionProps = {
   onNavigate: (sectionId: string) => void
@@ -9,12 +10,12 @@ type FooterSectionProps = {
 
 export default function FooterSection({ onNavigate }: FooterSectionProps) {
   return (
-    <footer className="from-secondary/90 via-secondary to-primary bg-linear-to-br py-12 text-white">
+    <footer className="from-secondary/80 via-secondary/90 to-primary bg-linear-to-br py-12 text-white">
       <div className="container mx-auto px-4">
         <div className="mb-8 grid gap-8 md:grid-cols-3">
-          <div>
-            <div className="mb-4 flex items-center gap-2">
-              <AppLogo type="secondary" width={150} height="auto" />
+          <div className="flex gap-2">
+            <div className="w-20 shrink-0 gap-1">
+              <Image src={Logo.src} width={80} height={80} alt="logo" />
             </div>
             <p className="leading-relaxed text-white/90">
               Mang đến cho bạn những trải nghiệm ẩm thực tinh tế nhất với niềm đam mê và sự tận tâm

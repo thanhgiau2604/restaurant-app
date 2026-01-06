@@ -12,7 +12,7 @@ export default function LocationSection() {
     >
       <div className="container mx-auto px-4">
         <div className="animate-in fade-in slide-in-from-bottom mb-12 text-center duration-700">
-          <h2 className="text-secondary mb-4 text-4xl font-bold md:text-5xl">Vị trí quán</h2>
+          <h2 className="text-secondary mb-4 text-4xl font-bold md:text-5xl">Vị Trí Quán</h2>
           <p className="text-muted-foreground text-lg">
             Hãy đến và trải nghiệm hương vị tại địa điểm của chúng tôi
           </p>
