@@ -9,7 +9,7 @@ type FooterSectionProps = {
 
 export default function FooterSection({ onNavigate }: FooterSectionProps) {
   return (
-    <footer className="bg-linear-to-br from-orange-900/90 via-rose-900/80 to-purple-900/80 py-12 text-white">
+    <footer className="from-secondary/90 via-secondary to-primary bg-linear-to-br py-12 text-white">
       <div className="container mx-auto px-4">
         <div className="mb-8 grid gap-8 md:grid-cols-3">
           <div>

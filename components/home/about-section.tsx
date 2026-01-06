@@ -13,7 +13,7 @@ export default function AboutSection() {
             </div>
           </div>
           <div className="animate-in fade-in slide-in-from-right duration-700">
-            <h2 className="mb-6 text-4xl font-bold text-rose-700 md:text-5xl">Giới Thiệu Quán</h2>
+            <h2 className="text-secondary mb-6 text-4xl font-bold md:text-5xl">Giới Thiệu Quán</h2>
             <p className="text-muted-foreground mb-4 text-lg leading-relaxed">
               Được thành lập vào năm 2026, nhà hàng hầm rượu của chúng tôi được tạo nên như một{' '}
               <strong>
@@ -36,13 +36,13 @@ export default function AboutSection() {
             </p>
             <div className="flex gap-8">
               <div className="text-center">
-                <div className="bg-linear-to-r from-orange-500 via-rose-700 to-purple-500 bg-clip-text text-4xl font-bold text-transparent">
+                <div className="from-secondary/50 via-secondary to-primary bg-linear-to-r bg-clip-text text-4xl font-bold text-transparent">
                   50+
                 </div>
                 <div className="text-muted-foreground text-sm">Món ăn đặc trưng</div>
               </div>
               <div className="text-center">
-                <div className="ffrom-orange-500 bg-linear-to-r via-rose-700 to-purple-500 bg-clip-text text-4xl font-bold text-transparent">
+                <div className="from-secondary/50 via-secondary to-primary bg-linear-to-r bg-clip-text text-4xl font-bold text-transparent">
                   15+
                 </div>
                 <div className="text-muted-foreground text-sm">Đa dạng thức uống</div>

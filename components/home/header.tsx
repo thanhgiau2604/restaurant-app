@@ -1,7 +1,9 @@
 'use client'
 
 import { Menu, X } from 'lucide-react'
-import AppLogo from '@/components/common/logo'
+import Logo from '@/assets/logo.png'
+import Image from 'next/image'
+import { cn } from '@/lib/utils'
 
 type HeaderProps = {
   scrolled: boolean
@@ -20,40 +22,55 @@ export default function HomeHeader({
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/70 shadow-lg backdrop-blur-sm' : 'bg-transparent'}`}
     >
-      <nav className="container mx-auto px-4 py-4">
+      <nav className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <AppLogo width={150} height="auto" type={scrolled ? 'primary' : 'secondary'} />
+            <Image src={Logo.src} width={80} height={80} alt="logo" />
           </div>
 
           <div className="hidden items-center gap-8 md:flex">
             <button
               onClick={() => onNavigate('home')}
-              className={`${scrolled ? 'text-foreground' : 'text-white'} font-bold drop-shadow-md transition-colors hover:text-rose-700`}
+              className={cn(`font-bold drop-shadow-md transition-colors`, {
+                'text-primary hover:text-secondary': scrolled,
+                'text-white hover:text-white/80': !scrolled,
+              })}
             >
               Trang chủ
             </button>
             <button
               onClick={() => onNavigate('about')}
-              className={`${scrolled ? 'text-foreground' : 'text-white'} font-bold drop-shadow-md transition-colors hover:text-rose-700`}
+              className={cn(`font-bold drop-shadow-md transition-colors`, {
+                'text-primary hover:text-secondary': scrolled,
+                'text-white hover:text-white/80': !scrolled,
+              })}
             >
               Giới thiệu
             </button>
             <button
               onClick={() => onNavigate('menu')}
-              className={`${scrolled ? 'text-foreground' : 'text-white'} font-bold drop-shadow-md transition-colors hover:text-rose-700`}
+              className={cn(`font-bold drop-shadow-md transition-colors`, {
+                'text-primary hover:text-secondary': scrolled,
+                'text-white hover:text-white/80': !scrolled,
+              })}
             >
               Thực đơn
             </button>
             <button
               onClick={() => onNavigate('reservations')}
-              className={`${scrolled ? 'text-foreground' : 'text-white'} font-bold drop-shadow-md transition-colors hover:text-rose-700`}
+              className={cn(`font-bold drop-shadow-md transition-colors`, {
+                'text-primary hover:text-secondary': scrolled,
+                'text-white hover:text-white/80': !scrolled,
+              })}
             >
               Đặt bàn
             </button>
             <button
               onClick={() => onNavigate('location')}
-              className={`${scrolled ? 'text-foreground' : 'text-white'} font-bold drop-shadow-md transition-colors hover:text-rose-700`}
+              className={cn(`font-bold drop-shadow-md transition-colors`, {
+                'text-primary hover:text-secondary': scrolled,
+                'text-white hover:text-white/80': !scrolled,
+              })}
             >
               Vị trí
             </button>

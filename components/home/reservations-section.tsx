@@ -35,13 +35,13 @@ export default function ReservationsSection({
     <section id="reservations" className="bg-white py-20">
       <div className="container mx-auto max-w-2xl px-4">
         <div className="animate-in fade-in slide-in-from-bottom mb-12 text-center duration-700">
-          <h2 className="mb-4 text-4xl font-bold text-rose-700 md:text-5xl">Đặt Bàn</h2>
+          <h2 className="text-secondary mb-4 text-4xl font-bold md:text-5xl">Đặt Bàn</h2>
           <p className="text-muted-foreground text-lg">
             Đặt bàn ngay và sẵn sàng cho một trải nghiệm ẩm thực tuyệt vời
           </p>
         </div>
 
-        <Card className="animate-in fade-in slide-in-from-bottom border-none shadow-2xl shadow-rose-100 delay-200 duration-700">
+        <Card className="animate-in fade-in slide-in-from-bottom shadow-secondary/70 border-none shadow-2xl delay-200 duration-700">
           <CardContent className="p-8">
             <form className="space-y-6" onSubmit={onSubmit}>
               <div className="space-y-2">
@@ -122,7 +122,7 @@ export default function ReservationsSection({
                 type="submit"
                 variant="default"
                 disabled={isSubmitting}
-                className="h-12 w-full bg-rose-800/80 font-semibold text-white transition-opacity hover:bg-rose-800/80 hover:text-white hover:opacity-90"
+                className="bg-primary/80 hover:bg-primary/70 h-12 w-full text-lg font-semibold text-white transition-all hover:text-white"
               >
                 {isSubmitting ? 'Đang gửi...' : 'Xác nhận Đặt bàn'}
               </Button>

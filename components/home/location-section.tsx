@@ -8,11 +8,11 @@ export default function LocationSection() {
   return (
     <section
       id="location"
-      className="bg-linear-to-br from-orange-50 via-rose-100 to-purple-100 py-20"
+      className="from-secondary/5 via-secondary/10 to-primary/20 bg-linear-to-br py-20"
     >
       <div className="container mx-auto px-4">
         <div className="animate-in fade-in slide-in-from-bottom mb-12 text-center duration-700">
-          <h2 className="mb-4 text-4xl font-bold text-rose-700 md:text-5xl">Vị trí quán</h2>
+          <h2 className="text-secondary mb-4 text-4xl font-bold md:text-5xl">Vị trí quán</h2>
           <p className="text-muted-foreground text-lg">
             Hãy đến và trải nghiệm hương vị tại địa điểm của chúng tôi
           </p>
@@ -37,31 +37,31 @@ export default function LocationSection() {
           <Card className="animate-in fade-in slide-in-from-right shadow-xl duration-700">
             <CardContent className="space-y-6 p-8">
               <div className="flex items-start gap-4">
-                <div className="rounded-lg bg-linear-to-br from-rose-600 to-orange-800 p-3 shadow-lg">
+                <div className="from-secondary/50 via-secondary to-primary rounded-lg bg-linear-to-br p-3 shadow-lg">
                   <MapPin className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="mb-1 text-lg font-semibold text-rose-700">Địa chỉ</h3>
+                  <h3 className="text-secondary mb-1 text-lg font-semibold">Địa chỉ</h3>
                   <p className="text-muted-foreground leading-relaxed">{BASIC_INFO.address}</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="rounded-lg bg-linear-to-br from-rose-600 to-orange-800 p-3 shadow-lg">
+                <div className="from-secondary/50 via-secondary to-primary rounded-lg bg-linear-to-br p-3 shadow-lg">
                   <Phone className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="mb-1 text-lg font-semibold text-rose-700">Số điện thoại</h3>
+                  <h3 className="text-secondary mb-1 text-lg font-semibold">Số điện thoại</h3>
                   <p className="text-muted-foreground">{BASIC_INFO.phone}</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="rounded-lg bg-linear-to-br from-rose-600 to-orange-800 p-3 shadow-lg">
+                <div className="from-secondary/50 via-secondary to-primary rounded-lg bg-linear-to-br p-3 shadow-lg">
                   <Clock className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="mb-1 text-lg font-semibold text-rose-700">Giờ hoạt động</h3>
+                  <h3 className="text-secondary mb-1 text-lg font-semibold">Giờ hoạt động</h3>
                   <div className="text-muted-foreground">
                     <div className="flex justify-between gap-2">
                       <span>Thứ 2 - Chủ nhật:</span>

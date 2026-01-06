@@ -24,10 +24,13 @@ export default function MenuSection({
   formatVnd,
 }: Props) {
   return (
-    <section id="menu" className="bg-linear-to-br from-orange-50 via-rose-100 to-purple-100 py-20">
+    <section
+      id="menu"
+      className="from-secondary/5 via-secondary/10 to-primary/20 bg-linear-to-br py-20"
+    >
       <div className="container mx-auto px-4">
         <div className="animate-in fade-in slide-in-from-bottom mb-12 text-center duration-700">
-          <h2 className="mb-4 text-4xl font-bold text-rose-700 md:text-5xl">Thực Đơn</h2>
+          <h2 className="text-secondary mb-4 text-4xl font-bold md:text-5xl">Thực Đơn</h2>
           <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
             Khám phá tuyển chọn các món ăn hấp dẫn được chúng tôi chọn lọc kỹ lưỡng
           </p>
@@ -48,8 +51,8 @@ export default function MenuSection({
                   variant={activeCategory === category.id ? 'custom' : 'outline'}
                   className={`rounded-full px-6 transition-all duration-300 ${
                     activeCategory === category.id
-                      ? 'scale-105 bg-rose-700/50 bg-linear-to-br from-rose-700/40 to-rose-800/80 text-white shadow-lg'
-                      : 'hover:scale-105 hover:border-rose-400'
+                      ? 'from-secondary/50 via-secondary to-primary scale-105 bg-linear-to-br text-white shadow-lg'
+                      : 'hover:border-secondary hover:scale-105'
                   }`}
                 >
                   {category.name}
@@ -81,7 +84,7 @@ export default function MenuSection({
               {dishes.map((dish) => (
                 <Card
                   key={dish.id}
-                  className="group overflow-hidden border-2 pt-0 transition-all duration-300 hover:scale-[1.02] hover:border-orange-400 hover:shadow-xl"
+                  className="group hover:border-secondary/50 overflow-hidden border-2 pt-0 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
                 >
                   <div className="relative h-48 overflow-hidden">
                     <img
@@ -90,7 +93,7 @@ export default function MenuSection({
                       className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                     <div className="absolute top-2 right-2 rounded-full bg-white px-3 py-1 shadow-lg">
-                      <span className="bg-linear-to-r from-orange-600 to-amber-600 bg-clip-text text-lg font-bold text-transparent">
+                      <span className="text-secondary bg-clip-text text-lg font-bold">
                         {formatVnd(dish.price)}đ
                       </span>
                     </div>
