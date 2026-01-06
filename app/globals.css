@@ -40,7 +40,7 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* Adding hero-specific color variables from version 1 */
-  --hero-accent: oklch(0.68 0.25 38.82);
+  --hero-accent: hsl(23 60 70);
   --hero-primary: oklch(0.55 0.22 275.02);
   --hero-secondary: oklch(0.65 0.2 15.38);
 }

@@ -53,7 +53,7 @@ export default function HeroSection({ heroVisible, onCtaClick }: HeroSectionProp
       id="home"
       className="relative flex min-h-screen items-center justify-center overflow-hidden"
     >
-      <div className="animate-gradient-xy absolute inset-0 bg-linear-to-br from-(--color-hero-accent) via-(--color-hero-primary) to-(--color-hero-secondary) opacity-90" />
+      <div className="animate-gradient-xy from-primary/50 via-secondary/70 absolute inset-0 bg-linear-to-br to-(--color-hero-accent) opacity-90" />
       <div
         className={`absolute inset-0 bg-cover bg-center opacity-40`}
         style={{ backgroundImage: `url(${MainBg.src})` }}
@@ -85,7 +85,7 @@ export default function HeroSection({ heroVisible, onCtaClick }: HeroSectionProp
           size="lg"
           variant="custom"
           onClick={onCtaClick}
-          className="from-secondary to-primary rounded-full bg-linear-to-r px-10 py-8 text-2xl font-semibold text-white shadow-2xl transition-transform hover:scale-105"
+          className="from-secondary/80 to-secondary rounded-full bg-linear-to-r px-10 py-8 text-2xl font-semibold text-white shadow-2xl transition-transform hover:scale-105"
         >
           Đặt Bàn Ngay
         </Button>
