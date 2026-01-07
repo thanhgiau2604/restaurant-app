@@ -215,7 +215,7 @@ export function DishManagement() {
           <CardTitle className="text-2xl font-bold">Quản lý thực đơn</CardTitle>
           <DishFormDialog
             trigger={
-              <Button className="text-primary border-primary gap-2 border bg-white hover:opacity-90">
+              <Button className="text-primary border-secondary/80 gap-2 border bg-white hover:opacity-90">
                 <Plus className="h-4 w-4" />
                 Thêm món
               </Button>

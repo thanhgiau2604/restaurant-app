@@ -96,7 +96,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-orange-50 via-rose-100 to-purple-100 p-4">
+    <div className="bg-gradient flex min-h-screen items-center justify-center p-4">
       <Card className="relative z-10 w-full max-w-md border-none bg-white/50 shadow-2xl">
         <CardHeader className="space-y-4 text-center">
           <div className="secondary-gradient mx-auto w-fit rounded-2xl p-4">
@@ -118,7 +118,7 @@ export default function LoginPage() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Enter email"
+                  placeholder="Nhập địa chỉ Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10"
@@ -135,7 +135,7 @@ export default function LoginPage() {
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter password"
+                  placeholder="Nhập mật khẩu"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pl-10"

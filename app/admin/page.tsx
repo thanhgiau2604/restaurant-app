@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 export default function AdminPage() {
   return (
     <AdminAuthGuard>
-      <div className="min-h-screen bg-linear-to-br from-orange-50 via-rose-100 to-purple-100">
+      <div className="bg-gradient min-h-screen">
         <AdminHeader />
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8">

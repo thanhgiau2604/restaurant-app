@@ -23,7 +23,7 @@
   --destructive-foreground: oklch(0.99 0.01 85.87);
   --border: oklch(0.9 0.01 85.87);
   --input: oklch(0.9 0.01 85.87);
-  --ring: oklch(0.58 0.2 35);
+  --ring: hsl(6 40 35);
   --chart-1: oklch(0.58 0.2 35);
   --chart-2: oklch(0.52 0.18 340);
   --chart-3: oklch(0.5 0.19 310);
@@ -173,9 +173,13 @@ button {
 }
 
 .common-gradient {
-  @apply bg-linear-to-r from-rose-800 to-orange-700 text-white;
+  @apply from-secondary/80 to-primary/90 bg-linear-to-r text-white;
 }
 
 .secondary-gradient {
-  @apply from-primary to-secondary/80 bg-linear-to-r text-white;
+  @apply from-secondary/70 to-primary bg-linear-to-r text-white;
+}
+
+.bg-gradient {
+  @apply from-secondary/5 via-secondary/10 to-primary/20 bg-linear-to-br;
 }

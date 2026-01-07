@@ -8,7 +8,8 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
-import AppLogo from '../common/logo'
+import Logo from '@/assets/logo.png'
+import Image from 'next/image'
 
 interface AdminHeaderProps {
   activePage?: 'dashboard' | 'menu' | 'reservations'
@@ -32,14 +33,14 @@ export function AdminHeader({ activePage = 'dashboard' }: AdminHeaderProps) {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-linear-to-br from-orange-50 to-rose-100 shadow">
+    <header className="from-secondary/10 via-secondary/5 to-primary/10 sticky top-0 z-50 w-full bg-linear-to-br shadow">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-6">
           <Link
             href="/admin"
             className="flex items-center gap-3 transition-opacity hover:opacity-80"
           >
-            <AppLogo width={150} height="auto" type="primary" />
+            <Image src={Logo.src} alt="Logo" width={60} height={50} />
           </Link>
 
           <nav className="hidden items-center gap-2 md:flex">
@@ -84,7 +85,7 @@ export function AdminHeader({ activePage = 'dashboard' }: AdminHeaderProps) {
         <Button
           variant="outline"
           onClick={handleLogout}
-          className="hover:bg-destructive hover:text-destructive-foreground gap-2 bg-transparent"
+          className="hover:bg-destructive/80 hover:text-destructive-foreground text-primary border-secondary/80 gap-2 bg-transparent hover:border-none"
         >
           <LogOut className="h-4 w-4" />
           Đăng xuất
