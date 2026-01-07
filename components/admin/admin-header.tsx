@@ -40,7 +40,7 @@ export function AdminHeader({ activePage = 'dashboard' }: AdminHeaderProps) {
             href="/admin"
             className="flex items-center gap-3 transition-opacity hover:opacity-80"
           >
-            <Image src={Logo.src} alt="Logo" width={60} height={50} />
+            <Image src={Logo.src} alt="Logo" width={60} height={60} />
           </Link>
 
           <nav className="hidden items-center gap-2 md:flex">

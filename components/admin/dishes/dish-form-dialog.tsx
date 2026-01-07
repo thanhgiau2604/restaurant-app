@@ -135,7 +135,7 @@ export default function DishFormDialog({
             <Label>Hình ảnh món</Label>
             {imagePreview ? (
               <div className="relative">
-                <div className="bg-muted relative h-48 w-full overflow-hidden rounded-lg">
+                <div className="bg-muted relative aspect-video w-full overflow-hidden rounded-lg">
                   <Image
                     src={imagePreview || '/placeholder.svg'}
                     alt="Xem trước"

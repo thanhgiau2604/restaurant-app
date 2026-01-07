@@ -65,7 +65,7 @@ export default function MenuSection({
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {Array.from({ length: 6 }).map((_, index) => (
                 <Card key={`dish-skeleton-${index}`} className="border-2 border-transparent">
-                  <div className="h-48 animate-pulse bg-white/70" />
+                  <div className="aspect-video w-full animate-pulse bg-white/70" />
                   <CardContent className="space-y-3 p-5">
                     <div className="bg-muted/70 h-5 w-2/3 animate-pulse rounded" />
                     <div className="bg-muted/50 h-4 w-full animate-pulse rounded" />
@@ -86,7 +86,7 @@ export default function MenuSection({
                   key={dish.id}
                   className="group hover:border-secondary/50 overflow-hidden border-2 pt-0 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
                 >
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative aspect-video w-full overflow-hidden">
                     <img
                       src={dish.image || '/placeholder.svg'}
                       alt={dish.name}

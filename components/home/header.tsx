@@ -4,6 +4,7 @@ import { Menu, X } from 'lucide-react'
 import Logo from '@/assets/logo.png'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 type HeaderProps = {
   scrolled: boolean
@@ -25,7 +26,10 @@ export default function HomeHeader({
       <nav className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Image src={Logo.src} width={80} height={80} alt="logo" />
+            <Link href="/" className="transition-opacity hover:opacity-80">
+              <Image src={Logo.src} width={80} height={80} alt="logo" />
+            </Link>
+
             <p
               className={cn(
                 'font-extrabold max-md:hidden',

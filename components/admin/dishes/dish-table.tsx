@@ -70,7 +70,7 @@ export default function DishTable({
             dishes.map((dish) => (
               <TableRow key={dish.id}>
                 <TableCell>
-                  <div className="bg-muted relative h-16 w-16 overflow-hidden rounded-lg">
+                  <div className="bg-muted relative aspect-video w-28 overflow-hidden rounded-lg">
                     {dish.image ? (
                       <Image
                         src={dish.image || '/placeholder.svg'}
