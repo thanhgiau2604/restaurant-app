@@ -7,6 +7,7 @@ import { Controller } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Badge } from '@/components/ui/badge'
 import {
   Dialog,
   DialogContent,
@@ -14,13 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Upload, X } from 'lucide-react'
 import type { Category, Dish } from '@/lib/types'
 import Image from 'next/image'
@@ -99,36 +93,75 @@ export default function DishFormDialog({
             {errors.price && <p className="text-sm text-red-500">{errors.price.message}</p>}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="category">Danh mục</Label>
+            <Label>Danh mục</Label>
             <Controller
               control={control}
-              name="category"
-              render={({ field }) => (
-                <Select value={field.value} onValueChange={field.onChange} required>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Chọn danh mục" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {isLoadingCategories ? (
-                      <SelectItem value="loading" disabled>
-                        Đang tải...
-                      </SelectItem>
-                    ) : categories.length === 0 ? (
-                      <SelectItem value="empty" disabled>
-                        Chưa có danh mục
-                      </SelectItem>
-                    ) : (
-                      categories.map((category) => (
-                        <SelectItem key={category.id} value={category.id}>
-                          {category.name}
-                        </SelectItem>
-                      ))
-                    )}
-                  </SelectContent>
-                </Select>
-              )}
+              name="categories"
+              render={({ field }) => {
+                const selected = field.value ?? []
+                const toggleCategory = (categoryId: string) => {
+                  if (selected.includes(categoryId)) {
+                    field.onChange(selected.filter((item) => item !== categoryId))
+                  } else {
+                    field.onChange([...selected, categoryId])
+                  }
+                }
+
+                return (
+                  <div className="space-y-3">
+                    <div className="flex flex-wrap gap-2">
+                      {selected.length === 0 ? (
+                        <p className="text-muted-foreground text-sm">Chưa chọn danh mục.</p>
+                      ) : (
+                        selected.map((categoryId) => {
+                          const categoryName =
+                            categories.find((category) => category.id === categoryId)?.name ??
+                            'Không rõ'
+                          return (
+                            <Badge key={categoryId} variant="secondary" className="gap-1 pr-1">
+                              {categoryName}
+                              <button
+                                type="button"
+                                onClick={() => toggleCategory(categoryId)}
+                                className="hover:text-foreground/80 text-muted-foreground rounded-full p-0.5"
+                                aria-label={`Bỏ ${categoryName}`}
+                              >
+                                <X className="h-3 w-3 text-white" />
+                              </button>
+                            </Badge>
+                          )
+                        })
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {isLoadingCategories ? (
+                        <p className="text-muted-foreground text-sm">Đang tải danh mục...</p>
+                      ) : categories.length === 0 ? (
+                        <p className="text-muted-foreground text-sm">Chưa có danh mục.</p>
+                      ) : (
+                        categories.map((category) => {
+                          const isSelected = selected.includes(category.id)
+                          return (
+                            <Button
+                              key={category.id}
+                              type="button"
+                              variant={isSelected ? 'custom' : 'outline'}
+                              onClick={() => toggleCategory(category.id)}
+                              className="rounded-full"
+                            >
+                              {category.name}
+                            </Button>
+                          )
+                        })
+                      )}
+                    </div>
+                  </div>
+                )
+              }}
             />
-            {errors.category && <p className="text-sm text-red-500">{errors.category.message}</p>}
+            {errors.categories && (
+              <p className="text-sm text-red-500">{errors.categories.message}</p>
+            )}
           </div>
 
           <div className="space-y-2">

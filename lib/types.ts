@@ -2,7 +2,7 @@ export interface Dish {
   id: string
   name: string
   price: number
-  category: string
+  categories: string[]
   image: string
 }
 

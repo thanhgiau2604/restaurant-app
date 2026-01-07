@@ -1,6 +1,6 @@
 export type DishFormValues = {
   name: string
   price: string
-  category: string
+  categories: string[]
   image?: string
 }

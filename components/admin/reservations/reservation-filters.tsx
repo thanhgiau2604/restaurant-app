@@ -43,18 +43,18 @@ export default function ReservationFilters({
           className="pl-10"
         />
       </div>
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-2 md:flex-row">
         <div className="relative">
           <Calendar className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 z-10 h-4 w-4 -translate-y-1/2" />
           <Input
             type="date"
             value={filterDate}
             onChange={(e) => onDateChange(e.target.value)}
-            className="w-45 pl-9"
+            className="w-full pl-9 md:w-45"
           />
         </div>
         <Select value={filterStatus} onValueChange={onStatusChange}>
-          <SelectTrigger className="max-w-50 shrink-0">
+          <SelectTrigger className="w-full shrink-0 md:max-w-50">
             <Filter className="mr-2 h-4 w-4" />
             <SelectValue placeholder="Trạng thái" />
           </SelectTrigger>

@@ -43,41 +43,29 @@ export function AdminHeader({ activePage = 'dashboard' }: AdminHeaderProps) {
             <Image src={Logo.src} alt="Logo" width={60} height={60} />
           </Link>
 
-          <nav className="hidden items-center gap-2 md:flex">
-            <Link href="/admin">
-              <Button
-                variant={activePage === 'dashboard' ? 'custom' : 'ghost'}
-                size="sm"
-                className={cn('gap-2', {
-                  'secondary-gradient': activePage === 'dashboard',
-                })}
-              >
-                <LayoutDashboard className="h-4 w-4" />
-                Tổng quan
-              </Button>
-            </Link>
+          <nav className="flex items-center gap-2">
             <Link href="/admin/menu">
               <Button
                 variant={activePage === 'menu' ? 'custom' : 'ghost'}
                 size="sm"
-                className={cn('gap-2', {
+                className={cn('border-secondary/50 gap-2 border', {
                   'secondary-gradient': activePage === 'menu',
                 })}
               >
                 <UtensilsCrossed className="h-4 w-4" />
-                Thực đơn
+                <span className="hidden md:inline">Thực đơn</span>
               </Button>
             </Link>
             <Link href="/admin/reservations">
               <Button
                 variant={activePage === 'reservations' ? 'custom' : 'ghost'}
                 size="sm"
-                className={cn('gap-2', {
+                className={cn('border-secondary/50 gap-2 border', {
                   'secondary-gradient': activePage === 'reservations',
                 })}
               >
                 <CalendarDays className="h-4 w-4" />
-                Đặt bàn
+                <span className="hidden md:inline">Đặt bàn</span>
               </Button>
             </Link>
           </nav>
@@ -88,7 +76,7 @@ export function AdminHeader({ activePage = 'dashboard' }: AdminHeaderProps) {
           className="hover:bg-destructive/80 hover:text-destructive-foreground text-primary border-secondary/80 gap-2 bg-transparent hover:border-none"
         >
           <LogOut className="h-4 w-4" />
-          Đăng xuất
+          <span className="hidden md:inline">Đăng xuất</span>
         </Button>
       </div>
     </header>

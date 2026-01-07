@@ -20,6 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Badge } from '@/components/ui/badge'
 import { ImageIcon, Pencil, Trash2 } from 'lucide-react'
 import type { Dish } from '@/lib/types'
 import Image from 'next/image'
@@ -30,7 +31,7 @@ type DishTableProps = {
   searchQuery: string
   onEdit: (dish: Dish) => void
   onDelete: (id: string) => void
-  categoryNameById: (categoryId: string) => string
+  categoryNamesByIds: (categoryIds: string[]) => string[]
   formatVnd: (value: string) => string
 }
 
@@ -40,7 +41,7 @@ export default function DishTable({
   searchQuery,
   onEdit,
   onDelete,
-  categoryNameById,
+  categoryNamesByIds,
   formatVnd,
 }: DishTableProps) {
   return (
@@ -86,7 +87,15 @@ export default function DishTable({
                   </div>
                 </TableCell>
                 <TableCell className="font-medium">{dish.name}</TableCell>
-                <TableCell>{categoryNameById(dish.category)}</TableCell>
+                <TableCell>
+                  <div className="flex flex-wrap gap-2">
+                    {categoryNamesByIds(dish.categories).map((categoryName) => (
+                      <Badge key={`${dish.id}-${categoryName}`} variant="secondary">
+                        {categoryName}
+                      </Badge>
+                    ))}
+                  </div>
+                </TableCell>
                 <TableCell>{formatVnd(dish.price.toString())}đ</TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">

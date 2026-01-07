@@ -142,7 +142,7 @@ export default function RestaurantPage() {
   }
 
   const filteredDishes = activeCategory
-    ? dishes.filter((dish) => dish.category === activeCategory)
+    ? dishes.filter((dish) => dish.categories.includes(activeCategory))
     : dishes
 
   const handleReservationSubmit = async (e: React.FormEvent) => {

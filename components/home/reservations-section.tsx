@@ -123,7 +123,7 @@ export default function ReservationsSection({
                 type="submit"
                 variant="default"
                 disabled={isSubmitting}
-                className="bg-primary/80 hover:bg-primary/70 h-12 w-full text-lg font-semibold text-white transition-all hover:text-white"
+                className="bg-primary/90 hover:bg-primary/80 h-12 w-full text-lg font-semibold text-white transition-all hover:text-white"
               >
                 {isSubmitting ? 'Đang gửi...' : 'Xác nhận Đặt bàn'}
               </Button>

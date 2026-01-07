@@ -22,11 +22,15 @@ export async function fetchDishes(): Promise<Dish[]> {
   const snapshot = await getDocs(query(dishesCollection, orderBy("name", "asc")))
   return snapshot.docs.map((docSnapshot) => {
     const data = docSnapshot.data() as Omit<Dish, "id">
+    const categories = Array.isArray((data as { categories?: unknown }).categories)
+      ? (data as { categories: string[] }).categories
+      : []
+    const legacyCategory = (data as { category?: string }).category
     return {
       id: docSnapshot.id,
       name: data.name ?? "",
       price: Number(data.price ?? 0),
-      category: data.category ?? "",
+      categories: categories.length > 0 ? categories : legacyCategory ? [legacyCategory] : [],
       image: data.image ?? "",
     }
   })

@@ -60,7 +60,7 @@ export function DishManagement() {
       .string()
       .min(1, 'Vui lòng nhập giá.')
       .refine((value) => !Number.isNaN(parsePrice(value)), 'Giá không hợp lệ.'),
-    category: z.string().min(1, 'Vui lòng chọn danh mục.'),
+    categories: z.array(z.string()).min(1, 'Vui lòng chọn ít nhất một danh mục.'),
     image: z.string().optional().or(z.literal('')),
   })
 
@@ -76,7 +76,7 @@ export function DishManagement() {
     defaultValues: {
       name: '',
       price: '',
-      category: '',
+      categories: [],
       image: '',
     },
   })
@@ -106,8 +106,13 @@ export function DishManagement() {
     return searchQuery === '' || dish.name.toLowerCase().includes(searchQuery.toLowerCase())
   })
 
-  const categoryNameById = (categoryId: string) => {
-    return categories.find((category) => category.id === categoryId)?.name ?? 'Không rõ'
+  const categoryNamesByIds = (categoryIds: string[]) => {
+    return categoryIds.length === 0
+      ? ['Chưa có danh mục']
+      : categoryIds.map(
+          (categoryId) =>
+            categories.find((category) => category.id === categoryId)?.name ?? 'Không rõ'
+        )
   }
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -157,7 +162,7 @@ export function DishManagement() {
         await updateDish(editingDish.id, {
           name: values.name,
           price: parsedPrice,
-          category: values.category,
+          categories: values.categories,
           image: values.image || '',
         })
         toast.success('Cập nhật món ăn thành công')
@@ -165,7 +170,7 @@ export function DishManagement() {
         await addDish({
           name: values.name,
           price: parsedPrice,
-          category: values.category,
+          categories: values.categories,
           image: values.image || '',
         })
         toast.success('Thêm món ăn thành công')
@@ -183,7 +188,7 @@ export function DishManagement() {
     reset({
       name: dish.name,
       price: formatVnd(dish.price.toString()),
-      category: dish.category,
+      categories: dish.categories,
       image: dish.image,
     })
     setImagePreview(dish.image)
@@ -202,7 +207,7 @@ export function DishManagement() {
   }
 
   const resetForm = () => {
-    reset({ name: '', price: '', category: '', image: '' })
+    reset({ name: '', price: '', categories: [], image: '' })
     setEditingDish(null)
     setImagePreview('')
     setIsDialogOpen(false)
@@ -259,7 +264,7 @@ export function DishManagement() {
           searchQuery={searchQuery}
           onEdit={handleEdit}
           onDelete={handleDelete}
-          categoryNameById={categoryNameById}
+          categoryNamesByIds={categoryNamesByIds}
           formatVnd={formatVnd}
         />
       </CardContent>

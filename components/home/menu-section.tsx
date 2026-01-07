@@ -29,10 +29,11 @@ export default function MenuSection({
       className="from-secondary/5 via-secondary/10 to-primary/20 bg-linear-to-br py-20"
     >
       <div className="container mx-auto px-4">
-        <div className="animate-in fade-in slide-in-from-bottom mb-12 text-center duration-700">
+        <div className="animate-in fade-in slide-in-from-bottom mb-6 text-center duration-700">
           <h2 className="text-secondary mb-4 text-4xl font-bold md:text-5xl">Thực Đơn</h2>
           <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
-            Khám phá tuyển chọn các món ăn hấp dẫn được chúng tôi chọn lọc kỹ lưỡng
+            Khám phá tuyển chọn các món ăn hấp dẫn được chúng tôi chọn lọc kỹ lưỡng <br />
+            Vui lòng chọn thực đơn phù hợp với nhu cầu của bạn
           </p>
         </div>
 
@@ -60,7 +61,7 @@ export default function MenuSection({
               ))}
         </div>
 
-        <div className="relative min-h-100">
+        <div className="relative min-h-80">
           {isLoadingDishes || isLoadingCategories ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {Array.from({ length: 6 }).map((_, index) => (
