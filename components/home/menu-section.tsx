@@ -91,19 +91,16 @@ export default function MenuSection({
                     <img
                       src={dish.image || '/placeholder.svg'}
                       alt={dish.name}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-110"
                     />
-                    <div className="absolute top-2 right-2 rounded-full bg-white px-3 py-1 shadow-lg">
+                    <div className="absolute top-2 right-2 rounded-full bg-white/80 px-3 py-1 shadow-lg">
                       <span className="text-secondary bg-clip-text text-lg font-bold">
                         {formatVnd(dish.price)}đ
                       </span>
                     </div>
                   </div>
-                  <CardContent className="p-5">
+                  <CardContent className="py-0">
                     <h3 className="mb-2 text-xl font-bold">{dish.name}</h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Món ăn đặc trưng của nhà hàng.
-                    </p>
                   </CardContent>
                 </Card>
               ))}

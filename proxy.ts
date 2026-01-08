@@ -12,7 +12,7 @@ const unauthorizedResponse = () =>
     },
   })
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   if (!BASIC_AUTH_USER || !BASIC_AUTH_PASSWORD) {
     return NextResponse.next()
   }
