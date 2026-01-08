@@ -5,7 +5,6 @@ import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
 import FirebaseAnalytics from '@/components/firebase-analytics'
-import FloatingContact from '@/components/floating-contact'
 
 const SITE_NAME = 'Nhà hàng Mộc Sơn'
 const SITE_URL = 'https://nhahangmocson.com'
@@ -134,7 +133,6 @@ export default function RootLayout({
       <body className={`antialiased ${_googleSans.className}`}>
         <FirebaseAnalytics />
         {children}
-        <FloatingContact />
         <Analytics />
         <Toaster richColors />
       </body>

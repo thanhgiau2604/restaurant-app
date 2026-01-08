@@ -15,6 +15,7 @@ import ReservationsSection, {
 } from '@/components/home/reservations-section'
 import LocationSection from '@/components/home/location-section'
 import FooterSection from '@/components/home/footer-section'
+import FloatingContact from '@/components/floating-contact'
 
 export default function RestaurantPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -208,6 +209,8 @@ export default function RestaurantPage() {
       <LocationSection />
 
       <FooterSection onNavigate={scrollToSection} />
+
+      <FloatingContact />
 
       <button
         type="button"

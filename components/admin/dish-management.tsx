@@ -107,6 +107,8 @@ export function DishManagement() {
   })
 
   const categoryNamesByIds = (categoryIds: string[]) => {
+    if (!categories.length) return []
+
     return categoryIds.length === 0
       ? ['Chưa có danh mục']
       : categoryIds.map(
