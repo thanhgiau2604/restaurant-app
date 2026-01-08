@@ -2,10 +2,10 @@
 
 import { Button } from '@/components/ui/button'
 import MainBg from '@/assets/view-04.jpg'
-import Dish01 from '@/assets/dish-01.jpg'
-import Dish02 from '@/assets/dish-02.jpg'
-import Dish03 from '@/assets/dish-03.jpg'
-import Dish04 from '@/assets/dish-04.jpg'
+import Dish01 from '@/assets/menu/dish-01.jpg'
+import Dish02 from '@/assets/menu/dish-02.jpg'
+import Dish03 from '@/assets/menu/dish-03.jpg'
+import Dish04 from '@/assets/menu/dish-04.jpg'
 
 const heroDishImages = [
   {
