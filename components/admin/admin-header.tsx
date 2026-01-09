@@ -33,7 +33,7 @@ export function AdminHeader({ activePage = 'dashboard' }: AdminHeaderProps) {
   }
 
   return (
-    <header className="from-secondary/10 via-secondary/5 to-primary/10 sticky top-0 z-50 w-full bg-linear-to-br shadow">
+    <header className="sticky top-0 z-50 w-full bg-linear-to-r from-[#efe4da] to-[#f2eae0] shadow">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-6">
           <Link
