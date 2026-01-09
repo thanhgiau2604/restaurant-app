@@ -3,6 +3,38 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import type { Category, Dish } from '@/lib/types'
+import HTMLFlipBook from 'react-pageflip'
+import Dish01 from '@/assets/menu/dish-01.jpg'
+import Dish02 from '@/assets/menu/dish-02.jpg'
+import Dish03 from '@/assets/menu/dish-03.jpg'
+import Dish04 from '@/assets/menu/dish-04.jpg'
+import Dish05 from '@/assets/menu/dish-05.jpg'
+import Dish06 from '@/assets/menu/dish-06.jpg'
+import Dish07 from '@/assets/menu/dish-07.jpg'
+import Dish08 from '@/assets/menu/dish-08.jpg'
+import Dish09 from '@/assets/menu/dish-09.jpg'
+import Dish10 from '@/assets/menu/dish-10.jpg'
+import Dish11 from '@/assets/menu/dish-11.jpg'
+import Dish12 from '@/assets/menu/dish-12.jpg'
+import Dish13 from '@/assets/menu/dish-13.jpg'
+import Dish14 from '@/assets/menu/dish-14.jpg'
+
+const menuFlipbookImages = [
+  { src: Dish01.src, alt: 'Menu dish 01' },
+  { src: Dish02.src, alt: 'Menu dish 02' },
+  { src: Dish03.src, alt: 'Menu dish 03' },
+  { src: Dish04.src, alt: 'Menu dish 04' },
+  { src: Dish05.src, alt: 'Menu dish 05' },
+  { src: Dish06.src, alt: 'Menu dish 06' },
+  { src: Dish07.src, alt: 'Menu dish 07' },
+  { src: Dish08.src, alt: 'Menu dish 08' },
+  { src: Dish09.src, alt: 'Menu dish 09' },
+  { src: Dish10.src, alt: 'Menu dish 10' },
+  { src: Dish11.src, alt: 'Menu dish 11' },
+  { src: Dish12.src, alt: 'Menu dish 12' },
+  { src: Dish13.src, alt: 'Menu dish 13' },
+  { src: Dish14.src, alt: 'Menu dish 14' },
+]
 
 type Props = {
   categories: Category[]
@@ -35,6 +67,30 @@ export default function MenuSection({
             Khám phá tuyển chọn các món ăn hấp dẫn được chúng tôi chọn lọc kỹ lưỡng <br />
             Vui lòng chọn thực đơn phù hợp với nhu cầu của bạn
           </p>
+        </div>
+
+        <div className="mb-10 flex justify-center">
+          <div className="w-full max-w-xl">
+            <HTMLFlipBook
+              width={520}
+              height={680}
+              size="stretch"
+              minWidth={260}
+              maxWidth={560}
+              minHeight={360}
+              maxHeight={700}
+              maxShadowOpacity={0.2}
+              showCover={false}
+              mobileScrollSupport
+              className="mx-auto"
+            >
+              {menuFlipbookImages.map((image) => (
+                <div key={image.src} className="overflow-hidden rounded-2xl bg-white shadow-2xl">
+                  <img src={image.src} alt={image.alt} className="h-full w-full object-cover" />
+                </div>
+              ))}
+            </HTMLFlipBook>
+          </div>
         </div>
 
         <div className="mb-12 flex flex-wrap justify-center gap-4">
