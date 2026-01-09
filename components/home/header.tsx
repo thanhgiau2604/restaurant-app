@@ -21,7 +21,7 @@ export default function HomeHeader({
 }: HeaderProps) {
   return (
     <header
-      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/70 shadow-lg backdrop-blur-sm' : 'bg-white/40 shadow-lg backdrop-blur-sm'}`}
+      className={`fixed top-0 right-0 left-0 z-50 bg-white/70 shadow-lg backdrop-blur-sm transition-all duration-300`}
     >
       <nav className="container mx-auto px-4">
         <div className="flex items-center justify-between">
