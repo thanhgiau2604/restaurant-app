@@ -36,8 +36,8 @@ export default function MenuSection({ dishes, isLoadingDishes }: Props) {
         </div>
 
         {shouldRenderFlipbook ? (
-          <div className="mb-10 flex justify-center">
-            <div className="w-full max-w-5xl">
+          <div className="mb-10 flex justify-center overflow-hidden">
+            <div className="w-full max-w-5xl overflow-hidden">
               {isLoadingDishes ? (
                 <div className="flex h-240 items-center justify-center rounded-2xl shadow-2xl" />
               ) : (

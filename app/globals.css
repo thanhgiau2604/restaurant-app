@@ -135,9 +135,16 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+body {
+  @apply bg-background text-foreground;
+  overflow-x: hidden;
+}
+
+.stf__parent,
+.stf__wrapper,
+.stf__block {
+  overflow: hidden;
+}
 }
 
 /* Custom animations */
