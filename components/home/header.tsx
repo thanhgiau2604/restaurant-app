@@ -21,7 +21,7 @@ export default function HomeHeader({
 }: HeaderProps) {
   return (
     <header
-      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/70 shadow-lg backdrop-blur-sm' : 'bg-transparent'}`}
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/70 shadow-lg backdrop-blur-sm' : 'bg-white/40 shadow-lg backdrop-blur-sm'}`}
     >
       <nav className="container mx-auto px-4">
         <div className="flex items-center justify-between">
@@ -30,62 +30,44 @@ export default function HomeHeader({
               <Image src={Logo.src} width={80} height={80} alt="logo" />
             </Link>
 
-            <p
-              className={cn(
-                'font-extrabold max-md:hidden',
-                scrolled
-                  ? 'text-secondary'
-                  : 'text-hero-accent text-shadow-[2px_0px_0px_rgba(73,35,20)]'
-              )}
-            >
-              NHÀ HÀNG <br /> <span className="mr-1" />
-              MỘC SƠN
+            <p className={cn('text-sm leading-tight font-semibold text-balance md:text-base')}>
+              <span className={cn('text-secondary')}>Nhà Hàng Ẩm Thực Mộc Sơn</span>
+              <span className={cn('text-primary block text-xs font-normal md:text-sm')}>
+                chuyên alacarte, sky và Hầm rượu vip
+              </span>
             </p>
           </div>
 
           <div className="hidden items-center gap-8 md:flex">
             <button
-              onClick={() => onNavigate('home')}
-              className={cn(`font-bold drop-shadow-md transition-colors`, {
-                'text-primary hover:text-secondary': scrolled,
-                'text-white hover:text-white/80': !scrolled,
-              })}
-            >
-              Trang chủ
-            </button>
-            <button
               onClick={() => onNavigate('about')}
-              className={cn(`font-bold drop-shadow-md transition-colors`, {
-                'text-primary hover:text-secondary': scrolled,
-                'text-white hover:text-white/80': !scrolled,
-              })}
+              className={cn(
+                `text-secondary hover:text-secondary/80 font-bold drop-shadow-md transition-colors`
+              )}
             >
               Giới thiệu
             </button>
             <button
               onClick={() => onNavigate('menu')}
-              className={cn(`font-bold drop-shadow-md transition-colors`, {
-                'text-primary hover:text-secondary': scrolled,
-                'text-white hover:text-white/80': !scrolled,
-              })}
+              className={cn(
+                `text-secondary hover:text-secondary/80 font-bold drop-shadow-md transition-colors`
+              )}
             >
               Thực đơn
             </button>
             <button
               onClick={() => onNavigate('reservations')}
-              className={cn(`font-bold drop-shadow-md transition-colors`, {
-                'text-primary hover:text-secondary': scrolled,
-                'text-white hover:text-white/80': !scrolled,
-              })}
+              className={cn(
+                `text-secondary hover:text-secondary/80 font-bold drop-shadow-md transition-colors`
+              )}
             >
               Đặt bàn
             </button>
             <button
               onClick={() => onNavigate('location')}
-              className={cn(`font-bold drop-shadow-md transition-colors`, {
-                'text-primary hover:text-secondary': scrolled,
-                'text-white hover:text-white/80': !scrolled,
-              })}
+              className={cn(
+                `text-secondary hover:text-secondary/80 font-bold drop-shadow-md transition-colors`
+              )}
             >
               Vị trí
             </button>
@@ -93,9 +75,9 @@ export default function HomeHeader({
 
           <button className="p-2 md:hidden" onClick={onToggleMobileMenu} aria-label="Toggle menu">
             {mobileMenuOpen ? (
-              <X className={`h-6 w-6 ${scrolled ? 'text-primary' : 'text-white'}`} />
+              <X className={`text-secondary h-6 w-6`} />
             ) : (
-              <Menu className={`h-6 w-6 ${scrolled ? 'text-primary' : 'text-white'}`} />
+              <Menu className={`text-secondary h-6 w-6`} />
             )}
           </button>
         </div>
@@ -104,32 +86,26 @@ export default function HomeHeader({
           <div className="bg-background/98 border-border animate-in slide-in-from-top-5 absolute top-full right-0 left-0 border-t shadow-xl backdrop-blur-lg md:hidden">
             <div className="container mx-auto flex flex-col gap-4 px-4 py-6">
               <button
-                onClick={() => onNavigate('home')}
-                className="text-primary py-2 text-left font-medium transition-colors"
-              >
-                Trang chủ
-              </button>
-              <button
                 onClick={() => onNavigate('about')}
-                className="text-primary py-2 text-left font-medium transition-colors"
+                className="text-secondary py-2 text-left font-medium transition-colors"
               >
                 Giới thiệu
               </button>
               <button
                 onClick={() => onNavigate('menu')}
-                className="text-primary py-2 text-left font-medium transition-colors"
+                className="text-secondary py-2 text-left font-medium transition-colors"
               >
                 Món ăn
               </button>
               <button
                 onClick={() => onNavigate('reservations')}
-                className="text-primary py-2 text-left font-medium transition-colors"
+                className="text-secondary py-2 text-left font-medium transition-colors"
               >
                 Đặt bàn
               </button>
               <button
                 onClick={() => onNavigate('location')}
-                className="text-primary py-2 text-left font-medium transition-colors"
+                className="text-secondary py-2 text-left font-medium transition-colors"
               >
                 Vị trí
               </button>

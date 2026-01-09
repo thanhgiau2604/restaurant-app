@@ -26,12 +26,6 @@ export default function FooterSection({ onNavigate }: FooterSectionProps) {
           <div>
             <div className="space-y-2">
               <button
-                onClick={() => onNavigate('home')}
-                className="hover:text-foreground block text-black transition-colors"
-              >
-                Trang chủ
-              </button>
-              <button
                 onClick={() => onNavigate('about')}
                 className="hover:text-foreground block text-black transition-colors"
               >
