@@ -24,7 +24,7 @@ export default function MenuSection({ dishes, isLoadingDishes }: Props) {
   return (
     <section
       id="menu"
-      className="from-secondary/5 via-secondary/10 to-primary/20 bg-linear-to-br py-20"
+      className="from-secondary/5 via-secondary/10 to-primary/10 bg-linear-to-br py-20"
     >
       <div className="container mx-auto px-4">
         <div className="animate-in fade-in slide-in-from-bottom mb-6 text-center duration-700">
