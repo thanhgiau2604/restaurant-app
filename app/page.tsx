@@ -19,17 +19,13 @@ import FloatingContact from '@/components/floating-contact'
 
 export default function RestaurantPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeCategory, setActiveCategory] = useState('')
   const [scrolled, setScrolled] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [heroVisible, setHeroVisible] = useState(false)
   const addReservation = useRestaurantStore((state) => state.addReservation)
   const dishes = useRestaurantStore((state) => state.dishes)
-  const categories = useRestaurantStore((state) => state.categories)
   const loadDishes = useRestaurantStore((state) => state.loadDishes)
-  const loadCategories = useRestaurantStore((state) => state.loadCategories)
   const isLoadingDishes = useRestaurantStore((state) => state.isLoadingDishes)
-  const isLoadingCategories = useRestaurantStore((state) => state.isLoadingCategories)
   const [isSubmittingReservation, setIsSubmittingReservation] = useState(false)
   const [reservationForm, setReservationForm] = useState<ReservationFormState>({
     name: '',
@@ -58,14 +54,7 @@ export default function RestaurantPage() {
 
   useEffect(() => {
     loadDishes()
-    loadCategories()
   }, [])
-
-  useEffect(() => {
-    if (!activeCategory && categories.length > 0) {
-      setActiveCategory(categories[0].id)
-    }
-  }, [activeCategory, categories])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -138,14 +127,6 @@ export default function RestaurantPage() {
     }
   }
 
-  const formatVnd = (value: number) => {
-    return new Intl.NumberFormat('vi-VN').format(value)
-  }
-
-  const filteredDishes = activeCategory
-    ? dishes.filter((dish) => dish.categories.includes(activeCategory))
-    : dishes
-
   const handleReservationSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const errors = validateReservation(reservationForm)
@@ -189,13 +170,8 @@ export default function RestaurantPage() {
       <AboutSection />
 
       <MenuSection
-        categories={categories}
-        dishes={filteredDishes}
-        activeCategory={activeCategory}
+        dishes={dishes}
         isLoadingDishes={isLoadingDishes}
-        isLoadingCategories={isLoadingCategories}
-        onCategoryChange={setActiveCategory}
-        formatVnd={formatVnd}
       />
 
       <ReservationsSection

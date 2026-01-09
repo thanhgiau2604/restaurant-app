@@ -16,7 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Upload, X } from 'lucide-react'
+import { Loader, Upload, X } from 'lucide-react'
 import { type Dish } from '@/lib/types'
 import { uploadImage } from '@/lib/cloudinary'
 import { useRestaurantStore } from '@/stores/restaurant-store'
@@ -172,13 +172,8 @@ export function DishManagement() {
           </div>
 
           {isLoadingDishes ? (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {Array.from({ length: 6 }).map((_, index) => (
-                <div
-                  key={`menu-image-skeleton-${index}`}
-                  className="bg-muted/60 h-40 animate-pulse rounded-lg"
-                />
-              ))}
+            <div className="flex min-h-56 items-center justify-center">
+              <div className="border-secondary/30 border-t-secondary h-10 w-10 animate-spin rounded-full border-4" />
             </div>
           ) : dishes.length === 0 ? (
             <div className="text-muted-foreground py-6 text-center">
@@ -191,7 +186,7 @@ export function DishManagement() {
                   key={dish.id}
                   className="group border-muted/60 relative overflow-hidden rounded-lg border bg-white"
                 >
-                  <div className="relative aspect-video w-full">
+                  <div className="relative aspect-3/4 w-full">
                     <Image
                       src={dish.image || '/placeholder.svg'}
                       alt={dish.name || 'Menu image'}
