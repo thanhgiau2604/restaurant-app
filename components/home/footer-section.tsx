@@ -2,7 +2,7 @@
 
 import Logo from '@/assets/logo.png'
 import Image from 'next/image'
-import { Facebook, Instagram, Twitter } from 'lucide-react'
+import Fb from '@/assets/fb.png'
 import { BASIC_INFO } from '@/constants'
 
 type FooterSectionProps = {
@@ -52,12 +52,12 @@ export default function FooterSection({ onNavigate }: FooterSectionProps) {
             <div className="flex gap-4">
               <a
                 href={BASIC_INFO.facebook}
-                className="bg-secondary/10 text-foreground hover:bg-secondary/20 rounded-full p-3 transition-all hover:scale-110"
+                className="transition-all hover:scale-110"
                 aria-label="Facebook"
                 target="_blank"
                 rel="noreferrer"
               >
-                <Facebook className="h-5 w-5" />
+                <Image src={Fb.src} width={32} height={32} alt="facebook" />
               </a>
               {/* <a
                 href="#"
