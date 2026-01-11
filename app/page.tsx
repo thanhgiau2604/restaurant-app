@@ -169,10 +169,7 @@ export default function RestaurantPage() {
 
       <AboutSection />
 
-      <MenuSection
-        dishes={dishes}
-        isLoadingDishes={isLoadingDishes}
-      />
+      <MenuSection dishes={dishes} isLoadingDishes={isLoadingDishes} />
 
       <ReservationsSection
         form={reservationForm}

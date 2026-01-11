@@ -21,6 +21,7 @@ export default function MenuSection({ dishes, isLoadingDishes }: Props) {
   const shouldRenderFlipbook = isLoadingDishes || menuImages.length > 0
   const shouldCenterCover = isCoverActive && orientation === 'landscape'
 
+  return null
   return (
     <section
       id="menu"

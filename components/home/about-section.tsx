@@ -6,7 +6,7 @@ import AlacarteImg from '@/assets/alacarte.jpg'
 
 export default function AboutSection() {
   return (
-    <section id="about" className="bg-white py-20">
+    <section id="about" className="overflow-hidden bg-white py-20">
       <div className="container mx-auto px-4">
         <div className="animate-in fade-in slide-in-from-bottom mb-12 text-center duration-700">
           <h2 className="text-secondary mb-4 text-4xl font-bold md:text-5xl">Giới Thiệu</h2>
