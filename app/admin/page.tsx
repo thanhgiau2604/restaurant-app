@@ -24,14 +24,15 @@ export default function AdminPage() {
                     <div className="secondary-gradient rounded-lg p-3 transition-transform group-hover:scale-110">
                       <UtensilsCrossed className="h-6 w-6 text-white" />
                     </div>
-                    <CardTitle className="text-2xl">Quản lý thực đơn</CardTitle>
+                    <CardTitle className="text-2xl">Quản lý Menu</CardTitle>
                   </div>
                   <CardDescription>
-                    Thêm, chỉnh sửa và xóa món ăn. Quản lý thông tin món, giá và danh mục.
+                    Nhằm đơn giản hoá việc tạo các món ăn thủ công, bạn chỉ cần upload hình ảnh Menu
+                    theo thứ tự mong muốn.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground text-sm">Bấm để quản lý thực đơn</p>
+                  <p className="text-muted-foreground text-sm">Bấm để quản lý Menu</p>
                 </CardContent>
               </Card>
             </Link>

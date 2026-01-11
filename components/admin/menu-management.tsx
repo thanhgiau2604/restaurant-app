@@ -163,7 +163,7 @@ export function DishManagement() {
                 )}
                 <div>
                   <p className="text-sm font-medium">
-                    {isUploadingNew ? 'Đang tải ảnh...' : 'Bấm để thêm ảnh thực đơn'}
+                    {isUploadingNew ? 'Đang tải ảnh...' : 'Bấm để thêm ảnh cho Menu'}
                   </p>
                   <p className="text-muted-foreground mt-1 text-xs">PNG, JPG, WEBP tối đa 5MB</p>
                 </div>
@@ -177,7 +177,7 @@ export function DishManagement() {
             </div>
           ) : dishes.length === 0 ? (
             <div className="text-muted-foreground py-6 text-center">
-              Chưa có ảnh menu. Hãy thêm ảnh đầu tiên.
+              Chưa có ảnh cho menu. Hãy thêm ảnh đầu tiên.
             </div>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -6,7 +6,7 @@ import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
 import FirebaseAnalytics from '@/components/firebase-analytics'
 
-const SITE_NAME = 'Nhà hàng Mộc Sơn'
+const SITE_NAME = 'Nhà hàng Ẩm thực Mộc Sơn'
 const SITE_URL = 'https://nhahangmocson.com'
 const OG_IMAGE = `${SITE_URL}/main-img.jpg`
 const TW_IMAGE = OG_IMAGE

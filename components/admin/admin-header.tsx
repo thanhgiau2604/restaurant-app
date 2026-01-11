@@ -53,7 +53,7 @@ export function AdminHeader({ activePage = 'dashboard' }: AdminHeaderProps) {
                 })}
               >
                 <UtensilsCrossed className="h-4 w-4" />
-                <span className="hidden md:inline">Thực đơn</span>
+                <span className="hidden md:inline">Menu</span>
               </Button>
             </Link>
             <Link href="/admin/reservations">

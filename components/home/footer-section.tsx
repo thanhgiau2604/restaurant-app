@@ -3,6 +3,7 @@
 import Logo from '@/assets/logo.png'
 import Image from 'next/image'
 import { Facebook, Instagram, Twitter } from 'lucide-react'
+import { BASIC_INFO } from '@/constants'
 
 type FooterSectionProps = {
   onNavigate: (sectionId: string) => void
@@ -50,13 +51,15 @@ export default function FooterSection({ onNavigate }: FooterSectionProps) {
             <h3 className="mb-4 text-lg font-semibold">Theo dõi chúng tôi</h3>
             <div className="flex gap-4">
               <a
-                href="#"
+                href={BASIC_INFO.facebook}
                 className="bg-secondary/10 text-foreground hover:bg-secondary/20 rounded-full p-3 transition-all hover:scale-110"
                 aria-label="Facebook"
+                target="_blank"
+                rel="noreferrer"
               >
                 <Facebook className="h-5 w-5" />
               </a>
-              <a
+              {/* <a
                 href="#"
                 className="bg-secondary/10 text-foreground hover:bg-secondary/20 rounded-full p-3 transition-all hover:scale-110"
                 aria-label="Instagram"
@@ -69,7 +72,7 @@ export default function FooterSection({ onNavigate }: FooterSectionProps) {
                 aria-label="Twitter"
               >
                 <Twitter className="h-5 w-5" />
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

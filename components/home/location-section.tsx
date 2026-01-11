@@ -19,7 +19,7 @@ export default function LocationSection() {
         </div>
 
         <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2">
-          <Card className="animate-in fade-in slide-in-from-left shadow-xl duration-700">
+          <Card className="animate-in fade-in slide-in-from-left bg-white/60 shadow-xl duration-700">
             <CardContent className="h-full p-0">
               <iframe
                 src={BASIC_INFO.map}
@@ -34,7 +34,7 @@ export default function LocationSection() {
             </CardContent>
           </Card>
 
-          <Card className="animate-in fade-in slide-in-from-right shadow-xl duration-700">
+          <Card className="animate-in fade-in slide-in-from-right bg-white/60 shadow-xl duration-700">
             <CardContent className="space-y-6 p-8">
               <div className="flex items-start gap-4">
                 <div className="from-secondary/50 via-secondary to-primary rounded-lg bg-linear-to-br p-3 shadow-lg">
@@ -63,7 +63,7 @@ export default function LocationSection() {
                 <div>
                   <h3 className="text-secondary mb-1 text-lg font-semibold">Giờ hoạt động</h3>
                   <div className="text-muted-foreground">
-                    <div className="flex justify-between gap-2">
+                    <div className="flex flex-col justify-between gap-0 sm:flex-row sm:gap-2">
                       <span>Thứ 2 - Chủ nhật:</span>
                       <span className="font-medium">{BASIC_INFO.business_hours.weekdays}</span>
                     </div>

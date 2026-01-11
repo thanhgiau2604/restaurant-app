@@ -85,7 +85,7 @@ export default function HeroSection({ heroVisible, onCtaClick }: HeroSectionProp
           size="lg"
           variant="custom"
           onClick={onCtaClick}
-          className="from-secondary/80 to-secondary rounded-full bg-linear-to-r px-10 py-8 text-2xl font-semibold text-white shadow-2xl transition-transform hover:scale-105"
+          className="from-secondary/80 to-secondary relative rounded-full bg-linear-to-r px-10 py-8 text-2xl font-semibold text-white shadow-2xl transition-transform hover:scale-105"
         >
           Đặt Bàn Ngay
         </Button>
