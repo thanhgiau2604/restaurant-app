@@ -24,7 +24,7 @@ export default function HomeHeader({
       className={`fixed top-0 right-0 left-0 z-50 bg-white/70 shadow-lg backdrop-blur-sm transition-all duration-300`}
     >
       <nav className="container mx-auto px-4">
-        <div className="relative flex items-center justify-between">
+        <div className="grid grid-cols-[auto_1fr_auto] items-center md:flex md:justify-between">
           <div className="flex items-center gap-2">
             <Link href="/" className="transition-opacity hover:opacity-80">
               <Image src={Logo.src} width={80} height={80} alt="logo" />
@@ -42,11 +42,7 @@ export default function HomeHeader({
             </p>
           </div>
 
-          <p
-            className={cn(
-              'absolute left-1/2 -translate-x-1/2 text-center text-sm leading-tight font-bold text-balance md:hidden'
-            )}
-          >
+          <p className={cn('text-center text-sm leading-tight font-bold text-balance md:hidden')}>
             <span className={cn('text-secondary')}>Nhà Hàng Ẩm Thực Mộc Sơn</span>
             <span className={cn('text-secondary block text-xs')}>
               chuyên alacarte, sky và Hầm rượu VIP
