@@ -20,9 +20,7 @@ export default function HomeHeader({
   onNavigate,
 }: HeaderProps) {
   return (
-    <header
-      className={`fixed top-0 right-0 left-0 z-50 bg-white/70 shadow-lg backdrop-blur-sm transition-all duration-300`}
-    >
+    <header className={`fixed top-0 right-0 left-0 z-50 bg-white/70 shadow-lg backdrop-blur-sm`}>
       <nav className="container mx-auto px-4">
         <div className="grid grid-cols-[auto_1fr_auto] items-center md:flex md:justify-between">
           <div className="flex items-center gap-2">
