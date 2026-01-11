@@ -2,7 +2,7 @@
 
 import { AdminHeader } from '@/components/admin/admin-header'
 import { AdminAuthGuard } from '@/components/admin/admin-auth-guard'
-import { DishManagement } from '@/components/admin/dish-management'
+import { DishManagement } from '@/components/admin/menu-management'
 
 export default function AdminMenuPage() {
   return (

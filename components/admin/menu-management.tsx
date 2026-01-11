@@ -122,7 +122,7 @@ export function DishManagement() {
   const handleDelete = async (dish: Dish) => {
     try {
       await deleteDish(dish.id)
-      toast.success('Xóa ảnh thực đơn thành công')
+      toast.success('Xóa ảnh menu thành công')
     } catch (error) {
       toast.error('Không thể xóa ảnh', {
         description: 'Vui lòng thử lại.',
@@ -134,7 +134,7 @@ export function DishManagement() {
     <Card className="border-none bg-white/40">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-2xl font-bold">Quản lý hình ảnh thực đơn</CardTitle>
+          <CardTitle className="text-2xl font-bold">Quản lý Menu</CardTitle>
         </div>
       </CardHeader>
       <CardContent>
@@ -177,7 +177,7 @@ export function DishManagement() {
             </div>
           ) : dishes.length === 0 ? (
             <div className="text-muted-foreground py-6 text-center">
-              Chưa có ảnh thực đơn. Hãy thêm ảnh đầu tiên.
+              Chưa có ảnh menu. Hãy thêm ảnh đầu tiên.
             </div>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -211,7 +211,7 @@ export function DishManagement() {
                         <AlertDialogHeader>
                           <AlertDialogTitle>Bạn chắc chắn chứ?</AlertDialogTitle>
                           <AlertDialogDescription>
-                            Thao tác này không thể hoàn tác. Ảnh thực đơn sẽ bị xóa.
+                            Thao tác này không thể hoàn tác. Ảnh menu sẽ bị xóa.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
