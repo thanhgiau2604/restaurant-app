@@ -20,7 +20,7 @@ export default function HomeHeader({
   onNavigate,
 }: HeaderProps) {
   return (
-    <header className={`fixed top-0 right-0 left-0 z-50 bg-white/70 shadow-lg backdrop-blur-sm`}>
+    <header className={`fixed top-0 right-0 left-0 z-50 bg-white/90 shadow-lg backdrop-blur-sm`}>
       <nav className="container mx-auto px-4">
         <div className="grid grid-cols-[auto_1fr_auto] items-center md:flex md:justify-between">
           <div className="flex items-center gap-2">
@@ -33,16 +33,16 @@ export default function HomeHeader({
                 'hidden text-sm leading-tight font-bold text-balance md:block md:text-base'
               )}
             >
-              <span className={cn('text-secondary')}>Nhà Hàng Ẩm Thực Mộc Sơn</span>
-              <span className={cn('text-secondary block text-xs md:text-sm')}>
+              <span className={cn('text-brown-1')}>Nhà Hàng Ẩm Thực Mộc Sơn</span>
+              <span className={cn('text-brown-1 block text-xs md:text-sm')}>
                 chuyên alacarte, sky và Hầm rượu VIP
               </span>
             </p>
           </div>
 
           <p className={cn('text-center text-sm leading-tight font-bold text-balance md:hidden')}>
-            <span className={cn('text-secondary')}>Nhà Hàng Ẩm Thực Mộc Sơn</span>
-            <span className={cn('text-secondary block text-xs')}>
+            <span className={cn('text-brown-1')}>Nhà Hàng Ẩm Thực Mộc Sơn</span>
+            <span className={cn('text-brown-1 block text-xs')}>
               chuyên alacarte, sky và Hầm rượu VIP
             </span>
           </p>
@@ -92,7 +92,7 @@ export default function HomeHeader({
         </div>
 
         {mobileMenuOpen && (
-          <div className="bg-background/98 border-border animate-in slide-in-from-top-5 absolute top-full right-0 left-0 border-t shadow-xl backdrop-blur-lg md:hidden">
+          <div className="border-border animate-in slide-in-from-top-5 absolute top-full right-0 left-0 border-t bg-white/95 shadow-xl backdrop-blur-lg md:hidden">
             <div className="container mx-auto flex flex-col gap-4 px-4 py-6">
               <button
                 onClick={() => onNavigate('about')}

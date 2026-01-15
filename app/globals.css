@@ -129,22 +129,24 @@
   --color-hero-accent: var(--hero-accent);
   --color-hero-primary: var(--hero-primary);
   --color-hero-secondary: var(--hero-secondary);
+
+  --color-brown-1: hsl(357 100% 32%);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-body {
-  @apply bg-background text-foreground;
-  overflow-x: hidden;
-}
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
 
-.stf__parent,
-.stf__wrapper,
-.stf__block {
-  overflow: hidden;
-}
+  .stf__parent,
+  .stf__wrapper,
+  .stf__block {
+    overflow: hidden;
+  }
 }
 
 /* Custom animations */
