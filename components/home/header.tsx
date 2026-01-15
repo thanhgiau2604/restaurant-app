@@ -36,7 +36,7 @@ export default function HomeHeader({
             >
               <span className={cn('text-brown-1 text-[15px]')}>NHÀ HÀNG ẨM THỰC MỘC SƠN</span>
               <span className={cn('text-brown-1 block text-xs md:text-sm')}>
-                Chuyên alacarte, Sky và Hầm rượu Vip
+                Chuyên Alacarte, Sky và Hầm rượu Vip
               </span>
             </p>
           </div>
