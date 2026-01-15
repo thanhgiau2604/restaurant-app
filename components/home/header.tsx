@@ -5,6 +5,7 @@ import Logo from '@/assets/logo.png'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import { _dancingScript } from '@/app/fonts'
 
 type HeaderProps = {
   scrolled: boolean
@@ -33,7 +34,7 @@ export default function HomeHeader({
                 'hidden text-sm leading-tight font-bold text-balance md:block md:text-base'
               )}
             >
-              <span className={cn('text-brown-1')}>Nhà Hàng Ẩm Thực Mộc Sơn</span>
+              <span className={cn('text-brown-1 text-[15px]')}>NHÀ HÀNG ẨM THỰC MỘC SƠN</span>
               <span className={cn('text-brown-1 block text-xs md:text-sm')}>
                 chuyên alacarte, sky và Hầm rượu VIP
               </span>
@@ -41,7 +42,7 @@ export default function HomeHeader({
           </div>
 
           <p className={cn('text-center text-sm leading-tight font-bold text-balance md:hidden')}>
-            <span className={cn('text-brown-1')}>Nhà Hàng Ẩm Thực Mộc Sơn</span>
+            <span className={cn('text-brown-1')}>NHÀ HÀNG ẨM THỰC MỘC SƠN</span>
             <span className={cn('text-brown-1 block text-xs')}>
               chuyên alacarte, sky và Hầm rượu VIP
             </span>

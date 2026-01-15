@@ -1,6 +1,6 @@
 import type React from 'react'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { _googleSans } from './fonts'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
@@ -10,8 +10,6 @@ const SITE_NAME = 'Nhà hàng Ẩm thực Mộc Sơn'
 const SITE_URL = 'https://nhahangmocson.com'
 const OG_IMAGE = `${SITE_URL}/main-img.jpg`
 const TW_IMAGE = OG_IMAGE
-
-const _googleSans = Inter({ subsets: ['vietnamese'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
