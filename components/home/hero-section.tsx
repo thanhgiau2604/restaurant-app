@@ -34,7 +34,7 @@ const heroDishImages = [
   },
   {
     src: Dish04.src,
-    positionClass: 'bottom-[8%] right-[12%] md:bottom-[20%]',
+    positionClass: 'bottom-[10%] right-[12%] md:bottom-[20%]',
     sizeClass: 'h-27 w-27 md:h-36 md:w-36',
     visibleOpacityClass: 'opacity-80',
     hiddenTranslateClass: 'translate-y-20',
