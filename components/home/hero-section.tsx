@@ -2,40 +2,40 @@
 
 import { Button } from '@/components/ui/button'
 import MainBg from '@/assets/view-04.jpg'
-import Dish01 from '@/assets/menu/dish-01.jpg'
-import Dish02 from '@/assets/menu/dish-02.jpg'
-import Dish03 from '@/assets/menu/dish-03.jpg'
-import Dish04 from '@/assets/menu/dish-04.jpg'
+import Dish01 from '@/assets/top-1.jpeg'
+import Dish02 from '@/assets/top-2.jpeg'
+import Dish03 from '@/assets/top-3.jpeg'
+import Dish04 from '@/assets/top-4.jpeg'
 
 const heroDishImages = [
   {
     src: Dish01.src,
-    positionClass: 'top-[15%] left-[10%]',
-    sizeClass: 'h-32 w-32 md:h-48 md:w-48',
+    positionClass: 'top-[15%] left-[10%] object-[50%_25%]',
+    sizeClass: 'h-35 w-35 md:h-48 md:w-48',
     visibleOpacityClass: 'opacity-80',
     hiddenTranslateClass: '-translate-y-20',
     animationDelay: '0.2s',
   },
   {
     src: Dish02.src,
-    positionClass: 'top-[60%] left-[5%]',
-    sizeClass: 'h-24 w-24 md:h-36 md:w-36',
+    positionClass: 'top-[72%] md:top-[60%] left-[5%]',
+    sizeClass: 'h-27 w-27 md:h-36 md:w-36',
     visibleOpacityClass: 'opacity-70',
     hiddenTranslateClass: 'translate-y-20',
     animationDelay: '0.4s',
   },
   {
     src: Dish03.src,
-    positionClass: 'top-[20%] right-[8%]',
-    sizeClass: 'h-28 w-28 md:h-40 md:w-40',
+    positionClass: 'top-[17%] right-[8%] md:top-[20%] md:right-[8%] object-[50%_80%]',
+    sizeClass: 'h-33 w-33 md:h-40 md:w-40',
     visibleOpacityClass: 'opacity-75',
     hiddenTranslateClass: '-translate-y-20',
     animationDelay: '0.3s',
   },
   {
     src: Dish04.src,
-    positionClass: 'right-[12%] bottom-[20%]',
-    sizeClass: 'h-24 w-24 md:h-36 md:w-36',
+    positionClass: 'bottom-[8%] right-[12%] md:bottom-[20%]',
+    sizeClass: 'h-27 w-27 md:h-36 md:w-36',
     visibleOpacityClass: 'opacity-80',
     hiddenTranslateClass: 'translate-y-20',
     animationDelay: '0.5s',
